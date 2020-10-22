@@ -2,9 +2,4 @@
 BugTracker
 Projeto BugTracker
 
-Colaborators
--> Fábio Santos
--> Gonçalo Oliveira
--> Hugo Ribeiro
--> João Silva
--> Rui Neves
+Colaborators: Fábio Santos, Gonçalo Oliveira, Hugo Ribeiro, João Silva, Rui Neves
