@@ -2,6 +2,26 @@
 
 if(isset($partes[1])){
     switch($partes[1]){
+
+        case "request":
+            $query = "SELECT * FROM Bug Where idBug = ?";
+                $sql = mysqli_prepare($ligacao, $query);
+                $bugId = $_POST["idBug"];
+                mysqli_stmt_bind_param($sql,'i', $bugId);
+                mysqli_stmt_bind_result($sql, $text);
+                if(mysqli_stmt_execute($sql)){
+                    $msg = Array("error" => "false", "msg" => $bugId);
+                }else{
+                    $msg = Array("error" => "true", "msg" => "Error getting description");
+                }
+                mysqli_stmt_close($sql);
+            }else{
+                $msg = Array("error" => "true", "msg" => "Incomplete data");
+            }
+            break;
+
+
+
         case "add":
             if(isset($_POST["bugDescription"]) and isset($_SESSION["id"]) and isset( $_POST["projId"]) and isset($_POST["title"])){
                 $query3 = "INSERT INTO bug(title, description, dateFound, solved, project, finder) VALUES (?,?,STR_TO_DATE(?, '%Y %m %d'),0,?,?)";
@@ -83,6 +103,8 @@ if(isset($partes[1])){
                 $msg = Array("error" => "true", "msg" => "Incomplete data");
             }
             break;
+
+        
             
         default:
             $msg = Array("error" => "true", "msg" => "funcao desconhecida");
