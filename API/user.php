@@ -65,7 +65,7 @@ if(isset($partes[1])){
                 And VALUES (?)";
 
                 $id = $_POST["id"];
-                mysqli_stmt_bind_param($sql,'s', $id); 
+                mysqli_stmt_bind_param($sql,'i', $id); 
                 mysqli_stmt_execute($sql);
                 mysqli_stmt_bind_result($sql, $id);
                 mysqli_stmt_store_result($sql); 
