@@ -4,17 +4,16 @@ if(isset($partes[1])){
     switch($partes[1]) {
         case "login":
             if(isset($_POST["uName"]) and isset($_POST["pass"])){
-                $query = "SELECT idUser,name FROM User WHERE userName = ? and password = ?;";
+                $query = "SELECT idUser FROM User WHERE userName = ? and password = ?;";
                 $sql = mysqli_prepare($ligacao,$query);
                 $user = $_POST["uName"];
                 $pass = md5($salt . $_POST["pass"] . $salt);
-                mysqli_stmt_bind_param($sql,'ss', $user, $pass);
+                mysqli_stmt_bind_param($sql,'ss', $user, $pass); 
                 mysqli_stmt_execute($sql);
                 mysqli_stmt_bind_result($sql, $id, $name);
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
-                    $_SESSION["name"] = $name;
                     $_SESSION["userName"] = $user;
                     $_SESSION["id"] = $id;
                     $msg = Array("error" => "false", "msg" => $name);
@@ -26,18 +25,15 @@ if(isset($partes[1])){
         break;
             
         case "register":
-            if(isset($_POST["uName"]) and isset($_POST["pass"]) and isset($_POST["email"]) and isset($_POST["name"])
-                and isset($_POST["type"]) and strcmp($_POST["type"], "admin") != 0){
-                $query2 ="INSERT INTO user(userName, password, email, name, type) VALUES (?,?,?,?,?)";
+            if(isset($_POST["uName"]) and isset($_POST["email"]) and  isset($_POST["pass"]) != 0){
+                $query2 ="INSERT INTO User(userName, email, password) VALUES (?,?,?)";
                 $sql = mysqli_prepare($ligacao,$query2);
                 $username = $_POST["uName"];
-                $pass = md5($salt . $_POST["pass"] . $salt);
                 $mail = $_POST["email"];
-                $nome = $_POST["name"];
-                $type = $_POST["type"];
-                mysqli_stmt_bind_param($sql,'sssss', $username, $pass, $mail, $nome, $type);   
+                $pass = md5($salt . $_POST["pass"] . $salt);
+                mysqli_stmt_bind_param($sql,'sss', $username, $mail, $pass);   
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $nome);
+                    $msg = Array("error" => "false", "msg" => $username);
   
                 }else{
                     $msg = Array("error" => "true", "msg" => "already exist");
@@ -52,7 +48,6 @@ if(isset($partes[1])){
             
         case "logoff":
             if(isset($_SESSION["id"])){
-                $_SESSION["name"] =  "";
                 $_SESSION["userName"] = "";  
                 session_destroy();
                 $msg = Array("error" => "false", "msg" => "Success");
@@ -60,10 +55,53 @@ if(isset($partes[1])){
                 $msg = Array("error" => "true", "msg" => "Failed to logoff");
             }
             break;
+
+
+        case "projects":
+            if(isset($_SESSION["id"])){ 
+                $query2 ="Select idProject From Project 
+                Inner Join Member 
+                On Member.idUser = ? and Member.idProject = Project.idProject
+                And VALUES (?)";
+
+                $id = $_POST["id"];
+                mysqli_stmt_bind_param($sql,'s', $id); 
+                mysqli_stmt_execute($sql);
+                mysqli_stmt_bind_result($sql, $id);
+                mysqli_stmt_store_result($sql); 
+                if(mysqli_stmt_execute($sql)){
+                    $msg = Array("error" => "false", "msg" => $id);
+  
+                }else{
+                    $msg = Array("error" => "true", "msg" => "projects");
+
+                }
+            }
+
+
+        case "reset":
+            if(isset($_POST["mail"]))
+                $query2 ="Select email From User Where email = ? ";
+                $id = $_POST["mail"];
+                mysqli_stmt_bind_param($sql,'s', $mail); 
+                mysqli_stmt_execute($sql);
+                mysqli_stmt_bind_result($sql, $mail);
+                mysqli_stmt_store_result($sql); 
+                if(mysqli_stmt_execute($sql)){
+                    $msg = Array("error" => "false", "msg" => $mail);
+  
+                }else{
+                    $msg = Array("error" => "true", "msg" => "exist");
+
+                }
             
         default:
             $msg = Array("error" => "true", "msg" => "funcao desconhecida");
+
+
     }
+
+
 }
 
 ?>
