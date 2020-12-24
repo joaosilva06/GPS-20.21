@@ -11,14 +11,12 @@ if(isset($partes[1])){
                 mysqli_stmt_bind_param($insertSQL,'ssi', $_POST["moduleName"], $today, $_POST["projId"]);
                 if(mysqli_stmt_execute($insertSQL)){
                     $msg = Array("error" => "false", "msg" => "Module ".$_POST["moduleName"]." added to project");
-  
                 }else{
                     $msg = Array("error" => "true", "msg" => "Error adding new module");
                 }
 
             }else{
                     $msg = Array("error" => "true", "msg" => "register incompleto");
-
             }
             break;
     }
