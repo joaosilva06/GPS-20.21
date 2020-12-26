@@ -5,6 +5,8 @@
  */
 package bugtracker.gui;
 
+import bugtracker.logic.UIObservable;
+import java.util.ArrayList;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
@@ -13,18 +15,20 @@ import javafx.scene.layout.StackPane;
  * @author joao_
  */
 public class BugTrackerUI extends BorderPane{
-    
-    public BugTrackerUI(){
+    UIObservable observable;
+    public BugTrackerUI(UIObservable obs){
+        this.observable = obs;
         StackPane pane = new StackPane();
         pane.setPrefSize(1280, 720);
         getStylesheets().addAll(this.getClass().getResource("../resources/styles.css").toExternalForm());
-        AuthRegUI authregUI = new AuthRegUI();
-        DashboardUI dashUI = new DashboardUI();
+        OperationsPanelUI opPanelUI = new OperationsPanelUI(observable);
+        AuthRegUI authregUI = new AuthRegUI(observable);
         authregUI.setId("authregui");
-        authregUI.setVisible(true);
-        dashUI.setVisible(false);
-        pane.getChildren().addAll(authregUI,dashUI);
+        opPanelUI.setId("operations");
+        opPanelUI.setVisible(false);
+        pane.getChildren().addAll(authregUI,opPanelUI);
         setCenter(pane);
+        
     }
     
 }

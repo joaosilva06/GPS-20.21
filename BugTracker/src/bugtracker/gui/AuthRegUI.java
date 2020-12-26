@@ -5,7 +5,14 @@
  */
 package bugtracker.gui;
 
+import bugtracker.logic.PropsID;
+import bugtracker.logic.Screens;
+import bugtracker.logic.UIObservable;
+import com.sun.javafx.charts.ChartLayoutAnimator;
+import java.beans.PropertyChangeEvent;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -24,9 +31,19 @@ import javafx.scene.shape.Line;
  */
 public class AuthRegUI extends BorderPane{
     
-    public AuthRegUI(){
+    UIObservable observable;
+    
+    public AuthRegUI(UIObservable obs){
+        this.observable = obs;
         Layout layout = new Layout();
         setCenter(layout);
+        
+        observable.registaPropertyChangeListener(PropsID.CHANGE_SCREEN, new PropertyChangeListenerJFXAdapter() {
+            @Override
+            public void onChange(PropertyChangeEvent evt) {
+                setVisible(observable.getActualScreen() == Screens.LOGIN);
+            }
+        });
     }
     
     class Layout extends HBox{
@@ -38,7 +55,7 @@ public class AuthRegUI extends BorderPane{
             this.setAlignment(Pos.CENTER);
             lForm.setMaxWidth(648);
             this.getChildren().addAll(lForm,sep,rForm);
-            this.setSpacing(200);
+            this.setSpacing(180);
         } 
     }
     
@@ -79,6 +96,13 @@ public class AuthRegUI extends BorderPane{
             this.getChildren().addAll(lbLogin,lbSlogan,username,passwordField,signInBtn,lbPassRec);
             this.setAlignment(Pos.CENTER);
             this.setSpacing(10);
+            
+            signInBtn.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    observable.signIn();
+                }
+            });
         }
         
     }

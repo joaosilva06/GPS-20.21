@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : joao_
 */
 
-#authregui{
+#authregui, #operations{
     -fx-background-color: "white";   
 }
 
@@ -26,5 +26,23 @@ and open the template in the editor.
     -fx-pref-width:200px;
     -fx-pref-height:40px;
     -fx-font-size:15px;
+    -fx-border-radius:5px;
     -fx-text-fill:"white";
+}
+
+.authScreenBtns:hover{
+    -fx-background-color:"white";
+    -fx-text-fill:"#2c75e9";
+    -fx-border-radius:5px;
+    -fx-border-color:"#2c75e9";
+}
+
+#lMenu{
+    -fx-background-color:"#dedddc";
+    -fx-pref-width:200px;
+}
+
+.menuOpts{
+    -fx-font-size:15px;
+    -fx-text-alignment:center;
 }
