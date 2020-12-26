@@ -2,7 +2,7 @@
 
 if(isset($partes[1])){
     switch($partes[1]) {
-        case "login":
+        case 'login':
             if(isset($_POST["uName"]) and isset($_POST["pass"])){
                 $query = "SELECT idUser FROM User WHERE userName = ? and password = ?;";
                 $sql = mysqli_prepare($ligacao,$query);
@@ -24,7 +24,7 @@ if(isset($partes[1])){
             }
         break;
             
-        case "register":
+        case 'register':
             if(isset($_POST["uName"]) and isset($_POST["email"]) and  isset($_POST["pass"]) != 0){
                 $query2 ="INSERT INTO User(userName, email, password) VALUES (?,?,?)";
                 $sql = mysqli_prepare($ligacao,$query2);
@@ -46,7 +46,7 @@ if(isset($partes[1])){
             }
             break;
             
-        case "logoff":
+        case 'logoff':
             if(isset($_SESSION["id"])){
                 $_SESSION["userName"] = "";  
                 session_destroy();
@@ -57,7 +57,7 @@ if(isset($partes[1])){
             break;
 
 
-        case "projects":
+        case 'projects':
             if(isset($_SESSION["id"])){ 
                 $query2 ="Select idProject From Project 
                 Inner Join Member 
@@ -79,7 +79,7 @@ if(isset($partes[1])){
             }
 
 
-        case "reset":
+        case 'reset':
             if(isset($_POST["mail"]))
                 $query2 ="Select email From User Where email = ? ";
                 $id = $_POST["mail"];
