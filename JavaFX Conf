@@ -1,0 +1,18 @@
+JavaFX version -> 15.0.1
+
+Create JavaFX global library on NetBeans:
+-> Menu Tools -> Libraries
+-> New Library with name JavaFX15
+-> Add JAR/Folder
+-> Search for folder javafx-sdk-15.0.1/lib
+-> Add all jars inside that folder
+
+Add new JavaFX15 global library to the project:
+-> Right click on the project, select Properties
+-> Select Libraries
+-> On Compile tab, add JavaFX15 to Classpath
+-> On Run tab add JavaFX15 to Modulepath
+-> Select Run
+-> On VM options write --add-modules javafx.controls
+
+Done

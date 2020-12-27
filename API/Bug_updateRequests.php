@@ -2,32 +2,12 @@
 
 if(isset($partes[1])){
     switch($partes[1]){
-
-        case "request":
-            if(isset( $_POST["projId"]) and isset($_POST["bugId"])){
-                $query = "SELECT * FROM Bug Inner join Project On Project.idProject =  ? Where idBug = ? ";
-                $sql = mysqli_prepare($ligacao, $query);
-                mysqli_stmt_bind_param($sql,'ii', $_POST["projectID"], $_POST["bugId"]);
-                mysqli_stmt_bind_result($sql, $text);
-                if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $bugId);
-                }else{
-                    $msg = Array("error" => "true", "msg" => "Error getting description");
-                }
-                mysqli_stmt_close($sql);
-            }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
-            }
-            break;
-
-
-
-        case "add":
-            if(isset($_POST["bugDescription"]) and isset($_SESSION["id"]) and isset( $_POST["projId"]) and isset($_POST["title"])){
-                $query3 = "INSERT INTO bug(title, description, dateFound, solved, project, finder) VALUES (?,?,STR_TO_DATE(?, '%Y %m %d'),0,?,?)";
+        case "addBugProject":
+            if(isset($_POST["bugTitle"]) and isset( $_POST["bugDescription"]) and isset($_POST["bugModule"]) and isset($_POST["bugType"]) and isset($_POST["bugPriority"]) and isset($_POST["bugProject"])){
+                $query3 = "INSERT INTO bug(title, description, dateCreation, Priority_idPriority, Type_idType, Module_idModule, Project_idProject) VALUES (?,?,STR_TO_DATE(?, '%Y %m %d'),?,?,?,?,?)";
                 $sql = mysqli_prepare($ligacao, $query3);
                 $today = date("Y m d");
-                mysqli_stmt_bind_param($sql,'sssii',$_POST["title"], $_POST["bugDescription"], $today, $_POST["projId"],$_SESSION["id"]);
+                mysqli_stmt_bind_param($sql ,"sssiiii",$_POST["bugTitle"], $_POST["bugDescription"],$today, $_POST["bugPriority"],$_POST["bugType"],$_POST["bugModule"],$_POST["bugProject"]));
                 if(mysqli_stmt_execute($sql)){
                     $msg = Array("error" => "false", "msg" => "Success");
                 }else{
@@ -37,8 +17,9 @@ if(isset($partes[1])){
             }else{
                 $msg = Array("error" => "true", "msg" => "Incomplete data");
             }
-            break; 
+            break;
             
+            /*
         case "edit":
             if(isset($_POST["newBugDescription"]) and isset($_POST["newTitle"]) and isset($_POST["bugI"]) and isset($_SESSION["id"])){
                 $query = "UPDATE bug SET title = ?, description  = ? WHERE idBug = ?";
@@ -104,7 +85,7 @@ if(isset($partes[1])){
             }
             break;
 
-        
+            */
             
         default:
             $msg = Array("error" => "true", "msg" => "funcao desconhecida");
