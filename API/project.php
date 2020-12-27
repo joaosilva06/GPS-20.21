@@ -3,7 +3,7 @@
 if(isset($partes[1])){
     switch($partes[1]) {
         case 'bugs':
-            if(/*isset($_SESSION["id"]) and*/ isset($_POST["projId"])){
+            if(isset($_SESSION["id"]) and isset($_POST["projId"])){
                 $getBugsQuery = "SELECT * FROM Bug  WHERE Project_idProject = ?;";
                 $getBugsSQl = mysqli_prepare($ligacao, $getBugsQuery);
                 mysqli_stmt_bind_param($getBugsSQl, 'i', $_POST["projId"]);
@@ -22,7 +22,7 @@ if(isset($partes[1])){
         break;
 
         case 'members':
-            if(isset($_POST["projId"])){
+            if(isset($_SESSION["id"]) and isset($_POST["projId"])){
                 $memberQuery = "SELECT userName, Role.description,  FROM User
                                 INNER JOIN Member ON idUser = User_idUser
                                 INNER JOIN Role ON Role_idRole = idRole
@@ -48,7 +48,7 @@ if(isset($partes[1])){
         break;
 
         case 'modules':
-            if(isset($_POST["projId"])){
+            if(isset($_SESSION["id"]) and isset($_POST["projId"])){
                 $modulesQuery = "SELECT * FROM Module
                                 WHERE Project_idProject = ?";
 

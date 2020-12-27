@@ -4,8 +4,8 @@ if(isset($partes[1])){
     switch($partes[1]) {
         case 'new':
             if(isset($_SESSION["id"]) and isset($_POST["projId"]) and isset($_POST["moduleName"])){
-                $insertQuery = "INSERT INTO Module( `name`, `dateCreation`, `Project_idProject`) ". 
-                                "VALUES(?, STR_TO_DATE(?, '%Y %m %d'),?)";
+                $insertQuery = "INSERT INTO Module( `name`, `dateCreation`, `Project_idProject`)  
+                                VALUES(?, STR_TO_DATE(?, '%Y %m %d'),?)";
                 $insertSQL = mysqli_prepare($ligacao, $insertQuery);
                 $today = date("Y m d");
                 mysqli_stmt_bind_param($insertSQL,'ssi', $_POST["moduleName"], $today, $_POST["projId"]);
@@ -19,6 +19,8 @@ if(isset($partes[1])){
                     $msg = Array("error" => "true", "msg" => "register incompleto");
             }
             break;
+
+
     }
 }
 

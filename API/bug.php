@@ -4,10 +4,10 @@ if(isset($partes[1])){
     switch($partes[1]){
 
         case "request":
-            $query = "SELECT * FROM Bug Inner join Project On Project.idProject =  ? Where idBug = ? ";
+            if(isset( $_POST["projId"]) and isset($_POST["bugId"])){
+                $query = "SELECT * FROM Bug Inner join Project On Project.idProject =  ? Where idBug = ? ";
                 $sql = mysqli_prepare($ligacao, $query);
-                $bugId = $_POST["idBug"];
-                mysqli_stmt_bind_param($sql,'ii', $_POST["projectID"] $bugId);
+                mysqli_stmt_bind_param($sql,'ii', $_POST["projectID"], $_POST["bugId"]);
                 mysqli_stmt_bind_result($sql, $text);
                 if(mysqli_stmt_execute($sql)){
                     $msg = Array("error" => "false", "msg" => $bugId);

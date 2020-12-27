@@ -25,7 +25,7 @@ if(isset($partes[1])){
         break;
             
         case 'register':
-            if(isset($_POST["uName"]) and isset($_POST["email"]) and  isset($_POST["pass"]) != 0){
+            if(isset($_POST["uName"]) and isset($_POST["email"]) and  isset($_POST["pass"])){
                 $query2 ="INSERT INTO User(userName, email, password) VALUES (?,?,?)";
                 $sql = mysqli_prepare($ligacao,$query2);
                 $username = $_POST["uName"];
@@ -59,11 +59,9 @@ if(isset($partes[1])){
 
         case 'projects':
             if(isset($_SESSION["id"])){ 
-                $query2 ="Select idProject From Project 
+                $query2 ="Select * From Project 
                 Inner Join Member 
-                On Member.idUser = ? and Member.idProject = Project.idProject
-                And VALUES (?)";
-
+                On Member.idUser = ? and Member.idProject = Project.idProject";
                 $id = $_POST["id"];
                 mysqli_stmt_bind_param($sql,'i', $id); 
                 mysqli_stmt_execute($sql);
