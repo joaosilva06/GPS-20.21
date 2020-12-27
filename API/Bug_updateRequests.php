@@ -4,7 +4,7 @@ if(isset($partes[1])){
     switch($partes[1]){
         case "addBugProject":
             if(isset($_POST["bugTitle"]) and isset( $_POST["bugDescription"]) and isset($_POST["bugModule"]) and isset($_POST["bugType"]) and isset($_POST["bugPriority"]) and isset($_POST["bugProject"])){
-                $query3 = "INSERT INTO bug(title, description, dateCreation, Priority_idPriority, Type_idType, Module_idModule, Project_idProject) VALUES (?,?,STR_TO_DATE(?, '%Y %m %d'),?,?,?,?,?)";
+                $query3 = "INSERT INTO Bug(title, description, dateCreation, Priority_idPriority, Type_idType, Module_idModule, Project_idProject) VALUES (?,?,STR_TO_DATE(?, '%Y %m %d'),?,?,?,?,?)";
                 $sql = mysqli_prepare($ligacao, $query3);
                 $today = date("Y m d");
                 mysqli_stmt_bind_param($sql ,"sssiiii",$_POST["bugTitle"], $_POST["bugDescription"],$today, $_POST["bugPriority"],$_POST["bugType"],$_POST["bugModule"],$_POST["bugProject"]));
@@ -19,10 +19,10 @@ if(isset($partes[1])){
             }
             break;
             
-            /*
+            
         case "edit":
-            if(isset($_POST["newBugDescription"]) and isset($_POST["newTitle"]) and isset($_POST["bugI"]) and isset($_SESSION["id"])){
-                $query = "UPDATE bug SET title = ?, description  = ? WHERE idBug = ?";
+            if(isset($_POST["newBugDescription"]) and isset($_POST["newTitle"]) and isset($_POST["bugId"]) and isset($_SESSION["id"])){
+                $query = "UPDATE Bug SET title = ?, description  = ? WHERE idBug = ?";
                 $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bind_param($sql,'ssi', $_POST["newTitle"], $_POST["newBugDescription"], $_POST["idBug"]);
                 if(mysqli_stmt_execute($sql)){
@@ -38,7 +38,7 @@ if(isset($partes[1])){
         
         case "solve":
             if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
-                $query = "UPDATE bug SET solved = 1 WHERE idBug = ?";
+                $query = "UPDATE Bug SET solved = 1 WHERE idBug = ?";
                 $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bind_param($sql,'i', $_POST["idBug"]);
                 if(mysqli_stmt_execute($sql)){
@@ -54,7 +54,7 @@ if(isset($partes[1])){
         
         case "unsolve":
             if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
-                $query = "UPDATE bug SET solved = 0 WHERE idBug = ?";
+                $query = "UPDATE Bug SET solved = 0 WHERE idBug = ?";
                 $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bind_param($sql,'i', $_POST["idBug"]);
                 if(mysqli_stmt_execute($sql)){
@@ -70,7 +70,7 @@ if(isset($partes[1])){
             
         case "check":
             if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
-                $query = "SELECT descripcion FROM bug WHERE idBug = ?";
+                $query = "SELECT descripcion FROM Bug WHERE idBug = ?";
                 $sql = mysqli_prepare($ligacao, $query);
                 mysqli_stmt_bind_param($sql,'i',$_POST["bugId"]);
                 mysqli_stmt_bind_result($sql, $text);
@@ -85,7 +85,7 @@ if(isset($partes[1])){
             }
             break;
 
-            */
+            
             
         default:
             $msg = Array("error" => "true", "msg" => "funcao desconhecida");

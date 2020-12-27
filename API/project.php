@@ -4,7 +4,7 @@ if(isset($partes[1])){
     switch($partes[1]) {
         case 'bugs':
             if(isset($_SESSION["id"]) and isset($_POST["projId"])){
-                $getBugsQuery = "SELECT * FROM Bug  WHERE Project_idProject = ?;";
+                $getBugsQuery = "SELECT * FROM Bug  WHERE Project_idProject = ?";
                 $getBugsSQl = mysqli_prepare($ligacao, $getBugsQuery);
                 mysqli_stmt_bind_param($getBugsSQl, 'i', $_POST["projId"]);
                 mysqli_stmt_execute($getBugsSQl);

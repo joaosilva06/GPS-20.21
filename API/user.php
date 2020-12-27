@@ -61,7 +61,7 @@ if(isset($partes[1])){
             if(isset($_SESSION["id"])){ 
                 $query2 ="Select * From Project 
                 Inner Join Member 
-                On Member.idUser = ? and Member.idProject = Project.idProject";
+                On Member.User_idUser = ? and Member.Project_idProject = Project.idProject";
                 $id = $_POST["id"];
                 mysqli_stmt_bind_param($sql,'i', $id); 
                 mysqli_stmt_execute($sql);

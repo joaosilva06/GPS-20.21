@@ -70,7 +70,8 @@ if(isset($partes[1])){
 
     
     default:
-        
+        $msg = Array("error" => "true", "msg" => "funcao desconhecida");
+
 
 
     }

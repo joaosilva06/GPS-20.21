@@ -24,10 +24,9 @@ if(isset($partes[1])){
 
         case 'remove':
             if(isset($_SESSION["id"]) and isset($_POST["projID"])){
-                $getBugsQuery = "Insert into Project(name, dateCreation) values name = ?,   dateCreation = ?;";
+                $getBugsQuery = "DELETE FROM Project WHERE idProject = ?;";
                 $getBugsSQl = mysqli_prepare($ligacao, $getBugsQuery);
-                $today = date("Y m d");
-                mysqli_stmt_bind_param($getBugsSQl, $_POST["name"], $today); 
+                mysqli_stmt_bind_param($getBugsSQl,"i", $_POST["name"]); 
                 mysqli_stmt_execute($getBugsSQl);
                 $result = Array();
                 if(mysqli_stmt_num_rows($getBugsSQl) > 0){
