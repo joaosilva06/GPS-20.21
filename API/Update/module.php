@@ -1,7 +1,7 @@
 <?php
 
-if(isset($partes[1])){
-    switch($partes[1]) {
+if(isset($partes[2])){
+    switch($partes[2]) {
         case 'new':
             if(isset($_SESSION["id"]) and isset($_POST["projId"]) and isset($_POST["moduleName"])){
                 $insertQuery = "INSERT INTO Module( `name`, `dateCreation`, `Project_idProject`)  

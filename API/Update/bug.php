@@ -1,7 +1,7 @@
 <?php
 
-if(isset($partes[1])){
-    switch($partes[1]){
+if(isset($partes[2])){
+    switch($partes[2]){
         case "addBugProject":
             if(isset($_POST["bugTitle"]) and isset( $_POST["bugDescription"]) and isset($_POST["bugModule"]) and isset($_POST["bugType"]) and isset($_POST["bugPriority"]) and isset($_POST["bugProject"])){
                 $query3 = "INSERT INTO bug(title, description, dateCreation, Priority_idPriority, Type_idType, Module_idModule, Project_idProject) VALUES (?,?,STR_TO_DATE(?, '%Y %m %d'),?,?,?,?,?)";

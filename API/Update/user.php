@@ -1,7 +1,7 @@
 <?php
 
-if(isset($partes[1])){
-    switch($partes[1]) {
+if(isset($partes[2])){
+    switch($partes[2]) {
         case "rename":
             if(isset($_SESSION["id"]) and isset($_POST["newName"]))){
                 $query = "Update User Set userName = ? Where idUser = ?";
@@ -44,7 +44,7 @@ if(isset($partes[1])){
             $msg = Array("error" => "true", "msg" => "Falta de dados");
         }
         break;
-
+        //not necessary
     case "namePass":
         if(isset($_SESSION["id"]) and isset($_POST["newName"]) and  isset($_POST["newPass"]))){
                 

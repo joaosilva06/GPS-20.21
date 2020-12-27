@@ -1,7 +1,7 @@
 <?php
 
-if(isset($partes[1])){
-    switch($partes[1]) {
+if(isset($partes[2])){
+    switch($partes[2]) {
         case 'login':
             if(isset($_POST["uName"]) and isset($_POST["pass"])){
                 $query = "SELECT idUser FROM User WHERE userName = ? and password = ?;";

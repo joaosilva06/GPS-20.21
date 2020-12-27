@@ -1,7 +1,7 @@
 <?php
 
-if(isset($partes[1])){
-    switch($partes[1]) {
+if(isset($partes[2])){
+    switch($partes[2]) {
         case 'add':
             if(isset($_SESSION["id"]) and isset($_POST["projName"])){
                 $getBugsQuery = "Insert into Project(name, dateCreation) values(?, STR_TO_DATE(?, '%Y %m %d'));";
