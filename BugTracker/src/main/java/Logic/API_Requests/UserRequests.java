@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class UserRequests {
-    @org.jetbrains.annotations.Nullable
     public static User registar(String username, String password, String email, String name) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/update/user/register");
         String params = "uName="+username+"&email="+email+"&pass="+password;

@@ -1,6 +1,18 @@
 Logic/User.java
  Logic.User
+Logic/Module.java
+ Logic.Module
 Main.java
  Main
+Logic/Bug.java
+ Logic.Bug
+Logic/Project.java
+ Logic.Project
+Logic/Exceptions/APIResponseException.java
+ Logic.Exceptions.APIResponseException
 Logic/API_Requests/UserRequests.java
  Logic.API_Requests.UserRequests
+Logic/API_Requests/APIResponse.java
+ Logic.API_Requests.APIResponse
+Logic/API_Requests/BugRequests.java
+ Logic.API_Requests.BugRequests
