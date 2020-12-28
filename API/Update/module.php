@@ -1,10 +1,11 @@
 <?php
+include ("../getRole.php");
 
 if(isset($partes[2])){
     switch($partes[2]) {
         case 'new':
             if(isset($_SESSION["id"]) and isset($_POST["projId"]) and isset($_POST["moduleName"])){
-                $insertQuery = "INSERT INTO Module( `name`, `dateCreation`, `Project_idProject`)  
+                $insertQuery = "INSERT INTO Module( name, dateCreation, Project_idProject)  
                                 VALUES(?, STR_TO_DATE(?, '%Y %m %d'),?)";
                 $insertSQL = mysqli_prepare($ligacao, $insertQuery);
                 $today = date("Y m d");
@@ -20,7 +21,30 @@ if(isset($partes[2])){
             }
             break;
 
+        case 'remove':
+            if(isset($_SESSION["id"]) and isset($_POST["idModule"]) and isset($_POST["project"])){
+                $query = "Delete From Module where Project_idProject = ? and idModule =  ?;";
+                $idRole = getRole($_SESSION["id"] , $_POST["project"]);
 
+                if($idRole == 1 or $idRole == 2){
+                    $sql = mysqli_prepare($ligacao, $query);
+                    mysqli_stmt_bind_param($sql,"iii", $_POST["role"], $_POST["project"], $_POST["user"]); 
+                    mysqli_stmt_execute($sql);
+                    $result = Array();
+                    if(mysqli_stmt_num_rows($sql) > 0){
+                        while($row = mysqli_fetch_assoc($sql))
+                            array_push($result, $row);
+                        $msg = Array("error" => "false", "msg" => $result);
+                    }
+                    $msg = Array("error" => "false", "msg" => "no rows selected");
+
+                }else{
+                    $msg = Array("error" => "true", "msg" => "access denied");
+                }
+            }else{
+                $msg = Array("error" => "true", "msg" => "Incomplete data");
+            }
+            break;
     }
 }
 

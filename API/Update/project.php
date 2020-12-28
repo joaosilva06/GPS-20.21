@@ -1,11 +1,11 @@
 <?php
-include ("../getRole.php")
+include ("../getRole.php");
 
 if(isset($partes[2])){
     switch($partes[2]) {
         case 'add':
             if(isset($_SESSION["id"]) and isset($_POST["projName"])){
-                $query = "Insert into Project(name, dateCreation) values(?, STR_TO_DATE(?, '%Y %m %d'));";
+                $query = "Insert into Project(name, dateCreation) values(?, STR_TO_DATE(?, '%Y %m %d'));";//adiconar member and role
                 $sql = mysqli_prepare($ligacao, $query);
                 $today = date("Y m d");
                 mysqli_stmt_bind_param($sql, "ss" , $_POST["name"], $today); 
@@ -27,7 +27,7 @@ if(isset($partes[2])){
             if(isset($_SESSION["id"]) and isset($_POST["role"]) and  isset($_POST["user"]) and isset($_POST["project"])){
                 $query = "Update Member set Role_idRole = ? where Project_idProject = ? and User_idUser = ?;";
 
-                $idRole = getRole($_POST["user"] , $_POST["project"]);
+                $idRole = getRole($_SESSION["id"] , $_POST["project"]);
                 if($idRole == 1 or ($idRole == 2 and $_POST["role"] >= 3)){
 
                     $sql = mysqli_prepare($ligacao, $query);
@@ -42,7 +42,7 @@ if(isset($partes[2])){
                     $msg = Array("error" => "false", "msg" => "no rows selected");
 
                 }else{
-                    $msg = Array("error" => "false", "msg" => "access denied");
+                    $msg = Array("error" => "true", "msg" => "access denied");
                 }
             }else{
                 $msg = Array("error" => "true", "msg" => "Incomplete data");
@@ -52,7 +52,7 @@ if(isset($partes[2])){
         case 'addMember':
             if(isset($_SESSION["id"]) and isset($_POST["role"]) and  isset($_POST["user"]) and isset($_POST["project"])){
                 $query = "Insert into Member(Role_idRole, User_idUser, Project_idProject) values(?,?,?);";
-                $idRole = getRole($_POST["user"] , $_POST["project"]);
+                $idRole = getRole($_SESSION["id"] , $_POST["project"]);
 
                 if($idRole == 1 or ($idRole == 2 and $_POST["role"] >= 3)){
                     $sql = mysqli_prepare($ligacao, $query);
@@ -67,7 +67,7 @@ if(isset($partes[2])){
                     $msg = Array("error" => "false", "msg" => "no rows selected");
 
                 }else{
-                    $msg = Array("error" => "false", "msg" => "access denied");
+                    $msg = Array("error" => "true", "msg" => "access denied");
                 }
             }else{
                 $msg = Array("error" => "true", "msg" => "Incomplete data");
@@ -77,7 +77,7 @@ if(isset($partes[2])){
         case 'removeMember':
             if(isset($_SESSION["id"]) and isset($_POST["user"]) and isset($_POST["project"])){
                 $query = "Delete From Member where Project_idProject = ? and User_idUser =  ?;";
-                $idRole = getRole($_POST["user"] , $_POST["project"]);
+                $idRole = getRole($_SESSION["id"] , $_POST["project"]);
 
                 if($idRole == 1 or ($idRole == 2 and $_POST["role"] >= 3)){
                     $sql = mysqli_prepare($ligacao, $query);
@@ -92,7 +92,7 @@ if(isset($partes[2])){
                     $msg = Array("error" => "false", "msg" => "no rows selected");
 
                 }else{
-                    $msg = Array("error" => "false", "msg" => "access denied");
+                    $msg = Array("error" => "true", "msg" => "access denied");
                 }
             }else{
                 $msg = Array("error" => "true", "msg" => "Incomplete data");

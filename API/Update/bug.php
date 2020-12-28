@@ -1,4 +1,5 @@
 <?php
+include ("../getRole.php");
 
 if(isset($partes[2])){
     switch($partes[2]){
@@ -36,8 +37,10 @@ if(isset($partes[2])){
             break;
         
         case "solve":
-            if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
-                $query = "UPDATE Bug SET solved = 1 WHERE idBug = ?";
+            if(isset($_POST["idBug"]) and isset($_SESSION["id"]) and isset($_POST["project"])){
+                $query = "UPDATE Bug SET solved = 1 WHERE idBug = ?;";
+
+                if(getRole($_SESSION["id"] , $_POST["project"]) < 4)
                 $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bind_param($sql,'i', $_POST["idBug"]);
                 if(mysqli_stmt_execute($sql)){
