@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Logic.Module;
 import Logic.Observables.PropsID;
 import Logic.Observables.Screens;
 import Logic.Observables.UIObservable;
@@ -13,8 +14,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 
 /**
@@ -25,20 +28,24 @@ public class ProjectsUI extends BorderPane{
     UIObservable observable;
     public ProjectsUI(UIObservable obs){
         this.observable = obs;
-//tem tabs
+
+        this.setStyle("-fx-background-color:white;");
         Label lb = new Label("Project Name");
         lb.setStyle("-fx-font-size:20px;-fx-font-weight:bold;-fx-padding:10 0 10 10");
         setTop(lb);
         TabPane tabPane = new TabPane();
 
+        tabPane.setStyle("tab-header-background:white");
+
         BugUI bugTab = new BugUI(observable);
+        ModulesUI modulesTab = new ModulesUI(observable);
 
         Tab tab1 = new Tab("Bugs",bugTab);
-        tab1.setStyle("-fx-pref-width:150px;-fx-pref-height:30px");
-        Tab tab2 = new Tab("Modules");
-        tab2.setStyle("-fx-pref-width:150px;-fx-pref-height:30px");
+        tab1.setStyle("-fx-pref-width:175px;-fx-pref-height:40px;-fx-background-color:white;-fx-font-size:15px");
+        Tab tab2 = new Tab("Modules",modulesTab);
+        tab2.setStyle("-fx-pref-width:175px;-fx-pref-height:40px;-fx-background-color:white;-fx-font-size:15px");
         Tab tab3 = new Tab("Team Members");
-        tab3.setStyle("-fx-pref-width:150px;-fx-pref-height:30px");
+        tab3.setStyle("-fx-pref-width:175px;-fx-pref-height:40px;-fx-background-color:white;-fx-font-size:15px");
 
         tabPane.getTabs().add(tab1);
         tabPane.getTabs().add(tab2);

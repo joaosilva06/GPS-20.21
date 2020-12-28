@@ -19,7 +19,7 @@ public class BugUI extends BorderPane {
 
         this.observable = obs;
 
-        this.setStyle("-fx-padding:50 50 50 50");
+        this.setStyle("-fx-padding:50 50 50 50;-fx-background-color:white");
 
         Options opt = new Options();
         opt.setAlignment(Pos.TOP_RIGHT);
@@ -27,23 +27,31 @@ public class BugUI extends BorderPane {
 
         TableView bugsTable = new TableView();
 
+        bugsTable.setStyle("-fx-border-color: white");
+
         TableColumn<Bug, String> bugName = new TableColumn<>("BUG");
         bugName.setCellValueFactory(new PropertyValueFactory<>("bugName"));
+        bugName.setStyle("-fx-background-color:white;-fx-pref-height:50px;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
 
         TableColumn<Bug, String> creatorName = new TableColumn<>("CREATOR");
         creatorName.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
+        creatorName.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
 
         TableColumn<Bug, String> status = new TableColumn<>("STATUS");
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        status.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
 
         TableColumn<Bug, String> type = new TableColumn<>("TYPE");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        type.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
 
         TableColumn<Module, String> moduleName = new TableColumn<>("MODULE");
         moduleName.setCellValueFactory(new PropertyValueFactory<>("moduleName"));
+        moduleName.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
 
         TableColumn<Bug, String> priority = new TableColumn<>("PRIORITY");
         priority.setCellValueFactory(new PropertyValueFactory<>("priority"));
+        priority.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 0 1 0");
 
         bugsTable.getColumns().addAll(bugName,creatorName,status,type,moduleName,priority);
 
