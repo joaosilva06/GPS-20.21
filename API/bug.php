@@ -39,7 +39,7 @@ if(isset($partes[1])){
             }
             break; 
             
-        case "edit":
+        /*case "edit":
             if(isset($_POST["newBugDescription"]) and isset($_POST["newTitle"]) and isset($_POST["bugI"]) and isset($_SESSION["id"])){
                 $query = "UPDATE bug SET title = ?, description  = ? WHERE idBug = ?";
                 $sql = mysqli_prepare($ligacao,$query);
@@ -85,7 +85,7 @@ if(isset($partes[1])){
             }else{
                 $msg = Array("error" => "true", "msg" => "Incomplete data");
             }
-            break;
+            break;*/
             
         case "check":
             if(isset($_POST["idBug"]) and isset($_SESSION["id"])){

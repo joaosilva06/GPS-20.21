@@ -1,22 +1,35 @@
 <?php
+class Util{
+    public fucntion userData(){
+        
+    }
+    
+}
+
 
 if(isset($partes[1])){
     switch($partes[1]) {
         case 'login':
             if(isset($_POST["uName"]) and isset($_POST["pass"])){
-                $query = "SELECT idUser FROM User WHERE userName = ? and password = ?;";
+                $query = "SELECT idUser FROM User WHERE userName = ? and password = ?";
                 $sql = mysqli_prepare($ligacao,$query);
                 $user = $_POST["uName"];
                 $pass = md5($salt . $_POST["pass"] . $salt);
                 mysqli_stmt_bind_param($sql,'ss', $user, $pass); 
                 mysqli_stmt_execute($sql);
-                mysqli_stmt_bind_result($sql, $id, $name);
+                mysqli_stmt_bind_result($sql, $id, $name, $email, $password);
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
                     $_SESSION["userName"] = $user;
                     $_SESSION["id"] = $id;
-                    $msg = Array("error" => "false", "msg" => $name);
+                    
+                    $result[0] = $id;
+                    $result[1] = $name;
+                    $result[2] = $email;
+                    
+                    $result[3] = $password;
+                    $msg = Array("error" => "false", "msg" => $result);
                 }else
                 $msg = Array("error" => "true", "msg" => "Login errado");
             }else{
@@ -33,7 +46,7 @@ if(isset($partes[1])){
                 $pass = md5($salt . $_POST["pass"] . $salt);
                 mysqli_stmt_bind_param($sql,'sss', $username, $mail, $pass);   
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $username);
+                    $msg = Array("error" => "false", "msg" => "Registed Succesfully");
   
                 }else{
                     $msg = Array("error" => "true", "msg" => "already exist");
@@ -65,10 +78,20 @@ if(isset($partes[1])){
                 $id = $_POST["id"];
                 mysqli_stmt_bind_param($sql,'i', $id); 
                 mysqli_stmt_execute($sql);
-                mysqli_stmt_bind_result($sql, $id);
+                mysqli_stmt_bind_result($sql, $ans["name"], $ans["date"]);
                 mysqli_stmt_store_result($sql); 
-                if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $id);
+                if(mysqli_stmt_execute($sql)){ // se nao der meter o execute antes do store_result
+                    for($i = 0; $i < mysqli_stmt_num_rows($sql) ; $i++){
+                        mysqli_stmt_data_seek($i);
+                        mysqli_stmt_fetch($sql);//not sure se correto
+                        
+                        foreach($ans as $kew =>$value){
+                            $result[$i][$key]= $value;
+                        }
+                        
+                    }
+                        
+                    $msg = Array("error" => "false", "msg" => $result); //devolvo o result
   
                 }else{
                     $msg = Array("error" => "true", "msg" => "projects");
@@ -86,7 +109,7 @@ if(isset($partes[1])){
                 mysqli_stmt_bind_result($sql, $mail);
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $mail);
+                    $msg = Array("error" => "false", "msg" => $mail); //devolvo o mail
   
                 }else{
                     $msg = Array("error" => "true", "msg" => "exist");

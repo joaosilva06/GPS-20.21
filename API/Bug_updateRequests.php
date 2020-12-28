@@ -67,23 +67,7 @@ if(isset($partes[1])){
                 $msg = Array("error" => "true", "msg" => "Incomplete data");
             }
             break;
-            
-        case "check":
-            if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
-                $query = "SELECT descripcion FROM Bug WHERE idBug = ?";
-                $sql = mysqli_prepare($ligacao, $query);
-                mysqli_stmt_bind_param($sql,'i',$_POST["bugId"]);
-                mysqli_stmt_bind_result($sql, $text);
-                if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $text);
-                }else{
-                    $msg = Array("error" => "true", "msg" => "Error getting description");
-                }
-                mysqli_stmt_close($sql);
-            }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
-            }
-            break;
+
 
             
             
