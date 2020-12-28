@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package GUI;
+
+import javafx.application.Platform;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javafx.application.Platform;
 
 /**
  *
@@ -19,6 +21,6 @@ public abstract class PropertyChangeListenerJFXAdapter implements PropertyChange
             onChange(evt);
         });
     }
-    
+
     abstract public void onChange(PropertyChangeEvent evt);
 }

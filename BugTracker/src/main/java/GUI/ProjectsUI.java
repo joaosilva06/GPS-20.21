@@ -8,9 +8,14 @@ package GUI;
 import Logic.Observables.PropsID;
 import Logic.Observables.Screens;
 import Logic.Observables.UIObservable;
-import java.beans.PropertyChangeEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+
+import java.beans.PropertyChangeEvent;
 
 /**
  *
@@ -20,10 +25,34 @@ public class ProjectsUI extends BorderPane{
     UIObservable observable;
     public ProjectsUI(UIObservable obs){
         this.observable = obs;
-        
-        Label lb = new Label("PROJECTS");
-        setCenter(lb);
-        
+
+        Label lb = new Label("Project Name");
+        lb.setStyle("-fx-font-size:20px;-fx-font-weight:bold;-fx-padding:10 0 10 10");
+        setTop(lb);
+        TabPane tabPane = new TabPane();
+
+        Tab tab1 = new Tab("Bugs");
+        tab1.setStyle("-fx-pref-width:150px;-fx-pref-height:30px");
+        Tab tab2 = new Tab("Modules");
+        tab2.setStyle("-fx-pref-width:150px;-fx-pref-height:30px");
+        Tab tab3 = new Tab("Team Members");
+        tab3.setStyle("-fx-pref-width:150px;-fx-pref-height:30px");
+
+        tabPane.getTabs().add(tab1);
+        tabPane.getTabs().add(tab2);
+        tabPane.getTabs().add(tab3);
+
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+        setCenter(tabPane);
+
+        tabPane.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+                System.out.println("TAB Ativa: "+newValue);
+            }
+        });
+
         observable.registaPropertyChangeListener(PropsID.CHANGE_SCREEN, new PropertyChangeListenerJFXAdapter() {
             @Override
             public void onChange(PropertyChangeEvent evt) {

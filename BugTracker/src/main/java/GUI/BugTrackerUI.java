@@ -5,10 +5,7 @@
  */
 package GUI;
 
-import Logic.Observables.PropsID;
-import Logic.Observables.Screens;
 import Logic.Observables.UIObservable;
-import java.util.ArrayList;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
@@ -32,5 +29,4 @@ public class BugTrackerUI extends BorderPane{
         setCenter(pane);
         
     }
-    
 }

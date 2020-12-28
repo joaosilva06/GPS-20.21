@@ -8,11 +8,11 @@ package GUI;
 import Logic.Observables.PropsID;
 import Logic.Observables.Screens;
 import Logic.Observables.UIObservable;
-import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+
+import java.beans.PropertyChangeEvent;
 
 /**
  *
@@ -21,7 +21,7 @@ import javafx.scene.layout.StackPane;
 public class OperationsPanelUI extends BorderPane {
     UIObservable observable;
     public OperationsPanelUI(UIObservable obs){
-        
+
         this.observable = obs;
         // Paineis para serem usados consoante a opcao escolhida do menu
         StackPane screens = new StackPane();
@@ -32,12 +32,12 @@ public class OperationsPanelUI extends BorderPane {
         projects.setVisible(false);
         screens.getChildren().addAll(dashboard,projects);
         setCenter(screens);
-        
+
         // Menu Lateral Fixo
         LateralMenu lMenu = new LateralMenu(observable);
         lMenu.setAlignment(Pos.TOP_CENTER);
         setLeft(lMenu);
-        
+
         observable.registaPropertyChangeListener(PropsID.CHANGE_SCREEN, new PropertyChangeListenerJFXAdapter() {
             @Override
             public void onChange(PropertyChangeEvent evt) {
@@ -45,5 +45,5 @@ public class OperationsPanelUI extends BorderPane {
             }
         });
     }
-    
+
 }
