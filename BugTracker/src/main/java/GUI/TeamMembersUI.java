@@ -37,7 +37,7 @@ public class TeamMembersUI extends BorderPane{
         addDate.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
 
         TableColumn<User, String> role = new TableColumn<>("ROLE");
-        role.setCellValueFactory(new PropertyValueFactory<>("numBugs"));
+        role.setCellValueFactory(new PropertyValueFactory<>("role"));
         role.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 0 1 0");
 
 
