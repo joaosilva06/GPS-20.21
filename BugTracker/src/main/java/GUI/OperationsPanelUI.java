@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
 import java.beans.PropertyChangeEvent;
+import java.io.FileNotFoundException;
 
 /**
  *
@@ -35,7 +36,6 @@ public class OperationsPanelUI extends BorderPane {
 
         // Menu Lateral Fixo
         LateralMenu lMenu = new LateralMenu(observable);
-        lMenu.setAlignment(Pos.TOP_CENTER);
         setLeft(lMenu);
 
         observable.registaPropertyChangeListener(PropsID.CHANGE_SCREEN, new PropertyChangeListenerJFXAdapter() {
