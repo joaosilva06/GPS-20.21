@@ -39,12 +39,13 @@ public class ProjectsUI extends BorderPane{
 
         BugUI bugTab = new BugUI(observable);
         ModulesUI modulesTab = new ModulesUI(observable);
+        TeamMembersUI membersTab = new TeamMembersUI(observable);
 
         Tab tab1 = new Tab("Bugs",bugTab);
         tab1.setStyle("-fx-pref-width:175px;-fx-pref-height:40px;-fx-background-color:white;-fx-font-size:15px");
         Tab tab2 = new Tab("Modules",modulesTab);
         tab2.setStyle("-fx-pref-width:175px;-fx-pref-height:40px;-fx-background-color:white;-fx-font-size:15px");
-        Tab tab3 = new Tab("Team Members");
+        Tab tab3 = new Tab("Team Members",membersTab);
         tab3.setStyle("-fx-pref-width:175px;-fx-pref-height:40px;-fx-background-color:white;-fx-font-size:15px");
 
         tabPane.getTabs().add(tab1);
