@@ -75,9 +75,9 @@ public class BugRequests {
         return resp.hasError();
     }
 
-    public static boolean solve(int bugId) throws IOException {
+    public static boolean solve(int bugId, int proj) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/get/bug/solve");
-        String params = "idBug="+bugId;
+        String params = "idBug="+bugId+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);

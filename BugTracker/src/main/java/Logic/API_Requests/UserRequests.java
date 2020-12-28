@@ -159,4 +159,26 @@ public class UserRequests {
         return resp.hasError();
     }
 
+    public static User search(String search) throws IOException, APIResponseException {
+        URL url = new URL("http://localhost/GPS_BT/get/user/search");
+        String params = "search="+search;
+
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setDoOutput(true);
+        con.setRequestMethod("POST");
+        con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+        con.setRequestProperty( "charset", "utf-8");
+        con.setRequestProperty( "Content-Length", Integer.toString( params.getBytes(StandardCharsets.UTF_8).length));
+        try( DataOutputStream wr = new DataOutputStream( con.getOutputStream())) {
+            wr.write( params.getBytes(StandardCharsets.UTF_8) );
+        }
+        InputStream in = con.getInputStream();
+        ObjectMapper mapper = new ObjectMapper();
+        APIResponse resp = mapper.readValue(in, APIResponse.class);
+        in.close();
+        if(resp.hasError())
+            return null;
+        return (User)resp.getMsg();
+    }
+
 }
