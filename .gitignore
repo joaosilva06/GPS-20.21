@@ -131,9 +131,9 @@ fabric.properties
 hs_err_pid*
 
 ### Gradle ###
-.gradle
+.gradle/
 build/
-BugTracker/build/**
+BugTracker/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
