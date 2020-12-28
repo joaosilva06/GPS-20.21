@@ -25,7 +25,7 @@ public class ProjectsUI extends BorderPane{
     UIObservable observable;
     public ProjectsUI(UIObservable obs){
         this.observable = obs;
-
+//tem tabs
         Label lb = new Label("Project Name");
         lb.setStyle("-fx-font-size:20px;-fx-font-weight:bold;-fx-padding:10 0 10 10");
         setTop(lb);
