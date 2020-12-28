@@ -1,8 +1,22 @@
 package Logic.API_Requests;
 
+import Logic.Bug;
+import Logic.Exceptions.APIResponseException;
+import Logic.Project;
+import Logic.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
 public class ProjectRequests {
 
-    public static boolean projectBugs(int id, int project_id) throws IOException {
+    public static List<Bug> projectBugs(int id, int project_id) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/get/project/bugs");
         String params = "id="+id+"&projId="+project_id;
 
@@ -26,7 +40,7 @@ public class ProjectRequests {
         }
     }
 
-    public static boolean projectMembers(int id, int project_id) throws IOException {
+    public static List<User> projectMembers(int id, int project_id) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/get/project/members");
         String params = "id="+id+"&projId="+project_id;
 
@@ -50,7 +64,7 @@ public class ProjectRequests {
         }
     }
 
-    public static boolean projectModules(int id, int project_id) throws IOException {
+    public static List<Module> projectModules(int id, int project_id) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/get/project/modules");
         String params = "id="+id+"&projId="+project_id;
 
@@ -70,7 +84,7 @@ public class ProjectRequests {
         if(resp.hasError())
             return null;
         else{
-            return (List<Modules>) resp.getMsg();
+            return (List<Module>) resp.getMsg();
         }
     }
 

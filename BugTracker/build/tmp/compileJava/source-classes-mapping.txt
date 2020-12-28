@@ -1,18 +1,51 @@
-Logic/User.java
- Logic.User
+Logic/Observables/Screens.java
+ Logic.Observables.Screens
+Logic/Observables/PropsID.java
+ Logic.Observables.PropsID
+GUI/OperationsPanelUI.java
+ GUI.OperationsPanelUI
+ GUI.OperationsPanelUI$1
 Logic/Module.java
  Logic.Module
-Main.java
- Main
 Logic/Bug.java
  Logic.Bug
 Logic/Project.java
  Logic.Project
-Logic/Exceptions/APIResponseException.java
- Logic.Exceptions.APIResponseException
-Logic/API_Requests/UserRequests.java
- Logic.API_Requests.UserRequests
-Logic/API_Requests/APIResponse.java
- Logic.API_Requests.APIResponse
+Logic/Observables/UIObservable.java
+ Logic.Observables.UIObservable
+GUI/ProjectsUI.java
+ GUI.ProjectsUI
+ GUI.ProjectsUI$1
 Logic/API_Requests/BugRequests.java
  Logic.API_Requests.BugRequests
+Logic/API_Requests/ProjectRequests.java
+ Logic.API_Requests.ProjectRequests
+GUI/PropertyChangeListenerJFXAdapter.java
+ GUI.PropertyChangeListenerJFXAdapter
+Logic/User.java
+ Logic.User
+Logic/API_Requests/APIResponse.java
+ Logic.API_Requests.APIResponse
+Logic/Exceptions/APIResponseException.java
+ Logic.Exceptions.APIResponseException
+GUI/AuthRegUI.java
+ GUI.AuthRegUI
+ GUI.AuthRegUI$1
+ GUI.AuthRegUI$Layout
+ GUI.AuthRegUI$LoginForm
+ GUI.AuthRegUI$LoginForm$1
+ GUI.AuthRegUI$RegisterForm
+ GUI.AuthRegUI$Separator
+GUI/LateralMenu.java
+ GUI.LateralMenu
+ GUI.LateralMenu$1
+ GUI.LateralMenu$2
+Logic/API_Requests/UserRequests.java
+ Logic.API_Requests.UserRequests
+GUI/DashboardUI.java
+ GUI.DashboardUI
+ GUI.DashboardUI$1
+Main.java
+ Main
+GUI/BugTrackerUI.java
+ GUI.BugTrackerUI

@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bugtracker.gui;
-
+package GUI;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javafx.application.Platform;

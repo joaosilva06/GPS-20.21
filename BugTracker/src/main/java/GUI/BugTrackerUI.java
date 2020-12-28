@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bugtracker.gui;
+package GUI;
 
-import bugtracker.logic.UIObservable;
+import Logic.Observables.PropsID;
+import Logic.Observables.Screens;
+import Logic.Observables.UIObservable;
 import java.util.ArrayList;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -20,7 +22,7 @@ public class BugTrackerUI extends BorderPane{
         this.observable = obs;
         StackPane pane = new StackPane();
         pane.setPrefSize(1280, 720);
-        getStylesheets().addAll(this.getClass().getResource("../resources/styles.css").toExternalForm());
+        //getStylesheets().addAll(this.getClass().getResource("../resources/styles.css").toExternalForm());
         OperationsPanelUI opPanelUI = new OperationsPanelUI(observable);
         AuthRegUI authregUI = new AuthRegUI(observable);
         authregUI.setId("authregui");

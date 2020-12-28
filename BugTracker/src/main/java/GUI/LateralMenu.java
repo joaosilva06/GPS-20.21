@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bugtracker.gui;
 
-import bugtracker.logic.UIObservable;
+package GUI;
+
+import Logic.Observables.PropsID;
+import Logic.Observables.Screens;
+import Logic.Observables.UIObservable;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
