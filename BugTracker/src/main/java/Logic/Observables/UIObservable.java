@@ -58,6 +58,12 @@ public class UIObservable {
         actualSubScreen = Screens.DASHBOARD;
         disparaEventos(defineEventos(PropsID.CHANGE_SCREEN));
     }
+
+    public void signOut(){
+        actualScreen = Screens.LOGIN;
+        actualSubScreen = null;
+        disparaEventos(defineEventos(PropsID.CHANGE_SCREEN));
+    }
     
     public void dashboard(){
         actualScreen = Screens.OPERATIONS;

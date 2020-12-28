@@ -45,5 +45,12 @@ public class LateralMenu extends VBox{
                 observable.project();
             }
         });
+
+        lbLogout.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                observable.signOut();
+            }
+        });
     }
 }
