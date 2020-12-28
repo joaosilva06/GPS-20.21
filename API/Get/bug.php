@@ -1,4 +1,5 @@
 <?php
+include "../getRole.php"
 
 if(isset($partes[2])){
     switch($partes[2]){
