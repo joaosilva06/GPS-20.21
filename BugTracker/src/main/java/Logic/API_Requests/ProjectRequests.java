@@ -1,19 +1,10 @@
 package Logic.API_Requests;
 
-import Logic.Bug;
-import com.fasterxml.jackson.databind.ObjectMapper;
+public class ProjectRequests {
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-
-public class BugRequests {
-    public static Bug getBug(int proj, int bug) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/bug/request");
-        String params = "projId="+proj+"&bugId="+bug;
+    public static boolean projectBugs(int id, int project_id) throws IOException {
+        URL url = new URL("http://localhost/GPS_BT/get/project/bugs");
+        String params = "id="+id+"&projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -28,16 +19,64 @@ public class BugRequests {
         ObjectMapper mapper = new ObjectMapper();
         APIResponse resp = mapper.readValue(in, APIResponse.class);
         in.close();
-        if(!resp.hasError()) {
-            Bug rBug = (Bug) resp.getMsg();
-            return rBug;
+        if(resp.hasError())
+            return null;
+        else{
+            return (List<Bug>) resp.getMsg();
         }
-        return null;
     }
 
-    public static boolean addBug(String desc, String title, int projId) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/bug/add");
-        String params = "bugDescription="+desc+"&projId="+projId+"&title="+title;
+    public static boolean projectMembers(int id, int project_id) throws IOException {
+        URL url = new URL("http://localhost/GPS_BT/get/project/members");
+        String params = "id="+id+"&projId="+project_id;
+
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setDoOutput(true);
+        con.setRequestMethod("POST");
+        con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+        con.setRequestProperty( "charset", "utf-8");
+        con.setRequestProperty( "Content-Length", Integer.toString( params.getBytes(StandardCharsets.UTF_8).length));
+        try( DataOutputStream wr = new DataOutputStream( con.getOutputStream())) {
+            wr.write( params.getBytes(StandardCharsets.UTF_8) );
+        }
+        InputStream in = con.getInputStream();
+        ObjectMapper mapper = new ObjectMapper();
+        APIResponse resp = mapper.readValue(in, APIResponse.class);
+        in.close();
+        if(resp.hasError())
+            return null;
+        else{
+            return (List<User>) resp.getMsg();
+        }
+    }
+
+    public static boolean projectModules(int id, int project_id) throws IOException {
+        URL url = new URL("http://localhost/GPS_BT/get/project/modules");
+        String params = "id="+id+"&projId="+project_id;
+
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setDoOutput(true);
+        con.setRequestMethod("POST");
+        con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+        con.setRequestProperty( "charset", "utf-8");
+        con.setRequestProperty( "Content-Length", Integer.toString( params.getBytes(StandardCharsets.UTF_8).length));
+        try( DataOutputStream wr = new DataOutputStream( con.getOutputStream())) {
+            wr.write( params.getBytes(StandardCharsets.UTF_8) );
+        }
+        InputStream in = con.getInputStream();
+        ObjectMapper mapper = new ObjectMapper();
+        APIResponse resp = mapper.readValue(in, APIResponse.class);
+        in.close();
+        if(resp.hasError())
+            return null;
+        else{
+            return (List<Modules>) resp.getMsg();
+        }
+    }
+
+    public static boolean addProject(int id, int project_name) throws IOException {
+        URL url = new URL("http://localhost/GPS_BT/get/project/modules");
+        String params = "id="+id+"&projName="+project_name;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -55,9 +94,9 @@ public class BugRequests {
         return resp.hasError();
     }
 
-    public static boolean editBug(String desc, String title, int bugId) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/bug/edit");
-        String params = "newBugDescription="+desc+"&newTitle="+title+"&bugI="+bugId;
+    public static boolean removeProject(int id, int project_id) throws IOException {
+        URL url = new URL("http://localhost/GPS_BT/get/project/modules");
+        String params = "id="+id+"&projID="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -75,29 +114,9 @@ public class BugRequests {
         return resp.hasError();
     }
 
-    public static boolean solve(int bugId) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/bug/solve");
-        String params = "idBug="+bugId;
-
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setDoOutput(true);
-        con.setRequestMethod("POST");
-        con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
-        con.setRequestProperty( "charset", "utf-8");
-        con.setRequestProperty( "Content-Length", Integer.toString( params.getBytes(StandardCharsets.UTF_8).length));
-        try( DataOutputStream wr = new DataOutputStream( con.getOutputStream())) {
-            wr.write( params.getBytes(StandardCharsets.UTF_8) );
-        }
-        InputStream in = con.getInputStream();
-        ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
-    }
-
-    public static boolean unsolve(int bugId) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/bug/unsolve");
-        String params = "idBug="+bugId;
+    public static boolean newModule(int id, int project_id, int moduleName) throws IOException {
+        URL url = new URL("http://localhost/GPS_BT/get/project/modules");
+        String params = "id="+id+"&projID="+project_id+"&moduleName="+moduleName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
