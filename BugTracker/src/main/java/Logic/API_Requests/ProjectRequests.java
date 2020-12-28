@@ -2,7 +2,7 @@ package Logic.API_Requests;
 
 public class ProjectRequests {
 
-    public static boolean projectBugs(int id, int project_id) throws IOException {
+    public static Bug projectBugs(int id, int project_id) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/get/project/bugs");
         String params = "id="+id+"&projId="+project_id;
 
@@ -26,7 +26,7 @@ public class ProjectRequests {
         }
     }
 
-    public static boolean projectMembers(int id, int project_id) throws IOException {
+    public static User projectMembers(int id, int project_id) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/get/project/members");
         String params = "id="+id+"&projId="+project_id;
 
@@ -50,7 +50,7 @@ public class ProjectRequests {
         }
     }
 
-    public static boolean projectModules(int id, int project_id) throws IOException {
+    public static Modules projectModules(int id, int project_id) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/get/project/modules");
         String params = "id="+id+"&projId="+project_id;
 
