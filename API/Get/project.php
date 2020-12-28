@@ -69,6 +69,8 @@ if(isset($partes[2])){
                 $msg = Array("error" => "true", "msg" => "Incomplete data");
             }
         break;
+            
+        
         default:
             $msg = Array("error" => "true", "msg" => "Unkown function");
     }

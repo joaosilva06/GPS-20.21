@@ -1,5 +1,7 @@
 <?php
 
+include "../getRole.php"
+
 if(isset($partes[2])){
     switch($partes[2]) {
         case 'login':
@@ -10,13 +12,16 @@ if(isset($partes[2])){
                 $pass = md5($salt . $_POST["pass"] . $salt);
                 mysqli_stmt_bind_param($sql,'ss', $user, $pass); 
                 mysqli_stmt_execute($sql);
-                mysqli_stmt_bind_result($sql, $id, $name);
+                mysqli_stmt_bind_result($sql, $id);
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
                     $_SESSION["userName"] = $user;
                     $_SESSION["id"] = $id;
-                    $msg = Array("error" => "false", "msg" => $name);
+                    $arr[0] = $user;
+                    $arr[1] = $pass;
+                    $arr[2] = $id;
+                    $msg = Array("error" => "false", "msg" => $arr);
                 }else
                 $msg = Array("error" => "true", "msg" => "Login errado");
             }else{
@@ -37,7 +42,7 @@ if(isset($partes[2])){
 
         case 'projects':
             if(isset($_SESSION["id"])){ 
-                $query2 ="Select * From Project 
+                $sql ="Select * From Project 
                 Inner Join Member 
                 On Member.idUser = ? and Member.idProject = Project.idProject";
                 $id = $_POST["id"];
@@ -53,12 +58,13 @@ if(isset($partes[2])){
 
                 }
             }
-
+            break;
 
         case 'reset':
-            if(isset($_POST["mail"]))
-                $query2 ="Select email From User Where email = ? ";
-                $id = $_POST["mail"];
+            if(isset($_POST["mail"])){
+                $query ="Select email From User Where email = ? ";
+                $mail = $_POST["mail"];
+                $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bind_param($sql,'s', $mail); 
                 mysqli_stmt_execute($sql);
                 mysqli_stmt_bind_result($sql, $mail);
@@ -70,7 +76,30 @@ if(isset($partes[2])){
                     $msg = Array("error" => "true", "msg" => "exist");
 
                 }
-            
+            }
+            break;
+
+
+        case 'search':
+            if(isset($_SESSION["id"]) and isset($_POST["search"])){
+                $query ="Select idUser From User Where email = ? or userName = ?;";
+                $look = $_POST["search"];
+                $sql = mysqli_prepare($ligacao,$query);
+                mysqli_stmt_bind_param($sql,'ss', $look, $look); 
+                mysqli_stmt_execute($sql);
+                mysqli_stmt_bind_result($sql, $id);
+                mysqli_stmt_store_result($sql); 
+                if(mysqli_stmt_execute($sql)){
+                    mysqli_stmt_fetch($sql);
+                    $msg = Array("error" => "false", "msg" => $id);
+  
+                }else{
+                    $msg = Array("error" => "true", "msg" => "exist");
+
+                }
+            }
+            break;
+
         default:
             $msg = Array("error" => "true", "msg" => "funcao desconhecida");
 
