@@ -15,7 +15,6 @@ $salt = "123";
 $partes=explode("/", substr($_SERVER["PATH_INFO"],1));
 $msg=Array("error"=>"true","message"=>"Link Incorreto");
 
-//$nomeDoModulo = $partes[0]. ".php"; nao e preciso?
 $nomeDoModulo = $partes[0]."/".$partes[1]. ".php";
 if ( file_exists($nomeDoModulo) ) {
     include $nomeDoModulo;
