@@ -1,7 +1,7 @@
 <?php
 
-if(isset($partes[1])){
-    switch($partes[1]) {
+if(isset($partes[2])){
+    switch($partes[2]) {
         case "rename":
             if(isset($_SESSION["id"]) and isset($_POST["newName"]))){
                 $query = "Update User Set userName = ? Where idUser = ?";
@@ -24,7 +24,7 @@ if(isset($partes[1])){
         break;
             
     case "pass":
-        if(isset($_SESSION["id"]) and isset($_POST["newPass"]))){
+        if(isset($_SESSION["id"]) and isset($_POST["newPass"]))){ 
             $query = "Update User Set password = ? Where idUser = ?";
             $sql = mysqli_prepare($ligacao,$query);
             $pass = md5($salt . $_POST["newPass"] . $salt);
@@ -44,7 +44,7 @@ if(isset($partes[1])){
             $msg = Array("error" => "true", "msg" => "Falta de dados");
         }
         break;
-
+        //not necessary
     case "namePass":
         if(isset($_SESSION["id"]) and isset($_POST["newName"]) and  isset($_POST["newPass"]))){
                 
@@ -65,6 +65,27 @@ if(isset($partes[1])){
             $msg = Array("error" => "true", "msg" => "Login errado");
         }else{
             $msg = Array("error" => "true", "msg" => "Falta de dados");
+        }
+        break;
+    case 'register':
+        if(isset($_POST["uName"]) and isset($_POST["email"]) and  isset($_POST["pass"])){
+            $query2 ="INSERT INTO User(userName, email, password) VALUES (?,?,?)";
+            $sql = mysqli_prepare($ligacao,$query2);
+            $username = $_POST["uName"];
+            $mail = $_POST["email"];
+            $pass = md5($salt . $_POST["pass"] . $salt);
+            mysqli_stmt_bind_param($sql,'sss', $username, $mail, $pass);   
+            if(mysqli_stmt_execute($sql)){
+                $msg = Array("error" => "false", "msg" => $username);
+
+            }else{
+                $msg = Array("error" => "true", "msg" => "already exist");
+
+            }
+
+        }else{
+                $msg = Array("error" => "true", "msg" => "register incompleto");
+
         }
         break;
 
