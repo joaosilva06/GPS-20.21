@@ -73,4 +73,5 @@ if(isset($partes[2])){
             $msg = Array("error" => "true", "msg" => "Unkown function");
     }
 }
+
 ?>
