@@ -1,6 +1,5 @@
 <?php
 
-include "../getRole.php"
 
 if(isset($partes[2])){
     switch($partes[2]) {
@@ -18,9 +17,9 @@ if(isset($partes[2])){
                     mysqli_stmt_fetch($sql);
                     $_SESSION["userName"] = $user;
                     $_SESSION["id"] = $id;
-                    $arr[0] = $user;
-                    $arr[1] = $pass;
-                    $arr[2] = $id;
+                    $arr[0] = $id;
+                    $arr[1] = $user;
+                    $arr[2] = $pass;
                     $msg = Array("error" => "false", "msg" => $arr);
                 }else
                 $msg = Array("error" => "true", "msg" => "Login errado");
@@ -82,16 +81,20 @@ if(isset($partes[2])){
 
         case 'search':
             if(isset($_SESSION["id"]) and isset($_POST["search"])){
-                $query ="Select idUser From User Where email = ? or userName = ?;";
+                $query ="Select * From User Where email = ? or userName = ?;";
                 $look = $_POST["search"];
                 $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bind_param($sql,'ss', $look, $look); 
                 mysqli_stmt_execute($sql);
-                mysqli_stmt_bind_result($sql, $id);
+                mysqli_stmt_bind_result($sql, $id, $user, $email, $pass, $date);
                 mysqli_stmt_store_result($sql); 
-                if(mysqli_stmt_execute($sql)){
+                if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
-                    $msg = Array("error" => "false", "msg" => $id);
+                    $arr[0] = $id;
+                    $arr[1] = $user;
+                    $arr[2] = $pass;
+                    
+                    $msg = Array("error" => "false", "msg" => $arr);
   
                 }else{
                     $msg = Array("error" => "true", "msg" => "exist");
