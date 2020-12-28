@@ -31,7 +31,9 @@ public class ProjectsUI extends BorderPane{
         setTop(lb);
         TabPane tabPane = new TabPane();
 
-        Tab tab1 = new Tab("Bugs");
+        BugUI bugTab = new BugUI(observable);
+
+        Tab tab1 = new Tab("Bugs",bugTab);
         tab1.setStyle("-fx-pref-width:150px;-fx-pref-height:30px");
         Tab tab2 = new Tab("Modules");
         tab2.setStyle("-fx-pref-width:150px;-fx-pref-height:30px");
@@ -49,7 +51,7 @@ public class ProjectsUI extends BorderPane{
         tabPane.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
-                System.out.println("TAB Ativa: "+newValue);
+                //System.out.println("TAB Ativa: "+newValue);
             }
         });
 
