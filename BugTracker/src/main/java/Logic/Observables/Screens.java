@@ -15,5 +15,6 @@ public enum Screens {
     
     //Sub screens
     DASHBOARD,
-    PROJECT
+    PROJECT,
+    PROFILE,
 }

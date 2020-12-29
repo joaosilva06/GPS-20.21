@@ -30,7 +30,7 @@ public class LateralMenu extends BorderPane {
 
         this.setId("lMenu");
 
-        Profile profile = new Profile();
+        Profile profile = new Profile(observable);
         profile.setAlignment(Pos.TOP_CENTER);
         setTop(profile);
 
@@ -44,8 +44,11 @@ public class LateralMenu extends BorderPane {
     }
 
     class Profile extends VBox{
-        public Profile(){
-            Image image = new Image(Menu.class.getResourceAsStream("/user.jpg"));
+        UIObservable observable;
+        public Profile(UIObservable obs){
+            this.observable = obs;
+
+            Image image = new Image(Menu.class.getResourceAsStream("/user.png"));
             ImageView imgUser = new ImageView(image);
             imgUser.setFitWidth(150);
             imgUser.setFitHeight(150);
@@ -56,6 +59,13 @@ public class LateralMenu extends BorderPane {
             setSpacing(10);
 
             this.getChildren().addAll(imgUser,lbUser);
+
+            lbUser.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    observable.profile();
+                }
+            });
         }
     }
 

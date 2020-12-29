@@ -1,6 +1,6 @@
 package GUI;
 
-import Logic.Bug;
+
 import Logic.Module;
 import Logic.Observables.UIObservable;
 import javafx.event.EventHandler;
@@ -10,9 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
-
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 public class ModulesUI extends BorderPane{
@@ -32,15 +29,15 @@ public class ModulesUI extends BorderPane{
 
         modulesTable.getStyleClass().add("table");
 
-        TableColumn<Bug, String> moduleName = new TableColumn<>("MODULE");
+        TableColumn<Module, String> moduleName = new TableColumn<>("MODULE");
         moduleName.setCellValueFactory(new PropertyValueFactory<>("moduleName"));
         moduleName.getStyleClass().add("column");
 
-        TableColumn<Bug, String> creationDate = new TableColumn<>("CREATION");
+        TableColumn<Module, String> creationDate = new TableColumn<>("CREATION");
         creationDate.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
         creationDate.getStyleClass().add("column");
 
-        TableColumn<Bug, String> numBugs = new TableColumn<>("# BUGS");
+        TableColumn<Module, String> numBugs = new TableColumn<>("# BUGS");
         numBugs.setCellValueFactory(new PropertyValueFactory<>("numBugs"));
         numBugs.getStyleClass().add("lastColumn");
 
