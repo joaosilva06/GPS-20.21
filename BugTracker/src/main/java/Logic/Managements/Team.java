@@ -42,6 +42,8 @@ public class Team {
                 proj.getMembers().remove(pos);
         } catch (IOException e) {
             //uma callback para a interface
+        }catch (APIResponseException e){
+            //callback
         }
     }
 
@@ -52,6 +54,8 @@ public class Team {
                 proj.getMembers().remove(pos);
         } catch (IOException e) {
             //uma callback para a interface
+        }catch (APIResponseException e){
+            //callback
         }
     }
 }
