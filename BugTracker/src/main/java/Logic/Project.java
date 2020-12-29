@@ -11,6 +11,8 @@ public class Project {
     private List<Module> modules;
     private List<Bug> bugs;
 
+    private int moduleId = 0;
+
 
     public Project(int projectId, String name, Date dateCreate) {
         this.projectId = projectId;
@@ -61,6 +63,12 @@ public class Project {
 
     public List<Module> getModules() {
         return modules;
+    }
+
+    public void addModule (String moduleName){
+        //como não estamos a buscar o id do modulo na resposta da api, tratamos dos ids manualmente
+        Module m = new Module(moduleName, this.moduleId++);
+        this.modules.add(m);
     }
 
     public void setModules(List<Module> modules) {
