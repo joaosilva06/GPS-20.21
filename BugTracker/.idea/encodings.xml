@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/main/java/GUI/AuthRegUI.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/GUI/BugTrackerUI.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/GUI/BugUI.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/GUI/DashboardUI.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/GUI/LateralMenu.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/GUI/ModulesUI.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/GUI/OperationsPanelUI.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/GUI/ProjectsUI.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/GUI/TeamMembersUI.java" charset="UTF-8" />
+  </component>
+</project>

@@ -3,15 +3,17 @@ package GUI;
 import Logic.Bug;
 import Logic.Module;
 import Logic.Observables.UIObservable;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 public class ModulesUI extends BorderPane{
     UIObservable observable;
@@ -61,6 +63,21 @@ public class ModulesUI extends BorderPane{
             lbDel.getStyleClass().add("delBtn");
             this.setSpacing(5);
             this.getChildren().addAll(lbAdd,lbDel);
+
+            lbAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    // create a text input dialog
+                    TextInputDialog td = new TextInputDialog("Module Name");
+                    td.setHeaderText(null);
+                    td.setResizable(true);
+                    td.setTitle("New Module");
+                    Optional<String> result = td.showAndWait();
+                    if (result.isPresent()){
+                        System.out.println("Module: " + result.get());
+                    }
+                }
+            });
         }
     }
 }
