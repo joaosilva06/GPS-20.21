@@ -1,6 +1,7 @@
 package Logic.API_Requests;
 
 import Logic.Bug;
+import Logic.Exceptions.APIResponseException;
 import Logic.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class ProjectRequests {
 
-    public static List<Bug> projectBugs(int id, int project_id) throws IOException {
+    public static List<Bug> projectBugs(int id, int project_id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/get/project/bugs");
         String params = "id="+id+"&projId="+project_id;
 
@@ -39,7 +40,7 @@ public class ProjectRequests {
     }
 
 
-    public static List<User> projectMembers(int id, int project_id) throws IOException {
+    public static List<User> projectMembers(int id, int project_id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/get/project/members");
         String params = "id="+id+"&projId="+project_id;
 
@@ -63,7 +64,7 @@ public class ProjectRequests {
         }
     }
 
-    public static List<Module> projectModules(int id, int project_id) throws IOException {
+    public static List<Module> projectModules(int id, int project_id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/get/project/modules");
         String params = "id="+id+"&projId="+project_id;
 
@@ -87,8 +88,8 @@ public class ProjectRequests {
         }
     }
 
-    public static boolean addProject(int id, int project_name) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/project/modules");
+    public static boolean addProject(int id, String project_name) throws IOException, APIResponseException {
+        URL url = new URL("http://localhost/GPS_BT/Update/project/add");
         String params = "id="+id+"&projName="+project_name;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -107,8 +108,8 @@ public class ProjectRequests {
         return resp.hasError();
     }
 
-    public static boolean removeProject(int id, int project_id) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/project/modules");
+    public static boolean removeProject(int id, int project_id) throws IOException, APIResponseException {
+        URL url = new URL("http://localhost/GPS_BT/get/project/remove");//nao existe, mas devia
         String params = "id="+id+"&projID="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -127,8 +128,8 @@ public class ProjectRequests {
         return resp.hasError();
     }
 
-    public static boolean newModule(int id, int project_id, int moduleName) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/project/modules");
+    public static boolean newModule(int id, int project_id, String moduleName) throws IOException, APIResponseException {
+        URL url = new URL("http://localhost/GPS_BT/update/module/new");
         String params = "id="+id+"&projID="+project_id+"&moduleName="+moduleName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -147,7 +148,7 @@ public class ProjectRequests {
         return resp.hasError();
     }
 
-    public static boolean addMember(int role, int user, int proj) throws IOException {
+    public static boolean addMember(int role, int user, int proj) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/update/project/addMember");
         String params = "role="+role+"&user="+user+"&project="+proj;
 
@@ -167,7 +168,7 @@ public class ProjectRequests {
         return resp.hasError();
     }
 
-    public static boolean changeRole(int role, int user, int proj) throws IOException {
+    public static boolean changeRole(int role, int user, int proj) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/update/project/role");
         String params = "role="+role+"&user="+user+"&project="+proj;
 
@@ -187,7 +188,7 @@ public class ProjectRequests {
         return resp.hasError();
     }
 
-    public static boolean removeMember(int user, int proj) throws IOException {
+    public static boolean removeMember(int user, int proj) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/update/project/role");
         String params = "user="+user+"&project="+proj;
 
