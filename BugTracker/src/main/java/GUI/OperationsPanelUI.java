@@ -26,14 +26,16 @@ public class OperationsPanelUI extends BorderPane {
         this.observable = obs;
         // Paineis para serem usados consoante a opcao escolhida do menu
         StackPane screens = new StackPane();
-        screens.setPrefSize(1080, 720);
+        screens.setPrefSize(980, 720);
         DashboardUI dashboard = new DashboardUI(observable);
         ProjectsUI projects = new ProjectsUI(observable);
         ProfileUI profile = new ProfileUI(observable);
+        BugDetailsUI bugDetails = new BugDetailsUI(observable);
         dashboard.setVisible(false);
         projects.setVisible(false);
         profile.setVisible(false);
-        screens.getChildren().addAll(dashboard,projects,profile);
+        bugDetails.setVisible(false);
+        screens.getChildren().addAll(dashboard,projects,profile,bugDetails);
         setCenter(screens);
 
         // Menu Lateral Fixo
