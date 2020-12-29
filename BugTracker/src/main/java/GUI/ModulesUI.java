@@ -20,7 +20,7 @@ public class ModulesUI extends BorderPane{
 
         this.observable = obs;
 
-        this.setStyle("-fx-padding:50 50 50 50;-fx-background-color:white");
+        this.getStyleClass().add("contentPanel");
 
         Options opt = new Options();
         opt.setAlignment(Pos.TOP_RIGHT);
@@ -28,19 +28,19 @@ public class ModulesUI extends BorderPane{
 
         TableView modulesTable = new TableView();
 
-        modulesTable.setStyle("-fx-border-color: white");
+        modulesTable.getStyleClass().add("table");
 
         TableColumn<Bug, String> moduleName = new TableColumn<>("MODULE");
         moduleName.setCellValueFactory(new PropertyValueFactory<>("moduleName"));
-        moduleName.setStyle("-fx-background-color:white;-fx-pref-height:50px;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
+        moduleName.getStyleClass().add("column");
 
         TableColumn<Bug, String> creationDate = new TableColumn<>("CREATION");
         creationDate.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
-        creationDate.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
+        creationDate.getStyleClass().add("column");
 
         TableColumn<Bug, String> numBugs = new TableColumn<>("# BUGS");
         numBugs.setCellValueFactory(new PropertyValueFactory<>("numBugs"));
-        numBugs.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 0 1 0");
+        numBugs.getStyleClass().add("lastColumn");
 
 
         modulesTable.getColumns().addAll(moduleName,creationDate,numBugs);
@@ -55,8 +55,10 @@ public class ModulesUI extends BorderPane{
 
     class Options extends HBox {
         public Options(){
-            Label lbAdd = new Label("Add");
-            Label lbDel = new Label("Del");
+            Label lbAdd = new Label("+");
+            lbAdd.getStyleClass().add("addBtn");
+            Label lbDel = new Label("x");
+            lbDel.getStyleClass().add("delBtn");
             this.getChildren().addAll(lbAdd,lbDel);
         }
     }
