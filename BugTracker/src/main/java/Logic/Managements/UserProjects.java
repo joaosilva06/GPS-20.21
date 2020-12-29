@@ -22,14 +22,28 @@ public class UserProjects {
         this.projs = null;
     }
 
-    public void projectBugs(){
-
-
+    public void projectBugs(int pos){
+        int usr_id = usr.getId();
+        int id_proj = projs.get(pos).getProjectId();
+        try {
+            projs.get(pos).setBugs(ProjectRequests.projectBugs(usr_id, id_proj));
+        }catch (IOException e){
+            //uma callback para a interface
+        }catch (APIResponseException e){
+            //callback
+        }
     }
 
-    public void projectModules(){
-
-
+    public void projectModules(int pos){
+        int usr_id = usr.getId();
+        int id_proj = projs.get(pos).getProjectId();
+        try {
+            projs.get(pos).setModules(ProjectRequests.projectModules(usr_id, id_proj));
+        }catch (IOException e){
+            //uma callback para a interface
+        }catch (APIResponseException e){
+            //callback
+        }
     }
 
     public void addProject(String project_name){
