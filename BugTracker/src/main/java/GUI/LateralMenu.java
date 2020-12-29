@@ -30,29 +30,49 @@ public class LateralMenu extends BorderPane {
 
         this.setId("lMenu");
 
+        Profile profile = new Profile();
+        profile.setAlignment(Pos.TOP_CENTER);
+        setTop(profile);
+
         Menu menu = new Menu();
         menu.setAlignment(Pos.TOP_CENTER);
-        setTop(menu);
+        setCenter(menu);
 
         Logout logout = new Logout();
         logout.setAlignment(Pos.BOTTOM_CENTER);
         setBottom(logout);
     }
 
-    class Menu extends VBox{
-        public Menu(){
-            Label lbDashboard = new Label("Dashboard");
-            Label lbProjects = new Label("Projects");
-            lbDashboard.getStyleClass().add("menuOpts");
-            lbProjects.getStyleClass().add("menuOpts");
-            this.setSpacing(10);
-
-
+    class Profile extends VBox{
+        public Profile(){
             Image image = new Image(Menu.class.getResourceAsStream("/user.jpg"));
             ImageView imgUser = new ImageView(image);
             imgUser.setFitWidth(150);
             imgUser.setFitHeight(150);
-            this.getChildren().addAll(imgUser,lbDashboard,lbProjects);
+
+            Label lbUser = new Label("Username");
+            lbUser.getStyleClass().add("menuOpts");
+
+            setSpacing(10);
+
+            this.getChildren().addAll(imgUser,lbUser);
+        }
+    }
+
+    class Menu extends VBox{
+        public Menu(){
+
+            this.getStyleClass().add("separatorsLMenu");
+
+            Label lbDashboard = new Label("Dashboard");
+            Label lbProjects = new Label("Projects");
+            lbDashboard.getStyleClass().add("menuOpts");
+            lbDashboard.setStyle("-fx-padding:15 0 0 0");
+            lbProjects.getStyleClass().add("menuOpts");
+            this.setSpacing(5);
+
+
+            this.getChildren().addAll(lbDashboard,lbProjects);
 
 
             lbDashboard.setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -74,10 +94,8 @@ public class LateralMenu extends BorderPane {
     class Logout extends VBox{
         public Logout(){
 
-            String cssLayout = "-fx-border-color: black;\n" +
-                    "-fx-border-insets: 5;\n" +
-                    "-fx-border-width: 1 0 0 0;";
-            this.setStyle(cssLayout);
+            this.getStyleClass().add("separatorsLMenu");
+            this.setStyle("-fx-padding:10 0 10 0");
             Label lbLogout = new Label("Logout");
             lbLogout.getStyleClass().add("menuOpts");
             this.getChildren().addAll(lbLogout);

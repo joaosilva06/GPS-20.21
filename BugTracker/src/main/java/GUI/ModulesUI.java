@@ -59,6 +59,7 @@ public class ModulesUI extends BorderPane{
             lbAdd.getStyleClass().add("addBtn");
             Label lbDel = new Label("x");
             lbDel.getStyleClass().add("delBtn");
+            this.setSpacing(5);
             this.getChildren().addAll(lbAdd,lbDel);
         }
     }
