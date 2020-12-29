@@ -30,14 +30,11 @@ if(isset($partes[2])){
                     $sql = mysqli_prepare($ligacao, $query);
                     mysqli_stmt_bind_param($sql,"iii", $_POST["role"], $_POST["project"], $_POST["user"]); 
                     mysqli_stmt_execute($sql);
-                    $result = Array();
                     if(mysqli_stmt_num_rows($sql) > 0){
-                        while($row = mysqli_fetch_assoc($sql))
-                            array_push($result, $row);
-                        $msg = Array("error" => "false", "msg" => $result);
+                        $msg = Array("error" => "false", "msg" => "Deleted");
+                    }else{
+                        $msg = Array("error" => "false", "msg" => "no Rows");
                     }
-                    $msg = Array("error" => "false", "msg" => "no rows selected");
-
                 }else{
                     $msg = Array("error" => "true", "msg" => "access denied");
                 }

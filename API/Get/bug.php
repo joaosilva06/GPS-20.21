@@ -1,87 +1,41 @@
 <?php
-include "../getRole.php"
 
 if(isset($partes[2])){
     switch($partes[2]){
 
         case "request":
-            if(isset( $_POST["projId"]) and isset($_POST["bugId"])){
-                $query = "SELECT * FROM Bug Inner join Project On Project.idProject =  ? Where idBug = ? ";
+            if(isset($_SESSION["id"]) and isset($_POST["bugId"])){
+                $query = "SELECT * FROM Bug 
+                Inner join Project On Project.idProject = Bug.Project_idProject 
+                Inner Join Type On Type.idType = Bug.Type_idType 
+                Inner Join Status on Status.idStatus = Bug.Status_idStatus 
+                Inner join Priority on Priority.idPriority = Bug.Priority_idPriority 
+                left join Module on Bug.Module_idModule = Module.idModule 
+                Where idBug = ? ";
+
                 $sql = mysqli_prepare($ligacao, $query);
-                mysqli_stmt_bind_param($sql,'ii', $_POST["projectID"], $_POST["bugId"]);
-                mysqli_stmt_bind_result($sql, $text);
-                if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $bugId);
+                mysqli_stmt_bind_param($sql,'i', $_POST["bugId"]);
+                mysqli_stmt_execute($sql);
+                mysqli_stmt_bind_result($sql, $id, $title, $desc, $date, $dateS, $trash, 
+                $trash, $trash, $trash, $trash, $trash, $project, $trash, $trash, $type,
+                $trash, $status, $trash, $prio, $trash, $module, $trash,$trash);
+                mysqli_stmt_store_result($sql);
+                if(mysqli_stmt_num_rows($sql) > 0){
+                    mysqli_stmt_fetch($sql);
+                    $arr["id"] = $id;
+                    $arr["title"] = $title;
+                    $arr["description"] = $desc;
+                    $arr["date"] = $date;
+                    $arr["dateS"] = $dateS;
+                    $arr["status"] = $status;
+                    $arr["priority"] = $prio;
+                    $arr["type"] = $type;
+                    $arr["module"] = $module;
+                    $arr["project"] = $project;
+                    $msg = Array("error" => "false", "msg" => $arr);
                 }else{
                     $msg = Array("error" => "true", "msg" => "Error getting description");
                 }
-                mysqli_stmt_close($sql);
-            }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
-            }
-            break;
-
-
-
-        case "add":
-            if(isset($_POST["bugDescription"]) and isset($_SESSION["id"]) and isset( $_POST["projId"]) and isset($_POST["title"])){
-                $query3 = "INSERT INTO bug(title, description, dateFound, solved, project, finder) VALUES (?,?,STR_TO_DATE(?, '%Y %m %d'),0,?,?)";
-                $sql = mysqli_prepare($ligacao, $query3);
-                $today = date("Y m d");
-                mysqli_stmt_bind_param($sql,'sssii',$_POST["title"], $_POST["bugDescription"], $today, $_POST["projId"],$_SESSION["id"]);
-                if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => "Success");
-                }else{
-                    $msg = Array("error" => "true", "msg" => "Unexpected error");
-                }
-                mysqli_stmt_close($sql);
-            }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
-            }
-            break; 
-            
-        case "edit":
-            if(isset($_POST["newBugDescription"]) and isset($_POST["newTitle"]) and isset($_POST["bugI"]) and isset($_SESSION["id"])){
-                $query = "UPDATE bug SET title = ?, description  = ? WHERE idBug = ?";
-                $sql = mysqli_prepare($ligacao,$query);
-                mysqli_stmt_bind_param($sql,'ssi', $_POST["newTitle"], $_POST["newBugDescription"], $_POST["idBug"]);
-                if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => "Changed");
-                }else{
-                    $msg = Array("error" => "true", "msg" => "Error changing bug");
-                }        
-                mysqli_stmt_close($sql);
-            }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
-            }
-            break;
-        
-        case "solve":
-            if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
-                $query = "UPDATE bug SET solved = 1 WHERE idBug = ?";
-                $sql = mysqli_prepare($ligacao,$query);
-                mysqli_stmt_bind_param($sql,'i', $_POST["idBug"]);
-                if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => "Bug Solved");
-                }else{
-                    $msg = Array("error" => "true", "msg" => "Error changing DATA");
-                }   
-                mysqli_stmt_close($sql);
-            }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
-            }
-            break;
-        
-        case "unsolve":
-            if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
-                $query = "UPDATE bug SET solved = 0 WHERE idBug = ?";
-                $sql = mysqli_prepare($ligacao,$query);
-                mysqli_stmt_bind_param($sql,'i', $_POST["idBug"]);
-                if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => "Bug UnSolved");
-                }else{
-                    $msg = Array("error" => "true", "msg" => "Error changing DATA");
-                }   
                 mysqli_stmt_close($sql);
             }else{
                 $msg = Array("error" => "true", "msg" => "Incomplete data");

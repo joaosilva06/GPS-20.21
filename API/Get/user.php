@@ -17,9 +17,9 @@ if(isset($partes[2])){
                     mysqli_stmt_fetch($sql);
                     $_SESSION["userName"] = $user;
                     $_SESSION["id"] = $id;
-                    $arr[0] = $id;
-                    $arr[1] = $user;
-                    $arr[2] = $pass;
+                    $arr["id"] = $id;
+                    $arr["name"] = $user;
+                    $arr["pass"] = $pass;
                     $msg = Array("error" => "false", "msg" => $arr);
                 }else
                 $msg = Array("error" => "true", "msg" => "Login errado");
@@ -90,9 +90,9 @@ if(isset($partes[2])){
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
-                    $arr[0] = $id;
-                    $arr[1] = $user;
-                    $arr[2] = $pass;
+                    $arr["id"] = $id;
+                    $arr["name"] = $user;
+                    $arr["pass"] = $pass;
                     
                     $msg = Array("error" => "false", "msg" => $arr);
   
