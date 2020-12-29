@@ -5,10 +5,11 @@ if(isset($partes[2])){
     switch($partes[2]) {
         case 'add':
             if(isset($_SESSION["id"]) and isset($_POST["projName"])){
-                $query = "Insert into Project(name, dateCreation) values(?, STR_TO_DATE(?, '%Y %m %d'));";//adiconar member and role
+                $query = "Insert into Project(name, dateCreation) values(?, STR_TO_DATE(?, '%Y %m %d')); 
+                Insert into Member(Role_idRole, User_idUser, Project_idProject) values(1,?, Select MAX(idProject) from Project) ";//adiconar member and role
                 $sql = mysqli_prepare($ligacao, $query);
                 $today = date("Y m d");
-                mysqli_stmt_bind_param($sql, "ss" , $_POST["name"], $today); 
+                mysqli_stmt_bind_param($sql, "ssi" , $_POST["name"], $today, $_SESSION["id"]); 
                 mysqli_stmt_execute($sql);
                 $result = Array();
                 if(mysqli_stmt_num_rows($sql) > 0){

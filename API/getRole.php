@@ -1,7 +1,7 @@
 <?php
 
-function getRole($idUser, $idProj) {
-    $query = "Select Role_idRole From Member where User_idUser = ? and Project_idProject = ?;"
+function getRole($idUser, $idProj, $ligacao) {
+    $query = "Select Role_idRole From Member where User_idUser = ? and Project_idProject = ?;";
     $sql = mysqli_prepare($ligacao,$query);
     mysqli_stmt_bind_param($sql,'ii', $idUser, $idProj); 
     mysqli_stmt_execute($sql);
