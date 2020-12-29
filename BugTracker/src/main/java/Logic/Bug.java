@@ -8,15 +8,19 @@ public class Bug {
     private String priority;
     private String solving;
     private String desc;
+    private String module;
 
-    public Bug(int id, String creator, String type, String status, String priority, String desc) {
+    public Bug(int id, String creator, String type, String status, String priority, String desc, String module) {
         this.id = id;
         this.creator = creator;
         this.type = type;
         this.status = status;
         this.priority = priority;
         this.desc = desc;
+        this.module = module;
     }
+
+    public Bug(){}
 
     public int getId() {
         return id;
@@ -72,5 +76,13 @@ public class Bug {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
     }
 }

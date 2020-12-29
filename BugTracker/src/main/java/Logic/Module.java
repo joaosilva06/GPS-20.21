@@ -9,6 +9,8 @@ public class Module {
         this.id = id;
     }
 
+    public Module(){}
+
     public String getName() {
         return name;
     }

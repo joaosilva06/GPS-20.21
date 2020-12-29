@@ -20,6 +20,8 @@ public class Project {
         this.dateCreate = dateCreate;
     }
 
+    public Project(){}
+
     public Project(int projectId, String name, Date dateCreate, List<User> members, List<Module> modules, List<Bug> bugs) {
         this.projectId = projectId;
         this.name = name;
