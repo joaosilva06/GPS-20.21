@@ -51,7 +51,7 @@ public class AuthRegUI extends BorderPane{
             RegisterForm rForm = new RegisterForm();
             this.setAlignment(Pos.CENTER);
             lForm.setMaxWidth(648);
-            this.setStyle("-fx-background-color: white;");
+            this.getStyleClass().addAll("authregui");
             this.getChildren().addAll(lForm,sep,rForm);
             this.setSpacing(180);
         }
@@ -71,6 +71,7 @@ public class AuthRegUI extends BorderPane{
 
         public LoginForm() {
             Label lbLogin = new Label("LOGIN");
+            lbLogin.getStyleClass().add("labelAuthReg");
             lbLogin.setStyle("-fx-font-size:30px; -fx-font-weight: bold");
 
             Label lbSlogan = new Label("Let's Track Some Bugs");
@@ -78,20 +79,15 @@ public class AuthRegUI extends BorderPane{
             TextField username = new TextField ();
             username.setPrefSize(300, 40);
             username.setPromptText("Username");
-            username.setStyle("-fx-font-size:15px;");
+            username.getStyleClass().add("formsInputs");
 
             PasswordField passwordField = new PasswordField();
             passwordField.setPrefSize(300, 40);
             passwordField.setPromptText("Password");
-            passwordField.setStyle("-fx-font-size:15px;");
+            passwordField.getStyleClass().add("formsInputs");
 
             Button signInBtn = new Button("Sign In");
-            signInBtn.setStyle("-fx-background-color:\"#2c75e9\";\n" +
-                    "    -fx-pref-width:200px;\n" +
-                    "    -fx-pref-height:40px;\n" +
-                    "    -fx-font-size:15px;\n" +
-                    "    -fx-border-radius:5px;\n" +
-                    "    -fx-text-fill:\"white\";");
+            signInBtn.getStyleClass().add("authScreenBtns");
 
             Label lbPassRec = new Label("Forgot password?");
             lbPassRec.setStyle("-fx-text-fill:#2c75e9");
@@ -114,35 +110,30 @@ public class AuthRegUI extends BorderPane{
 
         public RegisterForm(){
             Label lbReg = new Label("REGISTER");
-            lbReg.setStyle("-fx-font-size:30px; -fx-font-weight: bold");
+            lbReg.getStyleClass().add("labelAuthReg");
 
             TextField username = new TextField ();
             username.setPrefSize(300, 40);
             username.setPromptText("Username");
-            username.setStyle("-fx-font-size:15px");
+            username.getStyleClass().add("formsInputs");
 
             TextField mail = new TextField ();
             mail.setPrefSize(300, 40);
             mail.setPromptText("Email");
-            mail.setStyle("-fx-font-size:15px");
+            mail.getStyleClass().add("formsInputs");
 
             PasswordField passwordField = new PasswordField();
             passwordField.setPrefSize(300, 40);
             passwordField.setPromptText("Password");
-            passwordField.setStyle("-fx-font-size:15px");
+            passwordField.getStyleClass().add("formsInputs");
 
             PasswordField passConfirm = new PasswordField();
             passConfirm.setPrefSize(300, 40);
             passConfirm.setPromptText("Confirm Password");
-            passConfirm.setStyle("-fx-font-size:15px");
+            passConfirm.getStyleClass().add("formsInputs");
 
             Button signUpBtn = new Button("Sign Up");
-            signUpBtn.setStyle("-fx-background-color:\"#2c75e9\";\n" +
-                    "    -fx-pref-width:200px;\n" +
-                    "    -fx-pref-height:40px;\n" +
-                    "    -fx-font-size:15px;\n" +
-                    "    -fx-border-radius:5px;\n" +
-                    "    -fx-text-fill:\"white\";");
+            signUpBtn.getStyleClass().add("authScreenBtns");
 
             this.getChildren().addAll(lbReg,username,mail,passwordField,passConfirm,signUpBtn);
             this.setAlignment(Pos.CENTER);

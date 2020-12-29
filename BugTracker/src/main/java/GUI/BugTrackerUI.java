@@ -19,7 +19,7 @@ public class BugTrackerUI extends BorderPane{
         this.observable = obs;
         StackPane pane = new StackPane();
         pane.setPrefSize(1280, 720);
-        //getStylesheets().addAll(this.getClass().getResource("../resources/styles.css").toExternalForm());
+        getStylesheets().addAll(this.getClass().getResource("/styles.css").toExternalForm());
         OperationsPanelUI opPanelUI = new OperationsPanelUI(observable);
         AuthRegUI authregUI = new AuthRegUI(observable);
         authregUI.setId("authregui");

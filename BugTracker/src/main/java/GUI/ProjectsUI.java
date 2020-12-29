@@ -29,24 +29,24 @@ public class ProjectsUI extends BorderPane{
     public ProjectsUI(UIObservable obs){
         this.observable = obs;
 
-        this.setStyle("-fx-background-color:white;");
+        this.setId("projects");
         Label lb = new Label("Project Name");
         lb.setStyle("-fx-font-size:20px;-fx-font-weight:bold;-fx-padding:10 0 10 10");
         setTop(lb);
         TabPane tabPane = new TabPane();
 
-        tabPane.setStyle("tab-header-background:white");
+        tabPane.getStyleClass().add("floating");
 
         BugUI bugTab = new BugUI(observable);
         ModulesUI modulesTab = new ModulesUI(observable);
         TeamMembersUI membersTab = new TeamMembersUI(observable);
 
         Tab tab1 = new Tab("Bugs",bugTab);
-        tab1.setStyle("-fx-pref-width:175px;-fx-pref-height:40px;-fx-background-color:white;-fx-font-size:15px");
+        tab1.getStyleClass().add("tab");
         Tab tab2 = new Tab("Modules",modulesTab);
-        tab2.setStyle("-fx-pref-width:175px;-fx-pref-height:40px;-fx-background-color:white;-fx-font-size:15px");
+        tab2.getStyleClass().add("tab");
         Tab tab3 = new Tab("Team Members",membersTab);
-        tab3.setStyle("-fx-pref-width:175px;-fx-pref-height:40px;-fx-background-color:white;-fx-font-size:15px");
+        tab3.getStyleClass().add("tab");
 
         tabPane.getTabs().add(tab1);
         tabPane.getTabs().add(tab2);

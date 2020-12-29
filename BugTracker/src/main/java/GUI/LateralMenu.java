@@ -28,8 +28,7 @@ public class LateralMenu extends BorderPane {
     public LateralMenu(UIObservable obs){
         this.observable = obs;
 
-        this.setStyle("-fx-background-color:\"#dedddc\";\n" +
-                "    -fx-pref-width:200px; -fx-padding:10 0 0 0");
+        this.setId("lMenu");
 
         Menu menu = new Menu();
         menu.setAlignment(Pos.TOP_CENTER);
@@ -44,19 +43,17 @@ public class LateralMenu extends BorderPane {
         public Menu(){
             Label lbDashboard = new Label("Dashboard");
             Label lbProjects = new Label("Projects");
-            lbDashboard.setStyle("-fx-font-size:15px;");
-            lbProjects.setStyle("-fx-font-size:15px;");
+            lbDashboard.getStyleClass().add("menuOpts");
+            lbProjects.getStyleClass().add("menuOpts");
             this.setSpacing(10);
 
-            try{
-                Image image = new Image(new FileInputStream("C:\\wamp64\\www\\GPS-20.21\\BugTracker\\src\\main\\java\\Resources\\user.jpg"));
-                ImageView imgUser = new ImageView(image);
-                imgUser.setFitWidth(150);
-                imgUser.setFitHeight(150);
-                this.getChildren().addAll(imgUser,lbDashboard,lbProjects);
-            }catch (FileNotFoundException ex){
-                System.out.println("Ficheiro não encontrado");
-            }
+
+            Image image = new Image(Menu.class.getResourceAsStream("/user.jpg"));
+            ImageView imgUser = new ImageView(image);
+            imgUser.setFitWidth(150);
+            imgUser.setFitHeight(150);
+            this.getChildren().addAll(imgUser,lbDashboard,lbProjects);
+
 
             lbDashboard.setOnMouseClicked(new EventHandler<MouseEvent>(){
                 @Override
@@ -82,7 +79,7 @@ public class LateralMenu extends BorderPane {
                     "-fx-border-width: 1 0 0 0;";
             this.setStyle(cssLayout);
             Label lbLogout = new Label("Logout");
-            lbLogout.setStyle("-fx-font-size:15px;");
+            lbLogout.getStyleClass().add("menuOpts");
             this.getChildren().addAll(lbLogout);
 
             lbLogout.setOnMouseClicked(new EventHandler<MouseEvent>() {

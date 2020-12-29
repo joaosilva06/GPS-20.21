@@ -18,7 +18,7 @@ public class TeamMembersUI extends BorderPane{
 
         this.observable = obs;
 
-        this.setStyle("-fx-padding:50 50 50 50;-fx-background-color:white");
+        this.getStyleClass().add("contentPanel");
 
         Options opt = new Options();
         opt.setAlignment(Pos.TOP_RIGHT);
@@ -26,19 +26,19 @@ public class TeamMembersUI extends BorderPane{
 
         TableView membersTable = new TableView();
 
-        membersTable.setStyle("-fx-border-color: white");
+        membersTable.getStyleClass().add("table");
 
         TableColumn<User, String> memberName = new TableColumn<>("MEMBER");
         memberName.setCellValueFactory(new PropertyValueFactory<>("memberName"));
-        memberName.setStyle("-fx-background-color:white;-fx-pref-height:50px;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
+        memberName.getStyleClass().add("column");
 
         TableColumn<User, String> addDate = new TableColumn<>("ADDED ON");
         addDate.setCellValueFactory(new PropertyValueFactory<>("addDate"));
-        addDate.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
+        addDate.getStyleClass().add("column");
 
         TableColumn<User, String> role = new TableColumn<>("ROLE");
         role.setCellValueFactory(new PropertyValueFactory<>("role"));
-        role.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 0 1 0");
+        role.getStyleClass().add("lastColumn");
 
 
         membersTable.getColumns().addAll(memberName,addDate,role);
@@ -53,8 +53,10 @@ public class TeamMembersUI extends BorderPane{
 
     class Options extends HBox {
         public Options(){
-            Label lbAdd = new Label("Add");
-            Label lbDel = new Label("Del");
+            Label lbAdd = new Label("+");
+            lbAdd.getStyleClass().add("addBtn");
+            Label lbDel = new Label("x");
+            lbDel.getStyleClass().add("delBtn");
             this.getChildren().addAll(lbAdd,lbDel);
         }
     }

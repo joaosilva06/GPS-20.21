@@ -7,9 +7,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 
 public class BugUI extends BorderPane {
@@ -19,7 +24,7 @@ public class BugUI extends BorderPane {
 
         this.observable = obs;
 
-        this.setStyle("-fx-padding:50 50 50 50;-fx-background-color:white");
+        this.getStyleClass().add("contentPanel");
 
         Options opt = new Options();
         opt.setAlignment(Pos.TOP_RIGHT);
@@ -27,31 +32,31 @@ public class BugUI extends BorderPane {
 
         TableView bugsTable = new TableView();
 
-        bugsTable.setStyle("-fx-border-color: white");
+        bugsTable.getStyleClass().add("table");
 
         TableColumn<Bug, String> bugName = new TableColumn<>("BUG");
         bugName.setCellValueFactory(new PropertyValueFactory<>("bugName"));
-        bugName.setStyle("-fx-background-color:white;-fx-pref-height:50px;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
+        bugName.getStyleClass().add("column");
 
         TableColumn<Bug, String> creatorName = new TableColumn<>("CREATOR");
         creatorName.setCellValueFactory(new PropertyValueFactory<>("creatorName"));
-        creatorName.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
+        creatorName.getStyleClass().add("column");
 
         TableColumn<Bug, String> status = new TableColumn<>("STATUS");
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
-        status.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
+        status.getStyleClass().add("column");
 
         TableColumn<Bug, String> type = new TableColumn<>("TYPE");
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
-        type.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
+        type.getStyleClass().add("column");
 
         TableColumn<Module, String> moduleName = new TableColumn<>("MODULE");
         moduleName.setCellValueFactory(new PropertyValueFactory<>("moduleName"));
-        moduleName.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 1 1 0");
+        moduleName.getStyleClass().add("column");
 
         TableColumn<Bug, String> priority = new TableColumn<>("PRIORITY");
         priority.setCellValueFactory(new PropertyValueFactory<>("priority"));
-        priority.setStyle("-fx-background-color:white;-fx-border-color:#c8c6c6;-fx-border-width:0 0 1 0");
+        priority.getStyleClass().add("lastColumn");
 
         bugsTable.getColumns().addAll(bugName,creatorName,status,type,moduleName,priority);
 
@@ -65,8 +70,10 @@ public class BugUI extends BorderPane {
 
     class Options extends HBox{
         public Options(){
-            Label lbAdd = new Label("Add");
-            Label lbDel = new Label("Del");
+            Label lbAdd = new Label("+");
+            lbAdd.getStyleClass().add("addBtn");
+            Label lbDel = new Label("x");
+            lbDel.getStyleClass().add("delBtn");
             this.getChildren().addAll(lbAdd,lbDel);
         }
     }
