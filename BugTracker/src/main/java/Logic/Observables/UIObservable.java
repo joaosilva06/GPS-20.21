@@ -76,5 +76,11 @@ public class UIObservable {
         actualSubScreen = Screens.PROJECT;
         disparaEventos(defineEventos(PropsID.CHANGE_SCREEN));
     }
+
+    public void profile(){
+        actualScreen = Screens.OPERATIONS;
+        actualSubScreen = Screens.PROFILE;
+        disparaEventos(defineEventos(PropsID.CHANGE_SCREEN));
+    }
     
 }

@@ -29,9 +29,11 @@ public class OperationsPanelUI extends BorderPane {
         screens.setPrefSize(1080, 720);
         DashboardUI dashboard = new DashboardUI(observable);
         ProjectsUI projects = new ProjectsUI(observable);
+        ProfileUI profile = new ProfileUI(observable);
         dashboard.setVisible(false);
         projects.setVisible(false);
-        screens.getChildren().addAll(dashboard,projects);
+        profile.setVisible(false);
+        screens.getChildren().addAll(dashboard,projects,profile);
         setCenter(screens);
 
         // Menu Lateral Fixo

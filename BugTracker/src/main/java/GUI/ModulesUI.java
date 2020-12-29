@@ -1,17 +1,16 @@
 package GUI;
 
-import Logic.Bug;
+
 import Logic.Module;
 import Logic.Observables.UIObservable;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-
-import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 public class ModulesUI extends BorderPane{
     UIObservable observable;
@@ -30,15 +29,15 @@ public class ModulesUI extends BorderPane{
 
         modulesTable.getStyleClass().add("table");
 
-        TableColumn<Bug, String> moduleName = new TableColumn<>("MODULE");
+        TableColumn<Module, String> moduleName = new TableColumn<>("MODULE");
         moduleName.setCellValueFactory(new PropertyValueFactory<>("moduleName"));
         moduleName.getStyleClass().add("column");
 
-        TableColumn<Bug, String> creationDate = new TableColumn<>("CREATION");
+        TableColumn<Module, String> creationDate = new TableColumn<>("CREATION");
         creationDate.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
         creationDate.getStyleClass().add("column");
 
-        TableColumn<Bug, String> numBugs = new TableColumn<>("# BUGS");
+        TableColumn<Module, String> numBugs = new TableColumn<>("# BUGS");
         numBugs.setCellValueFactory(new PropertyValueFactory<>("numBugs"));
         numBugs.getStyleClass().add("lastColumn");
 
@@ -59,7 +58,23 @@ public class ModulesUI extends BorderPane{
             lbAdd.getStyleClass().add("addBtn");
             Label lbDel = new Label("x");
             lbDel.getStyleClass().add("delBtn");
+            this.setSpacing(5);
             this.getChildren().addAll(lbAdd,lbDel);
+
+            lbAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    // create a text input dialog
+                    TextInputDialog td = new TextInputDialog("Module Name");
+                    td.setHeaderText(null);
+                    td.setResizable(true);
+                    td.setTitle("New Module");
+                    Optional<String> result = td.showAndWait();
+                    if (result.isPresent()){
+                        System.out.println("Module: " + result.get());
+                    }
+                }
+            });
         }
     }
 }
