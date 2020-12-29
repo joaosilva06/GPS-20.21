@@ -2,6 +2,7 @@ package Logic.API_Requests;
 
 import Logic.Bug;
 import Logic.Exceptions.APIResponseException;
+import Logic.Module;
 import Logic.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
