@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import Logic.Observables.PropsID;
+import Logic.Observables.Screens;
 import Logic.Observables.UIObservable;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -15,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.beans.PropertyChangeEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,7 +57,7 @@ public class LateralMenu extends BorderPane {
             imgUser.setFitHeight(150);
 
             Label lbUser = new Label("Username");
-            lbUser.getStyleClass().add("menuOpts");
+            lbUser.setId("username");
 
             setSpacing(10);
 
@@ -70,24 +73,43 @@ public class LateralMenu extends BorderPane {
     }
 
     class Menu extends VBox{
+
         public Menu(){
 
             this.getStyleClass().add("separatorsLMenu");
 
             Label lbDashboard = new Label("Dashboard");
             Label lbProjects = new Label("Projects");
-            lbDashboard.getStyleClass().add("menuOpts");
-            lbDashboard.setStyle("-fx-padding:15 0 0 0");
+            lbDashboard.getStyleClass().addAll("menuOpts", "active");
             lbProjects.getStyleClass().add("menuOpts");
             this.setSpacing(5);
 
 
             this.getChildren().addAll(lbDashboard,lbProjects);
 
+            observable.registaPropertyChangeListener(PropsID.CHANGE_SCREEN, new PropertyChangeListenerJFXAdapter() {
+                @Override
+                public void onChange(PropertyChangeEvent evt) {
+                    if (observable.getActualSubScreen() == Screens.DASHBOARD) {
+                        lbDashboard.getStyleClass().add("active");
+                    } else {
+                        lbDashboard.getStyleClass().removeAll("active");
+                    }
+
+                    if(observable.getActualSubScreen() == Screens.PROJECT || observable.getActualSubScreen() == Screens.BUG_DETAILS){
+                        lbProjects.getStyleClass().add("active");
+                    } else {
+                        lbProjects.getStyleClass().removeAll("active");
+                    }
+                }
+            });
+
 
             lbDashboard.setOnMouseClicked(new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent t) {
+                    lbProjects.getStyleClass().removeAll("active");
+                    lbDashboard.getStyleClass().add("active");
                     observable.dashboard();
                 }
             });
@@ -95,6 +117,8 @@ public class LateralMenu extends BorderPane {
             lbProjects.setOnMouseClicked(new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent t) {
+                    lbProjects.getStyleClass().add("active");
+                    lbDashboard.getStyleClass().removeAll("active");
                     observable.project();
                 }
             });

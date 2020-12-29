@@ -17,4 +17,5 @@ public enum Screens {
     DASHBOARD,
     PROJECT,
     PROFILE,
+    BUG_DETAILS,
 }
