@@ -14,8 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class UserRequests {
-    public static User registar(String username, String password, String email, String name) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/update/user/register");
+    public static User registar(String username, String password, String email) throws IOException {
+        URL url = new URL("http://localhost/GPS_BT/get/user/register");
         String params = "uName="+username+"&email="+email+"&pass="+password;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();

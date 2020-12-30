@@ -5,8 +5,12 @@
  */
 package Logic.Observables;
 
+import Logic.API_Requests.UserRequests;
+import Logic.User;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,6 +61,19 @@ public class UIObservable {
         actualScreen = Screens.OPERATIONS;
         actualSubScreen = Screens.DASHBOARD;
         disparaEventos(defineEventos(PropsID.CHANGE_SCREEN));
+    }
+
+    public void signUp(String username, String password, String email){
+        try{
+            User u = UserRequests.registar(username, password, email);
+            if(u != null){
+                disparaEventos(defineEventos(PropsID.USER_REG_SUCCESS));
+            }
+        }catch (IOException ex){
+            System.out.println(ex);
+            disparaEventos(defineEventos(PropsID.USER_REG_FAIL));
+        }
+
     }
 
     public void signOut(){
