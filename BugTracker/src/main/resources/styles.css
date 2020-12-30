@@ -27,7 +27,14 @@ and open the template in the editor.
     -fx-font-weight: bold
 }
 
+.wrongInput{
+    -fx-border-color:red;
+    -fx-background-radius:5px;
+    -fx-border-radius: 5px;
+}
+
 .formsInputs{
+    -fx-background-radius:5px;
     -fx-font-size:15px;
 }
 

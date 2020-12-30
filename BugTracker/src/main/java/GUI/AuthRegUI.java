@@ -11,10 +11,7 @@ import Logic.Observables.UIObservable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -39,6 +36,26 @@ public class AuthRegUI extends BorderPane{
             @Override
             public void onChange(PropertyChangeEvent evt) {
                 setVisible(observable.getActualScreen() == Screens.LOGIN);
+            }
+        });
+
+        observable.registaPropertyChangeListener(PropsID.USER_REG_SUCCESS, new PropertyChangeListenerJFXAdapter() {
+            @Override
+            public void onChange(PropertyChangeEvent evt) {
+                Alert regSuccess = new Alert(Alert.AlertType.INFORMATION);
+                regSuccess.setHeaderText(null);
+                regSuccess.setContentText("Successfully registered!");
+                regSuccess.showAndWait();
+            }
+        });
+
+        observable.registaPropertyChangeListener(PropsID.USER_REG_FAIL, new PropertyChangeListenerJFXAdapter() {
+            @Override
+            public void onChange(PropertyChangeEvent evt) {
+                Alert regSuccess = new Alert(Alert.AlertType.ERROR);
+                regSuccess.setHeaderText(null);
+                regSuccess.setContentText("Something went wrong!");
+                regSuccess.showAndWait();
             }
         });
     }
@@ -99,7 +116,20 @@ public class AuthRegUI extends BorderPane{
             signInBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    observable.signIn();
+
+                    if(username.getText().trim().isEmpty()){
+                        username.getStyleClass().add("wrongInput");
+                    }
+                    else if(passwordField.getText().trim().isEmpty()){
+                        passwordField.getStyleClass().add("wrongInput");
+                    }
+                    else {
+                        username.getStyleClass().removeAll("wrongInput");
+                        passwordField.getStyleClass().removeAll("wrongInput");
+                        username.clear();
+                        passwordField.clear();
+                        observable.signIn();
+                    }
                 }
             });
         }
@@ -138,6 +168,58 @@ public class AuthRegUI extends BorderPane{
             this.getChildren().addAll(lbReg,username,mail,passwordField,passConfirm,signUpBtn);
             this.setAlignment(Pos.CENTER);
             this.setSpacing(10);
+
+            signUpBtn.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if(username.getText().trim().isEmpty()){
+                        username.getStyleClass().add("wrongInput");
+                        return;
+                    }
+                    else{
+                        username.getStyleClass().removeAll("wrongInput");
+                    }
+
+                    if(mail.getText().trim().isEmpty()){
+                        mail.getStyleClass().add("wrongInput");
+                        return;
+                    }
+                    else {
+                        mail.getStyleClass().removeAll("wrongInput");
+                    }
+
+                    if(passwordField.getText().trim().isEmpty()){
+                        passwordField.getStyleClass().add("wrongInput");
+                        return;
+                    }
+                    else{
+                        passwordField.getStyleClass().removeAll("wrongInput");
+                    }
+
+                    if(passConfirm.getText().trim().isEmpty()){
+                        passConfirm.getStyleClass().add("wrongInput");
+                        return;
+                    }
+                    else{
+                        passConfirm.getStyleClass().removeAll("wrongInput");
+                    }
+
+                    if(!passConfirm.getText().equals(passwordField.getText())){
+                        Alert mismatch = new Alert(Alert.AlertType.ERROR);
+                        mismatch.setHeaderText(null);
+                        mismatch.setContentText("Password fields doesn't match");
+                        mismatch.showAndWait();
+                        return;
+                    }
+                    else{
+                        observable.signUp(username.getText(),passwordField.getText(),mail.getText());
+                        username.clear();
+                        mail.clear();
+                        passwordField.clear();
+                        passConfirm.clear();
+                    }
+                }
+            });
         }
 
     }
