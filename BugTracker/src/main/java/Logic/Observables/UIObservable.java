@@ -70,7 +70,6 @@ public class UIObservable {
                 disparaEventos(defineEventos(PropsID.USER_REG_SUCCESS));
             }
         }catch (IOException ex){
-            System.out.println(ex);
             disparaEventos(defineEventos(PropsID.USER_REG_FAIL));
         }
 
