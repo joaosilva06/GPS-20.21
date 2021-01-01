@@ -4,6 +4,7 @@ import Logic.Observables.PropsID;
 import Logic.Observables.Screens;
 import Logic.Observables.UIObservable;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -72,9 +73,11 @@ public class ProfileUI extends BorderPane {
 
             Label lbNewPass = new Label("Change Password");
             lbNewPass.setStyle("-fx-text-fill:#2c75e9");
+            lbNewPass.setCursor(Cursor.HAND);
 
             Button saveBtn = new Button("Save");
             saveBtn.getStyleClass().add("authScreenBtns");
+            saveBtn.setCursor(Cursor.HAND);
 
             this.setSpacing(10);
 

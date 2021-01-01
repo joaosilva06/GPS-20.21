@@ -10,6 +10,7 @@ import Logic.Observables.Screens;
 import Logic.Observables.UIObservable;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -58,6 +59,7 @@ public class LateralMenu extends BorderPane {
 
             Label lbUser = new Label("Username");
             lbUser.setId("username");
+            lbUser.setCursor(Cursor.HAND);
 
             setSpacing(10);
 
@@ -80,6 +82,8 @@ public class LateralMenu extends BorderPane {
 
             Label lbDashboard = new Label("Dashboard");
             Label lbProjects = new Label("Projects");
+            lbDashboard.setCursor(Cursor.HAND);
+            lbProjects.setCursor(Cursor.HAND);
             lbDashboard.getStyleClass().addAll("menuOpts", "active");
             lbProjects.getStyleClass().add("menuOpts");
             this.setSpacing(5);
@@ -131,7 +135,8 @@ public class LateralMenu extends BorderPane {
             this.getStyleClass().add("separatorsLMenu");
             this.setStyle("-fx-padding:10 0 10 0");
             Label lbLogout = new Label("Logout");
-            lbLogout.getStyleClass().add("menuOpts");
+            lbLogout.setId("lbLogout");
+            lbLogout.setCursor(Cursor.HAND);
             this.getChildren().addAll(lbLogout);
 
             lbLogout.setOnMouseClicked(new EventHandler<MouseEvent>() {

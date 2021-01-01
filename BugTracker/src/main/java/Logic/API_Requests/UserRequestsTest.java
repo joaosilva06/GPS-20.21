@@ -1,13 +1,16 @@
 package Logic.API_Requests;
 
+import Logic.User;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserRequestsTest {
 
     @Test
-    void registar() {
+    void registar() throws IOException {
         User user = new User();
         user.setUsername("Fabio");
         user.setEmail("fabio@ola");
