@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserRequestsTest {
 
     @Test
-    void registar() {
+    void registar() throws IOException {
         User user = new User();
         user.setUsername("Fabio");
         user.setEmail("fabio@ola");

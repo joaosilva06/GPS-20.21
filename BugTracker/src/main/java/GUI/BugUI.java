@@ -6,6 +6,7 @@ import Logic.Observables.UIObservable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -83,7 +84,9 @@ public class BugUI extends BorderPane {
         public Options(){
             Label lbAdd = new Label("+");
             lbAdd.getStyleClass().add("addBtn");
+            lbAdd.setCursor(Cursor.HAND);
             Label lbDel = new Label("x");
+            lbDel.setCursor(Cursor.HAND);
             lbDel.getStyleClass().add("delBtn");
             this.setSpacing(5);
             this.getChildren().addAll(lbAdd,lbDel);

@@ -2,6 +2,7 @@ package GUI;
 
 import Logic.Bug;
 import Logic.Observables.UIObservable;
+import Logic.Role;
 import Logic.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -65,8 +67,10 @@ public class TeamMembersUI extends BorderPane{
         public Options(){
             Label lbAdd = new Label("+");
             lbAdd.getStyleClass().add("addBtn");
+            lbAdd.setCursor(Cursor.HAND);
             Label lbDel = new Label("x");
             lbDel.getStyleClass().add("delBtn");
+            lbDel.setCursor(Cursor.HAND);
             this.setSpacing(5);
             this.getChildren().addAll(lbAdd,lbDel);
 
@@ -95,7 +99,7 @@ public class TeamMembersUI extends BorderPane{
                     pane.setCenter(memberName);
 
                     ComboBox roleChooser = new ComboBox();
-                    roleChooser.getItems().addAll("Role 1", "Role 2", "Role 3", "Role 4", "Role 5");
+                    roleChooser.getItems().addAll(Role.Owner,Role.Admin,Role.Developer,Role.Tester);
                     roleChooser.setPrefSize(300,40);
 
                     form.setSpacing(5);
