@@ -11,6 +11,7 @@ import Logic.Observables.UIObservable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -105,9 +106,11 @@ public class AuthRegUI extends BorderPane{
 
             Button signInBtn = new Button("Sign In");
             signInBtn.getStyleClass().add("authScreenBtns");
+            signInBtn.setCursor(Cursor.HAND);
 
             Label lbPassRec = new Label("Forgot password?");
             lbPassRec.setStyle("-fx-text-fill:#2c75e9");
+            lbPassRec.setCursor(Cursor.HAND);
 
             this.getChildren().addAll(lbLogin,lbSlogan,username,passwordField,signInBtn,lbPassRec);
             this.setAlignment(Pos.CENTER);
@@ -164,7 +167,7 @@ public class AuthRegUI extends BorderPane{
 
             Button signUpBtn = new Button("Sign Up");
             signUpBtn.getStyleClass().add("authScreenBtns");
-
+            signUpBtn.setCursor(Cursor.HAND);
             this.getChildren().addAll(lbReg,username,mail,passwordField,passConfirm,signUpBtn);
             this.setAlignment(Pos.CENTER);
             this.setSpacing(10);
