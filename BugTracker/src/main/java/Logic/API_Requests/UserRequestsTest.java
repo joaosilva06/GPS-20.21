@@ -8,6 +8,17 @@ class UserRequestsTest {
 
     @Test
     void registar() {
+        User user = new User();
+        user.setUsername("Fabio");
+        user.setEmail("fabio@ola");
+        user.setPassword("olaola");
+
+        User test = UserRequests.registar(user.getUsername(), user.getPassword(), user.getEmail());
+
+        User user_result = new User(4, "Fabio", "fabio@ola", "071eee15edbb1d4493177690b3734054");
+
+        assertNotNull(test);
+        assertEquals(user_result, test);
     }
 
     @Test
