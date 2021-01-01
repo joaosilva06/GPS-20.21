@@ -11,13 +11,13 @@ if(isset($partes[2])){
                 $today = date("Y m d");
                 mysqli_stmt_bind_param($sql ,"sssiiii",$_POST["bugTitle"], $_POST["bugDescription"],$today, $_POST["bugPriority"],$_POST["bugType"],$_POST["bugModule"],$_POST["bugProject"]);
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => "Success");
+                    $msg = Array("msg" => "Success");
                 }else{
-                    $msg = Array("error" => "true", "msg" => "Unexpected error");
+                    $msg = Array("msg" => "Unexpected error");
                 }
                 mysqli_stmt_close($sql);
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
             break;
             
@@ -29,16 +29,16 @@ if(isset($partes[2])){
                     $sql = mysqli_prepare($ligacao,$query);
                     mysqli_stmt_bind_param($sql,'ssii', $_POST["newTitle"], $_POST["newBugDescription"], $_POST["priority"], $_POST["bugId"]);
                     if(mysqli_stmt_execute($sql)){
-                        $msg = Array("error" => "false", "msg" => "Changed");
+                        $msg = Array( "msg" => "Changed");
                     }else{
-                        $msg = Array("error" => "true", "msg" => "Error changing bug");
+                        $msg = Array("msg" => "Error changing bug");
                     }        
                     mysqli_stmt_close($sql);
                 }else{
-                    $msg = Array("error" => "true", "msg" => "Access Denied");
+                    $msg = Array("msg" => "Access Denied");
                 }
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
             break;
         
@@ -51,16 +51,16 @@ if(isset($partes[2])){
                     $sql = mysqli_prepare($ligacao,$query);
                     mysqli_stmt_bind_param($sql,'si', $today, $_POST["idBug"]);
                     if(mysqli_stmt_execute($sql)){
-                        $msg = Array("error" => "false", "msg" => "Bug Solved");
+                        $msg = Array( "msg" => "Bug Solved");
                     }else{
-                        $msg = Array("error" => "true", "msg" => "Error changing DATA");
+                        $msg = Array("msg" => "Error changing DATA");
                     }   
                     mysqli_stmt_close($sql);
                 }else{
-                    $msg = Array("error" => "true", "msg" => "Access denied");
+                    $msg = Array("msg" => "Access denied");
                 }
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
             break;
         
@@ -72,16 +72,16 @@ if(isset($partes[2])){
                     $sql = mysqli_prepare($ligacao,$query);
                     mysqli_stmt_bind_param($sql,'i', $_POST["idBug"]);
                     if(mysqli_stmt_execute($sql)){
-                        $msg = Array("error" => "false", "msg" => "Bug UnSolved");
+                        $msg = Array("msg" => "Bug UnSolved");
                     }else{
-                        $msg = Array("error" => "true", "msg" => "Error changing DATA");
+                        $msg = Array("msg" => "Error changing DATA");
                     }   
                     mysqli_stmt_close($sql);
                 }else{
-                    $msg = Array("error" => "true", "msg" => "Access denied");
+                    $msg = Array("msg" => "Access denied");
                 }
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
             break;
             
@@ -93,22 +93,22 @@ if(isset($partes[2])){
                     $sql = mysqli_prepare($ligacao,$query);
                     mysqli_stmt_bind_param($sql,'i', $_POST["idBug"]);
                     if(mysqli_stmt_execute($sql)){
-                        $msg = Array("error" => "false", "msg" => "Status Changed");
+                        $msg = Array("msg" => "Status Changed");
                     }else{
-                        $msg = Array("error" => "true", "msg" => "Error changing DATA");
+                        $msg = Array("msg" => "Error changing DATA");
                     }   
                     mysqli_stmt_close($sql);
                 }else{
-                    $msg = Array("error" => "true", "msg" => "Access denied");
+                    $msg = Array("msg" => "Access denied");
                 }
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
             break;
 
         
         default:
-            $msg = Array("error" => "true", "msg" => "funcao desconhecida");
+            $msg = Array("msg" => "funcao desconhecida");
     }   
 }
 

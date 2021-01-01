@@ -20,11 +20,11 @@ if(isset($partes[2])){
                     $arr["id"] = $id;
                     $arr["name"] = $user;
                     $arr["pass"] = $pass;
-                    $msg = Array("error" => "false", "msg" => $arr);
+                    $msg = Array("msg" => $arr);
                 }else
-                $msg = Array("error" => "true", "msg" => "Login errado");
+                $msg = Array("msg" => "Login errado");
             }else{
-                $msg = Array("error" => "true", "msg" => "Falta de dados");
+                $msg = Array("msg" => "Falta de dados");
             }
         break;
             
@@ -32,9 +32,9 @@ if(isset($partes[2])){
             if(isset($_SESSION["id"])){
                 $_SESSION["userName"] = "";  
                 session_destroy();
-                $msg = Array("error" => "false", "msg" => "Success");
+                $msg = Array("msg" => "Success");
             }else{
-                $msg = Array("error" => "true", "msg" => "Failed to logoff");
+                $msg = Array("msg" => "Failed to logoff");
             }
             break;
 
@@ -50,10 +50,10 @@ if(isset($partes[2])){
                 mysqli_stmt_bind_result($sql, $id);
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $id);
+                    $msg = Array( "msg" => $id);
   
                 }else{
-                    $msg = Array("error" => "true", "msg" => "projects");
+                    $msg = Array( "msg" => "projects");
 
                 }
             }
@@ -69,10 +69,10 @@ if(isset($partes[2])){
                 mysqli_stmt_bind_result($sql, $mail);
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $mail);
+                    $msg = Array( "msg" => $mail);
   
                 }else{
-                    $msg = Array("error" => "true", "msg" => "exist");
+                    $msg = Array("msg" => "exist");
 
                 }
             }
@@ -94,17 +94,17 @@ if(isset($partes[2])){
                     $arr["name"] = $user;
                     $arr["pass"] = $pass;
                     
-                    $msg = Array("error" => "false", "msg" => $arr);
+                    $msg = Array( "msg" => $arr);
   
                 }else{
-                    $msg = Array("error" => "true", "msg" => "exist");
+                    $msg = Array("msg" => "exist");
 
                 }
             }
             break;
 
         default:
-            $msg = Array("error" => "true", "msg" => "funcao desconhecida");
+            $msg = Array("msg" => "funcao desconhecida");
 
 
     }

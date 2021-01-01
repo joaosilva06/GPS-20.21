@@ -12,11 +12,11 @@ if(isset($partes[2])){
                     mysqli_stmt_fetch($sql);
                     $_SESSION["userName"] = $_POST["newName"];
                     $_SESSION["id"] = $id;
-                    $msg = Array("error" => "false", "msg" => $name);
+                    $msg = Array( "msg" => $name);
                 }else
-                $msg = Array("error" => "true", "msg" => "Login errado");
+                $msg = Array("msg" => "Login errado");
             }else{
-                $msg = Array("error" => "true", "msg" => "Falta de dados");
+                $msg = Array("msg" => "Falta de dados");
             }
         break;
             
@@ -33,9 +33,9 @@ if(isset($partes[2])){
                 mysqli_stmt_fetch($sql);
                 $msg = Array("error" => "false", "msg" => $name);
             }else
-            $msg = Array("error" => "true", "msg" => "Login errado");
+            $msg = Array("msg" => "Login errado");
         }else{
-            $msg = Array("error" => "true", "msg" => "Falta de dados");
+            $msg = Array("msg" => "Falta de dados");
         }
         break;
         //not necessary
@@ -54,11 +54,11 @@ if(isset($partes[2])){
                 mysqli_stmt_fetch($sql);
                 $_SESSION["userName"] = $user;
                 $_SESSION["id"] = $id;
-                $msg = Array("error" => "false", "msg" => $name);
+                $msg = Array( "msg" => $name);
             }else
-            $msg = Array("error" => "true", "msg" => "Login errado");
+            $msg = Array("msg" => "Login errado");
         }else{
-            $msg = Array("error" => "true", "msg" => "Falta de dados");
+            $msg = Array("msg" => "Falta de dados");
         }
         break;
         
@@ -81,26 +81,26 @@ if(isset($partes[2])){
                 mysqli_stmt_fetch($sql_id);
                 
                 $arr["id"] = $id;
-                $arr["uName"] = $username;
-                $arr["email"] = $mail;
-                $arr["password"] = $pass;
+                $arr["username"] = strval($username);
+                $arr["email"] = strval($mail);
+                $arr["password"] = strval($pass);
                 
-                $msg = Array("error" => "false", "msg" => $arr);
+                $msg = Array("msg" => $arr);
 
             }else{
-                $msg = Array("error" => "true", "msg" => "already exist");
+                $msg = Array("msg" => "already exist");
 
             }
 
         }else{
-                $msg = Array("error" => "true", "msg" => "register incompleto");
+                $msg = Array("msg" => "register incompleto");
 
         }
         break;
 
     
     default:
-        $msg = Array("error" => "true", "msg" => "funcao desconhecida");
+        $msg = Array("msg" => "funcao desconhecida");
 
 
 

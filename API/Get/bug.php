@@ -32,13 +32,13 @@ if(isset($partes[2])){
                     $arr["type"] = $type;
                     $arr["module"] = $module;
                     $arr["project"] = $project;
-                    $msg = Array("error" => "false", "msg" => $arr);
+                    $msg = Array("msg" => $arr);
                 }else{
-                    $msg = Array("error" => "true", "msg" => "Error getting description");
+                    $msg = Array("msg" => "Error getting description");
                 }
                 mysqli_stmt_close($sql);
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array( "msg" => "Incomplete data");
             }
             break;
             
@@ -49,20 +49,20 @@ if(isset($partes[2])){
                 mysqli_stmt_bind_param($sql,'i',$_POST["bugId"]);
                 mysqli_stmt_bind_result($sql, $text);
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $text);
+                    $msg = Array( "msg" => $text);
                 }else{
-                    $msg = Array("error" => "true", "msg" => "Error getting description");
+                    $msg = Array("msg" => "Error getting description");
                 }
                 mysqli_stmt_close($sql);
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array( "msg" => "Incomplete data");
             }
             break;
 
         
             
         default:
-            $msg = Array("error" => "true", "msg" => "funcao desconhecida");
+            $msg = Array( "msg" => "funcao desconhecida");
     }   
 }
 

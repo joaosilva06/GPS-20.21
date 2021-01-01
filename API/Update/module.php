@@ -11,13 +11,13 @@ if(isset($partes[2])){
                 $today = date("Y m d");
                 mysqli_stmt_bind_param($insertSQL,'ssi', $_POST["moduleName"], $today, $_POST["projId"]);
                 if(mysqli_stmt_execute($insertSQL)){
-                    $msg = Array("error" => "false", "msg" => "Module ".$_POST["moduleName"]." added to project");
+                    $msg = Array("msg" => "Module ".$_POST["moduleName"]." added to project");
                 }else{
-                    $msg = Array("error" => "true", "msg" => "Error adding new module");
+                    $msg = Array("msg" => "Error adding new module");
                 }
 
             }else{
-                    $msg = Array("error" => "true", "msg" => "register incompleto");
+                    $msg = Array("msg" => "register incompleto");
             }
             break;
 
@@ -31,15 +31,15 @@ if(isset($partes[2])){
                     mysqli_stmt_bind_param($sql,"iii", $_POST["role"], $_POST["project"], $_POST["user"]); 
                     mysqli_stmt_execute($sql);
                     if(mysqli_stmt_num_rows($sql) > 0){
-                        $msg = Array("error" => "false", "msg" => "Deleted");
+                        $msg = Array(msg" => "Deleted");
                     }else{
-                        $msg = Array("error" => "false", "msg" => "no Rows");
+                        $msg = Array( "msg" => "no Rows");
                     }
                 }else{
-                    $msg = Array("error" => "true", "msg" => "access denied");
+                    $msg = Array(msg" => "access denied");
                 }
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
             break;
     }
