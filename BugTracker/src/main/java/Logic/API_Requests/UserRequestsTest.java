@@ -1,10 +1,13 @@
 package Logic.API_Requests;
 
+import Logic.User;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserRequestsTest {
+public class UserRequestsTest {
 
     @Test
     void registar() {
@@ -13,9 +16,14 @@ class UserRequestsTest {
         user.setEmail("fabio@ola");
         user.setPassword("olaola");
 
-        User test = UserRequests.registar(user.getUsername(), user.getPassword(), user.getEmail());
+        User test = null;
+        try {
+            test = UserRequests.registar(user.getUsername(), user.getPassword(), user.getEmail());
+        } catch (IOException e) {
+            fail("Did not connect");
+        }
 
-        User user_result = new User(4, "Fabio", "fabio@ola", "071eee15edbb1d4493177690b3734054");
+        User user_result = new User(1, "Fabio", "fabio@ola", "071eee15edbb1d4493177690b3734054");
 
         assertNotNull(test);
         assertEquals(user_result, test);
