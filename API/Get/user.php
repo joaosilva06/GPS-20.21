@@ -15,7 +15,7 @@ if(isset($partes[2])){
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
-                    $_SESSION["userName"] = $user;
+                    $_SESSION["uName"] = $user;
                     $_SESSION["id"] = $id;
                     $arr["id"] = $id;
                     $arr["name"] = $user;
