@@ -17,7 +17,7 @@ and open the template in the editor.
     -fx-font-weight:bold;
 }
 
-#projects, #profile{
+#projects, #profile, #dashboard{
     -fx-background-color:"white";
     -fx-padding:5 5 5 5;
 }
@@ -75,7 +75,7 @@ and open the template in the editor.
 
 }
 
-#username{
+#username, #lbLogout{
     -fx-font-size:15px;
     -fx-padding:10 0 10 0;
     -fx-text-alignment:center;
