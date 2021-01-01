@@ -3,13 +3,19 @@ package GUI;
 
 import Logic.Module;
 import Logic.Observables.UIObservable;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Pair;
+
 import java.util.Optional;
 
 public class ModulesUI extends BorderPane{
@@ -64,15 +70,74 @@ public class ModulesUI extends BorderPane{
             lbAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    // create a text input dialog
-                    TextInputDialog td = new TextInputDialog("Module Name");
-                    td.setHeaderText(null);
-                    td.setResizable(true);
-                    td.setTitle("New Module");
-                    Optional<String> result = td.showAndWait();
-                    if (result.isPresent()){
-                        System.out.println("Module: " + result.get());
-                    }
+                    Dialog dialog = new Dialog();
+                    dialog.getDialogPane().setStyle("-fx-pref-height:200px");
+                    dialog.setTitle("New Module");
+                    dialog.setHeaderText("Enter module name");
+
+                    // Set the button types.
+                    ButtonType confirmBtn = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+                    dialog.getDialogPane().getButtonTypes().addAll(confirmBtn, ButtonType.CANCEL);
+
+                    // Create the username and password labels and fields.
+                    BorderPane pane = new BorderPane();
+                    pane.setPadding(new Insets(20, 20, 20, 20));
+
+                    TextField moduleName = new TextField();
+                    moduleName.setPromptText("Module Name");
+                    moduleName.setPrefSize(300, 40);
+                    moduleName.getStyleClass().add("inputsDialogs");
+                    pane.setCenter(moduleName);
+
+                    // Enable/Disable login button depending on whether a username was entered.
+                    Node confirm = dialog.getDialogPane().lookupButton(confirmBtn);
+                    confirm.setDisable(true);
+
+                    // Do some validation (using the Java 8 lambda syntax).
+                    moduleName.textProperty().addListener((observable, oldValue, newValue) -> {
+                        confirm.setDisable(newValue.trim().isEmpty());
+                    });
+
+                    dialog.getDialogPane().setContent(pane);
+
+                    Optional result = dialog.showAndWait();
+
+                    result.ifPresent(module -> {
+                        if(result.get() == confirmBtn){
+                            System.out.println("Module name: "+moduleName.getText());
+                        }
+                    });
+                }
+            });
+
+            lbDel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Dialog dialog = new Dialog();
+                    dialog.getDialogPane().setStyle("-fx-pref-height:100px");
+                    dialog.setTitle("Delete Module");
+                    dialog.setHeaderText(null);
+
+                    // Set the button types.
+                    ButtonType confirmBtn = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+                    dialog.getDialogPane().getButtonTypes().addAll(confirmBtn, ButtonType.CANCEL);
+
+                    // Create the username and password labels and fields.
+                    BorderPane pane = new BorderPane();
+                    pane.setPadding(new Insets(20, 20, 20, 20));
+
+                    Label lbQuestion = new Label("Sure you want to delete this module?");
+                    pane.setCenter(lbQuestion);
+
+                    dialog.getDialogPane().setContent(pane);
+
+                    Optional result = dialog.showAndWait();
+
+                    result.ifPresent(delete -> {
+                        if(result.get() == confirmBtn){
+                            System.out.println("Module deleted");
+                        }
+                    });
                 }
             });
         }
