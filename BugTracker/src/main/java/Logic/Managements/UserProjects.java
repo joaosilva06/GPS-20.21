@@ -1,15 +1,13 @@
 package Logic.Managements;
 
-import Logic.*;
 import Logic.API_Requests.ProjectRequests;
-import Logic.API_Requests.UserRequests;
 import Logic.Exceptions.APIResponseException;
-import Logic.Module;
-
-import java.util.Date;
-import java.util.List;
+import Logic.Project;
+import Logic.User;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 public class UserProjects {
 
@@ -22,11 +20,15 @@ public class UserProjects {
         this.projs = null;
     }
 
+    public List<Project> getProjs() {
+        return projs;
+    }
+
     public void projectBugs(int pos){
         int usr_id = usr.getId();
         int id_proj = projs.get(pos).getProjectId();
         try {
-            projs.get(pos).setBugs(ProjectRequests.projectBugs(usr_id, id_proj));
+            projs.get(pos).setBugs(ProjectRequests.projectBugs(id_proj));
         }catch (IOException e){
             //uma callback para a interface
         }catch (APIResponseException e){
@@ -38,7 +40,7 @@ public class UserProjects {
         int usr_id = usr.getId();
         int id_proj = projs.get(pos).getProjectId();
         try {
-            projs.get(pos).setModules(ProjectRequests.projectModules(usr_id, id_proj));
+            projs.get(pos).setModules(ProjectRequests.projectModules(id_proj));
         }catch (IOException e){
             //uma callback para a interface
         }catch (APIResponseException e){
@@ -51,7 +53,7 @@ public class UserProjects {
         Date date=java.util.Calendar.getInstance().getTime();
         Project p = new Project(projectsId++,project_name,date);
         try {
-            if(ProjectRequests.addProject(usr_id, project_name)) {
+            if(ProjectRequests.addProject(project_name)) {
                 projs.add(p);
             }else{
                 projectsId--;
@@ -67,7 +69,7 @@ public class UserProjects {
     public void removeProject(int pos){
         int id_proj = projs.get(pos).getProjectId();
         try {
-            if(ProjectRequests.removeProject(usr.getId(), id_proj))
+            if(ProjectRequests.removeProject(id_proj))
                 projs.remove(pos);
         } catch (IOException e) {
             //uma callback para a interface
@@ -80,7 +82,7 @@ public class UserProjects {
         int usr_id = usr.getId();
         int id_proj = projs.get(pos).getProjectId();
         try {
-            if(ProjectRequests.newModule(usr_id,id_proj, moduleName)){
+            if(ProjectRequests.newModule(id_proj, moduleName)){
                 projs.get(pos).addModule(moduleName);
             }
         }catch (IOException e){
