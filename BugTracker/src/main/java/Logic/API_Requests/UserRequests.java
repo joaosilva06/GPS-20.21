@@ -163,7 +163,7 @@ public class UserRequests {
         URL url = new URL("http://localhost/GPS_BT/get/user/search");
         String params = "search="+search;
 
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        HttpURLConnection   con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
         con.setRequestMethod("POST");
         con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");

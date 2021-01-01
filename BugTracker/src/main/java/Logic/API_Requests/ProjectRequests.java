@@ -16,9 +16,9 @@ import java.util.List;
 
 public class ProjectRequests {
 
-    public static List<Bug> projectBugs(int id, int project_id) throws IOException, APIResponseException {
+    public static List<Bug> projectBugs(int project_id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/get/project/bugs");
-        String params = "id="+id+"&projId="+project_id;
+        String params = "projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -41,9 +41,9 @@ public class ProjectRequests {
     }
 
 
-    public static List<User> projectMembers(int id, int project_id) throws IOException, APIResponseException {
+    public static List<User> projectMembers(int project_id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/get/project/members");
-        String params = "id="+id+"&projId="+project_id;
+        String params = "projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -65,9 +65,9 @@ public class ProjectRequests {
         }
     }
 
-    public static List<Module> projectModules(int id, int project_id) throws IOException, APIResponseException {
+    public static List<Module> projectModules(int project_id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/get/project/modules");
-        String params = "id="+id+"&projId="+project_id;
+        String params = "projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -89,9 +89,9 @@ public class ProjectRequests {
         }
     }
 
-    public static boolean addProject(int id, String project_name) throws IOException, APIResponseException {
+    public static boolean addProject(String project_name) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/Update/project/add");
-        String params = "id="+id+"&projName="+project_name;
+        String params = "projName="+project_name;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -109,9 +109,9 @@ public class ProjectRequests {
         return resp.hasError();
     }
 
-    public static boolean removeProject(int id, int project_id) throws IOException, APIResponseException {
+    public static boolean removeProject(int project_id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/get/project/remove");//nao existe, mas devia
-        String params = "id="+id+"&projID="+project_id;
+        String params = "projID="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -129,9 +129,9 @@ public class ProjectRequests {
         return resp.hasError();
     }
 
-    public static boolean newModule(int id, int project_id, String moduleName) throws IOException, APIResponseException {
+    public static boolean newModule(int project_id, String moduleName) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/update/module/new");
-        String params = "id="+id+"&projID="+project_id+"&moduleName="+moduleName;
+        String params = "projID="+project_id+"&moduleName="+moduleName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
