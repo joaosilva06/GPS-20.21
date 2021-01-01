@@ -20,7 +20,7 @@ public class UserRequestsTest {
         try {
             test = UserRequests.registar(user.getUsername(), user.getPassword(), user.getEmail());
         } catch (IOException e) {
-            fail("Did not connect");
+            fail(e.getMessage());
         }
 
         User user_result = new User(1, "Fabio", "fabio@ola", "071eee15edbb1d4493177690b3734054");
