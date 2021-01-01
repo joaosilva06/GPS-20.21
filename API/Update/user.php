@@ -71,8 +71,21 @@ if(isset($partes[2])){
             $pass = md5($salt . $_POST["pass"] . $salt);
             $today = date("Y m d");
             mysqli_stmt_bind_param($sql,'ssss', $username, $mail, $pass, $today);   
+
             if(mysqli_stmt_execute($sql)){
-                $msg = Array("error" => "false", "msg" => $username);
+                $query ="Select Max(idUser) from User;";
+                $sql_id = mysqli_prepare($ligacao,$query);
+                mysqli_stmt_execute($sql_id);
+                mysqli_stmt_bind_result($sql_id, $id);
+                mysqli_stmt_store_result($sql_id); 
+                mysqli_stmt_fetch($sql_id);
+                
+                $arr["id"] = $id;
+                $arr["uName"] = $username;
+                $arr["email"] = $mail;
+                $arr["password"] = $pass;
+                
+                $msg = Array("error" => "false", "msg" => $arr);
 
             }else{
                 $msg = Array("error" => "true", "msg" => "already exist");

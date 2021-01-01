@@ -27,6 +27,7 @@ public class UserRequestsTest {
 
         assertNotNull(test);
         assertEquals(user_result, test);
+
     }
 
     @Test
