@@ -31,12 +31,13 @@ public class ProjectRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        if(resp.hasError())
+        try {
+            List<Bug> rBug = mapper.readValue(in,  mapper.getTypeFactory().constructCollectionType(List.class, Bug.class));
+            return rBug;
+        } catch (Exception e){
             return null;
-        else{
-            return (List<Bug>) resp.getMsg();
+        }finally{
+            in.close();
         }
     }
 
@@ -56,12 +57,13 @@ public class ProjectRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        if(resp.hasError())
+        try {
+            List<User> rUsers = mapper.readValue(in,  mapper.getTypeFactory().constructCollectionType(List.class, User.class));
+            return rUsers;
+        } catch (Exception e){
             return null;
-        else{
-            return (List<User>) resp.getMsg();
+        }finally{
+            in.close();
         }
     }
 
@@ -80,12 +82,13 @@ public class ProjectRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        if(resp.hasError())
+        try {
+            List<Module> rMods = mapper.readValue(in,  mapper.getTypeFactory().constructCollectionType(List.class, Module.class));
+            return rMods;
+        } catch (Exception e){
             return null;
-        else{
-            return (List<Module>) resp.getMsg();
+        }finally{
+            in.close();
         }
     }
 
@@ -104,9 +107,14 @@ public class ProjectRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
     }
 
     public static boolean removeProject(int project_id) throws IOException, APIResponseException {
@@ -124,9 +132,14 @@ public class ProjectRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
     }
 
     public static boolean newModule(int project_id, String moduleName) throws IOException, APIResponseException {
@@ -144,9 +157,14 @@ public class ProjectRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
     }
 
     public static boolean addMember(int role, int user, int proj) throws IOException, APIResponseException {
@@ -164,9 +182,14 @@ public class ProjectRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
     }
 
     public static boolean changeRole(int role, int user, int proj) throws IOException, APIResponseException {
@@ -184,9 +207,14 @@ public class ProjectRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
     }
 
     public static boolean removeMember(int user, int proj) throws IOException, APIResponseException {
@@ -204,8 +232,13 @@ public class ProjectRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
     }
 }
