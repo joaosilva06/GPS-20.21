@@ -29,13 +29,14 @@ public class UserRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        if(!resp.hasError()) {
-            User user = (User) resp.getMsg();
-            return user;
+        try {
+            User rUser = mapper.readValue(in, User.class);
+            return rUser;
+        } catch (Exception e){
+            return null;
+        }finally{
+            in.close();
         }
-        return null;
     }
 
     public static boolean login(String username, String password) throws IOException {
@@ -53,9 +54,14 @@ public class UserRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
     }
 
     public static boolean logoff(String username, String password) throws IOException {
@@ -68,9 +74,14 @@ public class UserRequests {
         con.setRequestProperty( "charset", "utf-8");
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
     }
 
     public static List<Project> projects(String username, String password) throws IOException {
@@ -89,11 +100,13 @@ public class UserRequests {
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
         APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        if(resp.hasError())
+        try {
+            List<Project> rProjs = mapper.readValue(in,  mapper.getTypeFactory().constructCollectionType(List.class, Project.class));
+            return rProjs;
+        } catch (Exception e){
             return null;
-        else{
-            return (List<Project>) resp.getMsg();
+        }finally{
+            in.close();
         }
     }
 
@@ -112,9 +125,14 @@ public class UserRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
     }
 
     public static String rename(String newName) throws IOException, APIResponseException {
@@ -132,11 +150,14 @@ public class UserRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        if(resp.hasError())
-            throw new APIResponseException((String)resp.getMsg());
-        return (String)resp.getMsg();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return resp;
+        }catch (Exception e){
+            return "Converting error";
+        }finally{
+            in.close();
+        }
     }
 
     public static boolean repass(String newPass) throws IOException, APIResponseException {
@@ -154,9 +175,14 @@ public class UserRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        return resp.hasError();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
     }
 
     public static User search(String search) throws IOException, APIResponseException {
@@ -174,11 +200,14 @@ public class UserRequests {
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
-        in.close();
-        if(resp.hasError())
+        try {
+            User resp = mapper.readValue(in, User.class);
+            return resp;
+        }catch (Exception e){
             return null;
-        return (User)resp.getMsg();
+        }finally{
+            in.close();
+        }
     }
 
 }
