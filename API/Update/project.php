@@ -15,12 +15,12 @@ if(isset($partes[2])){
                 if(mysqli_stmt_num_rows($sql) > 0){
                     while($row = mysqli_fetch_assoc($sql))
                         array_push($result, $row);
-                    $msg = Array("error" => "false", "msg" => $result);
+                    $msg = Array( "msg" => $result);
                 }
-                $msg = Array("error" => "false", "msg" => "no rows selected");
+                $msg = Array( "msg" => "no rows selected");
                
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
         break;
 
@@ -38,12 +38,12 @@ if(isset($partes[2])){
                     if(mysqli_stmt_num_rows($sql) > 0){
                         while($row = mysqli_fetch_assoc($sql))
                             array_push($result, $row);
-                        $msg = Array("error" => "false", "msg" => $result);
+                        $msg = Array( "msg" => $result);
                     }
-                    $msg = Array("error" => "false", "msg" => "no rows selected");
+                    $msg = Array( "msg" => "no rows selected");
 
                 }else{
-                    $msg = Array("error" => "true", "msg" => "access denied");
+                    $msg = Array("msg" => "access denied");
                 }
             }else{
                 $msg = Array("error" => "true", "msg" => "Incomplete data");
@@ -63,15 +63,15 @@ if(isset($partes[2])){
                     if(mysqli_stmt_num_rows($sql) > 0){
                         while($row = mysqli_fetch_assoc($sql))
                             array_push($result, $row);
-                        $msg = Array("error" => "false", "msg" => $result);
+                        $msg = Array("msg" => $result);
                     }
-                    $msg = Array("error" => "false", "msg" => "no rows selected");
+                    $msg = Array(msg" => "no rows selected");
 
                 }else{
-                    $msg = Array("error" => "true", "msg" => "access denied");
+                    $msg = Array( "msg" => "access denied");
                 }
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
             break;
 
@@ -88,22 +88,22 @@ if(isset($partes[2])){
                     if(mysqli_stmt_num_rows($sql) > 0){
                         while($row = mysqli_fetch_assoc($sql))
                             array_push($result, $row);
-                        $msg = Array("error" => "false", "msg" => $result);
+                        $msg = Array("msg" => $result);
                     }
-                    $msg = Array("error" => "false", "msg" => "no rows selected");
+                    $msg = Array( "msg" => "no rows selected");
 
                 }else{
-                    $msg = Array("error" => "true", "msg" => "access denied");
+                    $msg = Array("msg" => "access denied");
                 }
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
             break;
         
         
         
         default:
-            $msg = Array("error" => "true", "msg" => "Unkown function");
+            $msg = Array("msg" => "Unkown function");
     }
 }
 ?>

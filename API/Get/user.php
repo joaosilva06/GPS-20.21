@@ -20,11 +20,11 @@ if(isset($partes[2])){
                     $arr["id"] = $id;
                     $arr["name"] = $user;
                     $arr["pass"] = $pass;
-                    $msg = Array("error" => "false", "msg" => $arr);
+                    $msg = Array("msg" => $arr);
                 }else
-                $msg = Array("error" => "true", "msg" => "Login errado");
+                $msg = Array("msg" => "Login errado");
             }else{
-                $msg = Array("error" => "true", "msg" => "Falta de dados");
+                $msg = Array("msg" => "Falta de dados");
             }
         break;
             
@@ -32,28 +32,34 @@ if(isset($partes[2])){
             if(isset($_SESSION["id"])){
                 $_SESSION["userName"] = "";  
                 session_destroy();
-                $msg = Array("error" => "false", "msg" => "Success");
+                $msg = Array("msg" => "Success");
             }else{
-                $msg = Array("error" => "true", "msg" => "Failed to logoff");
+                $msg = Array("msg" => "Failed to logoff");
             }
             break;
 
 
         case 'projects':
             if(isset($_SESSION["id"])){ 
-                $sql ="Select * From Project 
-                Inner Join Member 
-                On Member.idUser = ? and Member.idProject = Project.idProject";
+                $sql ="Select * From Project inner Join Member On Member.User_idUser = ? and Member.Project_idProject = Project.idProject ";
                 $id = $_POST["id"];
                 mysqli_stmt_bind_param($sql,'i', $id); 
                 mysqli_stmt_execute($sql);
-                mysqli_stmt_bind_result($sql, $id);
+                mysqli_stmt_bind_result($sql, $id, $name,$date, $trash, $roleId, $trash, $trash);
                 mysqli_stmt_store_result($sql); 
+                $result = Array();
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $id);
-  
+                    $rows =mysqli_stmt_num_rows($sql) ;
+                    if($rows > 0)
+                        while($row = mysqli_stmt_fetch($sql)){
+                        $arr["projectId"] = $id;
+                        $arr["name"] = $name;
+                        $arr["dateCreate"] = $date;
+                        array_push($result, $arr);
+                        }
+                    $msg = Array( "msg" => $result);
                 }else{
-                    $msg = Array("error" => "true", "msg" => "projects");
+                    $msg = Array( "msg" => "projects");
 
                 }
             }
@@ -69,10 +75,10 @@ if(isset($partes[2])){
                 mysqli_stmt_bind_result($sql, $mail);
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $mail);
+                    $msg = Array( "msg" => $mail);
   
                 }else{
-                    $msg = Array("error" => "true", "msg" => "exist");
+                    $msg = Array("msg" => "exist");
 
                 }
             }
@@ -93,18 +99,19 @@ if(isset($partes[2])){
                     $arr["id"] = $id;
                     $arr["name"] = $user;
                     $arr["pass"] = $pass;
+                    $arr["email"] = $email;
                     
-                    $msg = Array("error" => "false", "msg" => $arr);
+                    $msg = Array( "msg" => $arr);
   
                 }else{
-                    $msg = Array("error" => "true", "msg" => "exist");
+                    $msg = Array("msg" => "exist");
 
                 }
             }
             break;
 
         default:
-            $msg = Array("error" => "true", "msg" => "funcao desconhecida");
+            $msg = Array("msg" => "funcao desconhecida");
 
 
     }

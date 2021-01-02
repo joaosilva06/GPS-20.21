@@ -97,7 +97,7 @@ public class UserRequests {
         }
     }
 
-    public static boolean resetPass(String email) throws IOException {
+    public static boolean resetMail(String email) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/get/user/reset");
         String params = "mail="+email;
 
