@@ -41,17 +41,23 @@ if(isset($partes[2])){
 
         case 'projects':
             if(isset($_SESSION["id"])){ 
-                $sql ="Select * From Project 
-                Inner Join Member 
-                On Member.idUser = ? and Member.idProject = Project.idProject";
+                $sql ="Select * From Project inner Join Member On Member.User_idUser = ? and Member.Project_idProject = Project.idProject ";
                 $id = $_POST["id"];
                 mysqli_stmt_bind_param($sql,'i', $id); 
                 mysqli_stmt_execute($sql);
-                mysqli_stmt_bind_result($sql, $id);
+                mysqli_stmt_bind_result($sql, $id, $name,$date, $trash, $roleId, $trash, $trash);
                 mysqli_stmt_store_result($sql); 
+                $result = Array();
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array( "msg" => $id);
-  
+                    $rows =mysqli_stmt_num_rows($sql) ;
+                    if($rows > 0)
+                        while($row = mysqli_stmt_fetch($sql)){
+                        $arr["projectId"] = $id;
+                        $arr["name"] = $name;
+                        $arr["dateCreate"] = $date;
+                        array_push($result, $arr);
+                        }
+                    $msg = Array( "msg" => $result);
                 }else{
                     $msg = Array( "msg" => "projects");
 
@@ -93,6 +99,7 @@ if(isset($partes[2])){
                     $arr["id"] = $id;
                     $arr["name"] = $user;
                     $arr["pass"] = $pass;
+                    $arr["email"] = $email;
                     
                     $msg = Array( "msg" => $arr);
   

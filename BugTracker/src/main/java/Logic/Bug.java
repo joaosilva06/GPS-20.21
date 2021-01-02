@@ -10,8 +10,9 @@ public class Bug {
     private String solving;
     private String desc;
     private String module;
+    private String project;
 
-    public Bug(int id, String creator, String type, String status, String priority, String desc, String module, String title) {
+    public Bug(int id, String creator, String type, String status, String priority, String desc, String module, String title, String project) {
         this.id = id;
         this.title = title;
         this.creator = creator;
@@ -20,6 +21,7 @@ public class Bug {
         this.priority = priority;
         this.desc = desc;
         this.module = module;
+        this.project = project;
     }
 
     public Bug(){}
@@ -94,5 +96,13 @@ public class Bug {
 
     public void setModule(String module) {
         this.module = module;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String module) {
+        this.project = project;
     }
 }

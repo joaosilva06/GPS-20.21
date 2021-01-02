@@ -35,10 +35,11 @@ public class BugRequests {
         return null;
     }
 
-    public static boolean addBug(String desc, String title, int projId) throws IOException {
+    public static boolean addBug(String desc, String title, int projId, Integer modId, int type, int prio) throws IOException {//ver
         URL url = new URL("http://localhost/GPS_BT/get/bug/add");
-        String params = "bugDescription="+desc+"&projId="+projId+"&title="+title;
-
+        String params ="bugTitlte="+title+"&bugDescription="+desc+
+                "&bugModule="+modId +"&bugType="+type+"&bugPriority="+ prio +
+                "&bugProject=" + projId;
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
         con.setRequestMethod("POST");
