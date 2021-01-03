@@ -11,6 +11,7 @@ import Logic.Observables.UIObservable;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -45,6 +46,23 @@ public class LateralMenu extends BorderPane {
         Logout logout = new Logout();
         logout.setAlignment(Pos.BOTTOM_CENTER);
         setBottom(logout);
+
+        observable.registaPropertyChangeListener(PropsID.PROJECT_ADDED, new PropertyChangeListenerJFXAdapter() {
+            @Override
+            public void onChange(PropertyChangeEvent evt) {
+                System.out.println(observable.getProjectList());
+            }
+        });
+
+        observable.registaPropertyChangeListener(PropsID.REQUEST_FAIL, new PropertyChangeListenerJFXAdapter() {
+            @Override
+            public void onChange(PropertyChangeEvent evt) {
+                Alert addProjFail = new Alert(Alert.AlertType.ERROR);
+                addProjFail.setHeaderText(null);
+                addProjFail.setContentText(observable.getMessage());
+                addProjFail.showAndWait();
+            }
+        });
     }
 
     class Profile extends VBox{

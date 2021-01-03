@@ -12,7 +12,10 @@ package Logic.Observables;
 public enum PropsID {
     CHANGE_SCREEN("op_screen"),
     USER_REG_SUCCESS("user_reg_success"),
-    USER_REG_FAIL("user_reg_fail");
+    USER_REG_FAIL("user_reg_fail"),
+    LOGIN_FAIL("login_fail"),
+    REQUEST_FAIL("request_fail"),
+    PROJECT_ADDED("project_added");
     
     String valor;
 

@@ -9,9 +9,14 @@ import Logic.Observables.PropsID;
 import Logic.Observables.Screens;
 import Logic.Observables.UIObservable;
 import java.beans.PropertyChangeEvent;
+import java.util.Optional;
 
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.control.Label;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -55,6 +60,49 @@ public class DashboardUI extends BorderPane{
             this.setSpacing(600);
 
             this.getChildren().addAll(lbDash,lbNewProject);
+
+            lbNewProject.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Dialog dialog = new Dialog();
+                    dialog.getDialogPane().setStyle("-fx-pref-height:200px");
+                    dialog.setTitle("New Project");
+                    dialog.setHeaderText("Enter project name");
+
+                    // Set the button types.
+                    ButtonType confirmBtn = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+                    dialog.getDialogPane().getButtonTypes().addAll(confirmBtn, ButtonType.CANCEL);
+
+                    // Create the username and password labels and fields.
+                    BorderPane pane = new BorderPane();
+                    pane.setPadding(new Insets(20, 20, 20, 20));
+
+                    TextField projectName = new TextField();
+                    projectName.setPromptText("Project Name");
+                    projectName.setPrefSize(300, 40);
+                    projectName.getStyleClass().add("inputsDialogs");
+                    pane.setCenter(projectName);
+
+                    // Enable/Disable login button depending on whether a username was entered.
+                    Node confirm = dialog.getDialogPane().lookupButton(confirmBtn);
+                    confirm.setDisable(true);
+
+                    // Do some validation (using the Java 8 lambda syntax).
+                    projectName.textProperty().addListener((observable, oldValue, newValue) -> {
+                        confirm.setDisable(newValue.trim().isEmpty());
+                    });
+
+                    dialog.getDialogPane().setContent(pane);
+
+                    Optional result = dialog.showAndWait();
+
+                    result.ifPresent(module -> {
+                        if(result.get() == confirmBtn){
+                            observable.addProject(projectName.getText());
+                        }
+                    });
+                }
+            });
         }
     }
 }

@@ -9,15 +9,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 
 public class BugUI extends BorderPane {
     UIObservable observable;

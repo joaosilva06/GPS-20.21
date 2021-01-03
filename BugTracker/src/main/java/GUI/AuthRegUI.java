@@ -43,10 +43,10 @@ public class AuthRegUI extends BorderPane{
         observable.registaPropertyChangeListener(PropsID.USER_REG_SUCCESS, new PropertyChangeListenerJFXAdapter() {
             @Override
             public void onChange(PropertyChangeEvent evt) {
-                Alert regSuccess = new Alert(Alert.AlertType.INFORMATION);
-                regSuccess.setHeaderText(null);
-                regSuccess.setContentText("Successfully registered!");
-                regSuccess.showAndWait();
+                Alert regFail = new Alert(Alert.AlertType.INFORMATION);
+                regFail.setHeaderText(null);
+                regFail.setContentText(observable.getMessage());
+                regFail.showAndWait();
             }
         });
 
@@ -55,8 +55,18 @@ public class AuthRegUI extends BorderPane{
             public void onChange(PropertyChangeEvent evt) {
                 Alert regSuccess = new Alert(Alert.AlertType.ERROR);
                 regSuccess.setHeaderText(null);
-                regSuccess.setContentText("Something went wrong!");
+                regSuccess.setContentText(observable.getMessage());
                 regSuccess.showAndWait();
+            }
+        });
+
+        observable.registaPropertyChangeListener(PropsID.LOGIN_FAIL, new PropertyChangeListenerJFXAdapter() {
+            @Override
+            public void onChange(PropertyChangeEvent evt) {
+                Alert loginFail = new Alert(Alert.AlertType.ERROR);
+                loginFail.setHeaderText(null);
+                loginFail.setContentText(observable.getMessage());
+                loginFail.showAndWait();
             }
         });
     }
@@ -127,11 +137,11 @@ public class AuthRegUI extends BorderPane{
                         passwordField.getStyleClass().add("wrongInput");
                     }
                     else {
+                        observable.signIn(username.getText(),passwordField.getText());
                         username.getStyleClass().removeAll("wrongInput");
                         passwordField.getStyleClass().removeAll("wrongInput");
                         username.clear();
                         passwordField.clear();
-                        observable.signIn();
                     }
                 }
             });
