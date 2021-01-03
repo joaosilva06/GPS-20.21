@@ -11,11 +11,14 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserRequests {
     public static User registar(String username, String password, String email) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/user/register");
+        URL url = new URL("http://localhost/GPS_BT/index.php/update/user/register");
         String params = "uName="+username+"&email="+email+"&pass="+password;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -25,7 +28,7 @@ public class UserRequests {
         con.setRequestProperty( "charset", "utf-8");
         con.setRequestProperty( "Content-Length", Integer.toString( params.getBytes(StandardCharsets.UTF_8).length));
         try( DataOutputStream wr = new DataOutputStream( con.getOutputStream())) {
-            wr.write( params.getBytes(StandardCharsets.UTF_8) );
+            wr.write(params.getBytes(StandardCharsets.UTF_8) );
         }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
@@ -33,14 +36,14 @@ public class UserRequests {
             User rUser = mapper.readValue(in, User.class);
             return rUser;
         } catch (Exception e){
-            return null;
+            throw new IOException(e.getMessage());
         }finally{
             in.close();
         }
     }
 
     public static boolean login(String username, String password) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/user/login");
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/user/login");
         String params = "uName="+username+"&pass="+password;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -65,7 +68,7 @@ public class UserRequests {
     }
 
     public static boolean logoff(String username, String password) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/user/logoff");
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/user/logoff");
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -85,7 +88,7 @@ public class UserRequests {
     }
 
     public static List<Project> projects(String username, String password) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/user/projects");
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/user/projects");
         String params = "uName="+username+"&pass="+password;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -111,7 +114,7 @@ public class UserRequests {
     }
 
     public static boolean resetMail(String email) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/user/reset");
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/user/reset");
         String params = "mail="+email;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -136,7 +139,7 @@ public class UserRequests {
     }
 
     public static String rename(String newName) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/update/user/rename");
+        URL url = new URL("http://localhost/GPS_BT/index.php/update/user/rename");
         String params = "newName="+newName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -161,7 +164,7 @@ public class UserRequests {
     }
 
     public static boolean repass(String newPass) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/update/user/pass");
+        URL url = new URL("http://localhost/GPS_BT/index.php/update/user/pass");
         String params = "newPass="+newPass;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
