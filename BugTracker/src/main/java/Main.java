@@ -12,6 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        //System.out.println(Main.class.getClassLoader().getResource("logging.properties"));
         UIObservable observable = new UIObservable();
         BugTrackerUI ui= new BugTrackerUI(observable);
         Scene scene = new Scene(ui, 1280, 720);

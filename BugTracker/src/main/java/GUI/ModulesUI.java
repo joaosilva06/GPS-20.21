@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,7 +63,9 @@ public class ModulesUI extends BorderPane{
         public Options(){
             Label lbAdd = new Label("+");
             lbAdd.getStyleClass().add("addBtn");
+            lbAdd.setCursor(Cursor.HAND);
             Label lbDel = new Label("x");
+            lbDel.setCursor(Cursor.HAND);
             lbDel.getStyleClass().add("delBtn");
             this.setSpacing(5);
             this.getChildren().addAll(lbAdd,lbDel);

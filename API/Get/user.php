@@ -1,6 +1,4 @@
 <?php
-
-
 if(isset($partes[2])){
     switch($partes[2]) {
         case 'login':
@@ -15,45 +13,48 @@ if(isset($partes[2])){
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
-                    $_SESSION["userName"] = $user;
                     $_SESSION["id"] = $id;
                     $arr["id"] = $id;
-                    $arr["name"] = $user;
-                    $arr["pass"] = $pass;
-                    $msg = Array("error" => "false", "msg" => $arr);
+                    $arr["username"] = $user;
+                    $arr["password"] = $pass;
+                    $msg = $arr;
                 }else
-                $msg = Array("error" => "true", "msg" => "Login errado");
+                $msg = "Login errado";
             }else{
-                $msg = Array("error" => "true", "msg" => "Falta de dados");
+                $msg = "Falta de dados";
             }
-        break;
-            
+            break;     
         case 'logoff':
-            if(isset($_SESSION["id"])){
-                $_SESSION["userName"] = "";  
+            if(isset($_SESSION["id"])){ 
                 session_destroy();
-                $msg = Array("error" => "false", "msg" => "Success");
+                $msg = "Success";
             }else{
-                $msg = Array("error" => "true", "msg" => "Failed to logoff");
+                $msg = "Failed to logoff";
             }
             break;
 
 
         case 'projects':
             if(isset($_SESSION["id"])){ 
-                $sql ="Select * From Project 
-                Inner Join Member 
-                On Member.idUser = ? and Member.idProject = Project.idProject";
+                $sql ="Select * From Project inner Join Member On Member.User_idUser = ? and Member.Project_idProject = Project.idProject ";
                 $id = $_POST["id"];
                 mysqli_stmt_bind_param($sql,'i', $id); 
                 mysqli_stmt_execute($sql);
-                mysqli_stmt_bind_result($sql, $id);
+                mysqli_stmt_bind_result($sql, $id, $name,$date, $trash, $roleId, $trash, $trash);
                 mysqli_stmt_store_result($sql); 
+                $result = Array();
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $id);
-  
+                    $rows =mysqli_stmt_num_rows($sql) ;
+                    if($rows > 0)
+                        while($row = mysqli_stmt_fetch($sql)){
+                        $arr["projectId"] = $id;
+                        $arr["name"] = $name;
+                        $arr["dateCreate"] = $date;
+                        array_push($result, $arr);
+                        }
+                    $msg = $result;
                 }else{
-                    $msg = Array("error" => "true", "msg" => "projects");
+                    $msg = "projects";
 
                 }
             }
@@ -69,48 +70,48 @@ if(isset($partes[2])){
                 mysqli_stmt_bind_result($sql, $mail);
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array("error" => "false", "msg" => $mail);
+                    $msg = $mail;
   
                 }else{
-                    $msg = Array("error" => "true", "msg" => "exist");
+                    $msg = "exist";
 
                 }
             }
             break;
-
-
         case 'search':
-            if(isset($_SESSION["id"]) and isset($_POST["search"])){
-                $query ="Select * From User Where email = ? or userName = ?;";
-                $look = $_POST["search"];
-                $sql = mysqli_prepare($ligacao,$query);
-                mysqli_stmt_bind_param($sql,'ss', $look, $look); 
-                mysqli_stmt_execute($sql);
-                mysqli_stmt_bind_result($sql, $id, $user, $email, $pass, $date);
-                mysqli_stmt_store_result($sql); 
-                if(mysqli_stmt_num_rows($sql) > 0){
-                    mysqli_stmt_fetch($sql);
-                    $arr["id"] = $id;
-                    $arr["name"] = $user;
-                    $arr["pass"] = $pass;
-                    
-                    $msg = Array("error" => "false", "msg" => $arr);
-  
-                }else{
-                    $msg = Array("error" => "true", "msg" => "exist");
+            if(isset($_SESSION["id"])){
+                if(isset($_POST["search"])){
+                    $query ="Select * From User Where email = ? or userName = ?;";
+                    $look = $_POST["search"];
+                    $sql = mysqli_prepare($ligacao,$query);
+                    mysqli_stmt_bind_param($sql,'ss', $look, $look); 
+                    mysqli_stmt_execute($sql);
+                    mysqli_stmt_bind_result($sql, $id, $user, $email, $pass, $date);
+                    mysqli_stmt_store_result($sql); 
+                    if(mysqli_stmt_num_rows($sql) > 0){
+                        mysqli_stmt_fetch($sql);
+                        $arr["id"] = $id;
+                        $arr["username"] = $user;
+                        $arr["password"] = $pass;
+                        //$arr["email"] = $email;
+                        
+                        $msg = $arr;
+    
+                    }else{
+                        $msg = "Doesn't Exists";
 
+                    }
+                }else{
+                    $msg = "Info missing";
                 }
+            }else{
+                $msg = "Login First";
             }
             break;
 
         default:
-            $msg = Array("error" => "true", "msg" => "funcao desconhecida");
-
-
+            $msg = "funcao desconhecida";
+            break;
     }
-
-
 }
-            
-
 ?>

@@ -10,13 +10,11 @@ if(isset($partes[2])){
                 mysqli_stmt_execute($sql);
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
-                    $_SESSION["userName"] = $_POST["newName"];
-                    $_SESSION["id"] = $id;
-                    $msg = Array("error" => "false", "msg" => $name);
+                    $msg = $name;
                 }else
-                $msg = Array("error" => "true", "msg" => "Login errado");
+                $msg = "Login errado";
             }else{
-                $msg = Array("error" => "true", "msg" => "Falta de dados");
+                $msg = "Falta de dados";
             }
         break;
             
@@ -31,34 +29,11 @@ if(isset($partes[2])){
             mysqli_stmt_store_result($sql); 
             if(mysqli_stmt_num_rows($sql) > 0){
                 mysqli_stmt_fetch($sql);
-                $msg = Array("error" => "false", "msg" => $name);
+                $msg = $name;
             }else
-            $msg = Array("error" => "true", "msg" => "Login errado");
+            $msg = "Login errado";
         }else{
-            $msg = Array("error" => "true", "msg" => "Falta de dados");
-        }
-        break;
-        //not necessary
-    case "namePass":
-        if(isset($_SESSION["id"]) and isset($_POST["newName"]) and  isset($_POST["newPass"])){
-                
-            $query = "Update User Set userNamer= ?,password = ? Where idUser = ?";
-            $sql = mysqli_prepare($ligacao,$query);
-            $user = $_POST["newName"];
-            $pass = md5($salt . $_POST["newPass"] . $salt);
-            mysqli_stmt_bind_param($sql,'ssi', $user, $pass, $_SESSION["id"]); 
-            mysqli_stmt_execute($sql);
-            mysqli_stmt_bind_result($sql, $id, $name);
-            mysqli_stmt_store_result($sql); 
-            if(mysqli_stmt_num_rows($sql) > 0){
-                mysqli_stmt_fetch($sql);
-                $_SESSION["userName"] = $user;
-                $_SESSION["id"] = $id;
-                $msg = Array("error" => "false", "msg" => $name);
-            }else
-            $msg = Array("error" => "true", "msg" => "Login errado");
-        }else{
-            $msg = Array("error" => "true", "msg" => "Falta de dados");
+            $msg ="Falta de dados";
         }
         break;
         
@@ -71,23 +46,36 @@ if(isset($partes[2])){
             $pass = md5($salt . $_POST["pass"] . $salt);
             $today = date("Y m d");
             mysqli_stmt_bind_param($sql,'ssss', $username, $mail, $pass, $today);   
+
             if(mysqli_stmt_execute($sql)){
-                $msg = Array("error" => "false", "msg" => $username);
+                $query ="Select Max(idUser) from User;";
+                $sql_id = mysqli_prepare($ligacao,$query);
+                mysqli_stmt_execute($sql_id);
+                mysqli_stmt_bind_result($sql_id, $id);
+                mysqli_stmt_store_result($sql_id); 
+                mysqli_stmt_fetch($sql_id);
+                
+                $arr["id"] = $id;
+                $arr["username"] = strval($username);
+                $arr["email"] = strval($mail);
+                $arr["password"] = strval($pass);
+                
+                $msg = $arr;
 
             }else{
-                $msg = Array("error" => "true", "msg" => "already exist");
+                $msg = "already exist";
 
             }
 
         }else{
-                $msg = Array("error" => "true", "msg" => "register incompleto");
+                $msg = "register incompleto";
 
         }
         break;
 
     
     default:
-        $msg = Array("error" => "true", "msg" => "funcao desconhecida");
+        $msg = "funcao desconhecida";
 
 
 

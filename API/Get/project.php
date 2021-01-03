@@ -26,13 +26,13 @@ if(isset($partes[2])){
                         $arr["project"] = $project;
                         array_push($result, $arr);
                     }
-                    $msg = Array("error" => "false", "msg" => $result[0]);
+                    $msg = Array( "msg" => $result[0]);
                 }else{
-                    $msg = Array("error" => "false", "msg" => "no rows selected");
+                    $msg = Array("msg" => "no rows selected");
                 }
                
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
         break;
 
@@ -56,13 +56,13 @@ if(isset($partes[2])){
                         $arr["role"] = $role;
                         array_push($result, $arr);
                     }
-                    $msg = Array("error" => "false", "msg" => $result);
+                    $msg = Array( "msg" => $result);
                 }else{
-                    $msg = Array("error" => "false", "msg" => "no rows selected");
+                    $msg = Array("msg" => "no rows selected");
                 }
 
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
         break;
 
@@ -85,19 +85,19 @@ if(isset($partes[2])){
                         $arr["idProject"] = $idProject;
                         array_push($result, $arr);
                     }
-                    $msg = Array("error" => "false", "msg" => $result);
+                    $msg = Array( "msg" => $result);
                 }else{
-                    $msg = Array("error" => "false", "msg" => "no rows selected");
+                    $msg = Array("msg" => "no rows selected");
                 }
 
             }else{
-                $msg = Array("error" => "true", "msg" => "Incomplete data");
+                $msg = Array("msg" => "Incomplete data");
             }
         break;
             
         
         default:
-            $msg = Array("error" => "true", "msg" => "Unkown function");
+            $msg = Array("msg" => "Unkown function");
     }
 }
 

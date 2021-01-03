@@ -17,7 +17,9 @@ import java.util.List;
 public class ProjectRequests{
 
     public static List<Bug> projectBugs(int project_id) throws IOException, APIResponseException {
+
         URL url = new URL("http://localhost/GPS_BT/index.php/get/project/bugs");
+
         String params = "projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -43,7 +45,9 @@ public class ProjectRequests{
 
 
     public static List<User> projectMembers(int project_id) throws IOException, APIResponseException {
+
         URL url = new URL("http://localhost/GPS_BT/index.php/get/project/members");
+
         String params = "projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -68,7 +72,9 @@ public class ProjectRequests{
     }
 
     public static List<Module> projectModules(int project_id) throws IOException, APIResponseException {
+
         URL url = new URL("http://localhost/GPS_BT/index.php/get/project/modules");
+
         String params = "projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -93,7 +99,9 @@ public class ProjectRequests{
     }
 
     public static boolean addProject(String project_name) throws IOException, APIResponseException {
+
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/add");
+
         String params = "projName="+project_name;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -118,7 +126,9 @@ public class ProjectRequests{
     }
 
     public static boolean removeProject(int project_id) throws IOException, APIResponseException {
+
         URL url = new URL("http://localhost/GPS_BT/index.php/get/project/remove");//nao existe, mas devia
+
         String params = "projID="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -143,7 +153,9 @@ public class ProjectRequests{
     }
 
     public static boolean newModule(int project_id, String moduleName) throws IOException, APIResponseException {
+
         URL url = new URL("http://localhost/GPS_BT/index.php/update/module/new");
+
         String params = "projID="+project_id+"&moduleName="+moduleName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();

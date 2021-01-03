@@ -11,6 +11,7 @@ import Logic.Observables.UIObservable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -42,10 +43,10 @@ public class AuthRegUI extends BorderPane{
         observable.registaPropertyChangeListener(PropsID.USER_REG_SUCCESS, new PropertyChangeListenerJFXAdapter() {
             @Override
             public void onChange(PropertyChangeEvent evt) {
-                Alert regSuccess = new Alert(Alert.AlertType.INFORMATION);
-                regSuccess.setHeaderText(null);
-                regSuccess.setContentText("Successfully registered!");
-                regSuccess.showAndWait();
+                Alert regFail = new Alert(Alert.AlertType.INFORMATION);
+                regFail.setHeaderText(null);
+                regFail.setContentText(observable.getMessage());
+                regFail.showAndWait();
             }
         });
 
@@ -54,8 +55,18 @@ public class AuthRegUI extends BorderPane{
             public void onChange(PropertyChangeEvent evt) {
                 Alert regSuccess = new Alert(Alert.AlertType.ERROR);
                 regSuccess.setHeaderText(null);
-                regSuccess.setContentText("Something went wrong!");
+                regSuccess.setContentText(observable.getMessage());
                 regSuccess.showAndWait();
+            }
+        });
+
+        observable.registaPropertyChangeListener(PropsID.LOGIN_FAIL, new PropertyChangeListenerJFXAdapter() {
+            @Override
+            public void onChange(PropertyChangeEvent evt) {
+                Alert loginFail = new Alert(Alert.AlertType.ERROR);
+                loginFail.setHeaderText(null);
+                loginFail.setContentText(observable.getMessage());
+                loginFail.showAndWait();
             }
         });
     }
@@ -105,9 +116,11 @@ public class AuthRegUI extends BorderPane{
 
             Button signInBtn = new Button("Sign In");
             signInBtn.getStyleClass().add("authScreenBtns");
+            signInBtn.setCursor(Cursor.HAND);
 
             Label lbPassRec = new Label("Forgot password?");
             lbPassRec.setStyle("-fx-text-fill:#2c75e9");
+            lbPassRec.setCursor(Cursor.HAND);
 
             this.getChildren().addAll(lbLogin,lbSlogan,username,passwordField,signInBtn,lbPassRec);
             this.setAlignment(Pos.CENTER);
@@ -124,11 +137,11 @@ public class AuthRegUI extends BorderPane{
                         passwordField.getStyleClass().add("wrongInput");
                     }
                     else {
+                        observable.signIn(username.getText(),passwordField.getText());
                         username.getStyleClass().removeAll("wrongInput");
                         passwordField.getStyleClass().removeAll("wrongInput");
                         username.clear();
                         passwordField.clear();
-                        observable.signIn();
                     }
                 }
             });
@@ -164,7 +177,7 @@ public class AuthRegUI extends BorderPane{
 
             Button signUpBtn = new Button("Sign Up");
             signUpBtn.getStyleClass().add("authScreenBtns");
-
+            signUpBtn.setCursor(Cursor.HAND);
             this.getChildren().addAll(lbReg,username,mail,passwordField,passConfirm,signUpBtn);
             this.setAlignment(Pos.CENTER);
             this.setSpacing(10);

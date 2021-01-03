@@ -2,6 +2,7 @@ package Logic;
 
 public class Bug {
     private int id;
+    private String title;
     private String creator;
     private String type;
     private String status;
@@ -9,15 +10,18 @@ public class Bug {
     private String solving;
     private String desc;
     private String module;
+    private String project;
 
-    public Bug(int id, String creator, String type, String status, String priority, String desc, String module) {
+    public Bug(int id, String creator, String type, String status, String priority, String desc, String module, String title, String project) {
         this.id = id;
+        this.title = title;
         this.creator = creator;
         this.type = type;
         this.status = status;
         this.priority = priority;
         this.desc = desc;
         this.module = module;
+        this.project = project;
     }
 
     public Bug(){}
@@ -28,6 +32,14 @@ public class Bug {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCreator() {
@@ -84,5 +96,13 @@ public class Bug {
 
     public void setModule(String module) {
         this.module = module;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String module) {
+        this.project = project;
     }
 }
