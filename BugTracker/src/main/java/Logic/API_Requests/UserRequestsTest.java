@@ -2,6 +2,7 @@ package Logic.API_Requests;
 
 import Logic.Exceptions.APIResponseException;
 import Logic.User;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserRequestsTest {
 
     @Test
+    @Order(1)
     void registar() throws IOException {
         User user = new User();
         user.setUsername("Fabio");
@@ -32,12 +34,13 @@ public class UserRequestsTest {
     }
 
     @Test
+    @Order(2)
     void login() {
         User user = new User();
         user.setUsername("Fabio");
         user.setPassword("olaola");
 
-        boolean test = false;
+        User test = null;
         try {
             test = UserRequests.login(user.getUsername(), user.getPassword());
 
@@ -45,11 +48,12 @@ public class UserRequestsTest {
             fail(e.getMessage());
         }
 
-        assertTrue(test);
+        assertNotNull(test);
         //assertEquals(true, test);
     }
 
     @Test
+    @Order(7)
     void logoff() {
         User user = new User();
         user.setUsername("Fabio");
@@ -68,10 +72,12 @@ public class UserRequestsTest {
     }
 
     @Test
+    @Order(6)
     void projects() {
     }
 
     @Test
+    @Order(8)
     void resetMail() {
         String mail = "hugo@123";
         boolean test = false;
@@ -87,6 +93,7 @@ public class UserRequestsTest {
     }
 
     @Test
+    @Order(5)
     void rename() {
         User user = new User();
         user.setUsername("Fabio");
@@ -107,6 +114,7 @@ public class UserRequestsTest {
     }
 
     @Test
+    @Order(4)
     void repass() {
         User user = new User();
         user.setUsername("Fabio");
@@ -127,16 +135,17 @@ public class UserRequestsTest {
     }
 
     @Test
+    @Order(3)
     void search() {
         String name = "Hugo";
         User test = null;
         try {
+
             test = UserRequests.search(name);
 
-        } catch (IOException e) {
+        } catch (IOException | APIResponseException e) {
             fail(e.getMessage());
-        } catch (APIResponseException e) {
-            e.printStackTrace();
+
         }
 
         User hugo = new User(2,"Hugo", "hugo@123", "071eee15edbb1d4493177690b3734054");

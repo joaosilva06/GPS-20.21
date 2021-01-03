@@ -1,6 +1,4 @@
 <?php
-
-
 if(isset($partes[2])){
     switch($partes[2]) {
         case 'login':
@@ -15,25 +13,23 @@ if(isset($partes[2])){
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
-                    //$_SESSION["uName"] = $user;
                     $_SESSION["id"] = $id;
                     $arr["id"] = $id;
-                    $arr["name"] = $user;
-                    $arr["pass"] = $pass;
+                    $arr["username"] = $user;
+                    $arr["password"] = $pass;
                     $msg = $arr;
                 }else
-                $msg = Array("msg" => "Login errado");
+                $msg = "Login errado";
             }else{
-                $msg = Array("msg" => "Falta de dados");
+                $msg = "Falta de dados";
             }
-        break;
-            
+            break;     
         case 'logoff':
             if(isset($_SESSION["id"])){ 
                 session_destroy();
                 $msg = "Success";
             }else{
-                $msg = Array("msg" => "Failed to logoff");
+                $msg = "Failed to logoff";
             }
             break;
 
@@ -56,9 +52,9 @@ if(isset($partes[2])){
                         $arr["dateCreate"] = $date;
                         array_push($result, $arr);
                         }
-                    $msg = Array( "msg" => $result);
+                    $msg = $result;
                 }else{
-                    $msg = Array( "msg" => "projects");
+                    $msg = "projects";
 
                 }
             }
@@ -74,49 +70,48 @@ if(isset($partes[2])){
                 mysqli_stmt_bind_result($sql, $mail);
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_execute($sql)){
-                    $msg = Array( "msg" => $mail);
+                    $msg = $mail;
   
                 }else{
-                    $msg = Array("msg" => "exist");
+                    $msg = "exist";
 
                 }
             }
             break;
-
-
         case 'search':
-            if(isset($_SESSION["id"]) and isset($_POST["search"])){
-                $query ="Select * From User Where email = ? or userName = ?;";
-                $look = $_POST["search"];
-                $sql = mysqli_prepare($ligacao,$query);
-                mysqli_stmt_bind_param($sql,'ss', $look, $look); 
-                mysqli_stmt_execute($sql);
-                mysqli_stmt_bind_result($sql, $id, $user, $email, $pass, $date);
-                mysqli_stmt_store_result($sql); 
-                if(mysqli_stmt_num_rows($sql) > 0){
-                    mysqli_stmt_fetch($sql);
-                    $arr["id"] = $id;
-                    $arr["name"] = $user;
-                    $arr["pass"] = $pass;
-                    $arr["email"] = $email;
-                    
-                    $msg = Array( "msg" => $arr);
-  
-                }else{
-                    $msg = Array("msg" => "exist");
+            if(isset($_SESSION["id"])){
+                if(isset($_POST["search"])){
+                    $query ="Select * From User Where email = ? or userName = ?;";
+                    $look = $_POST["search"];
+                    $sql = mysqli_prepare($ligacao,$query);
+                    mysqli_stmt_bind_param($sql,'ss', $look, $look); 
+                    mysqli_stmt_execute($sql);
+                    mysqli_stmt_bind_result($sql, $id, $user, $email, $pass, $date);
+                    mysqli_stmt_store_result($sql); 
+                    if(mysqli_stmt_num_rows($sql) > 0){
+                        mysqli_stmt_fetch($sql);
+                        $arr["id"] = $id;
+                        $arr["username"] = $user;
+                        $arr["password"] = $pass;
+                        //$arr["email"] = $email;
+                        
+                        $msg = $arr;
+    
+                    }else{
+                        $msg = "Doesn't Exists";
 
+                    }
+                }else{
+                    $msg = "Info missing";
                 }
+            }else{
+                $msg = "Login First";
             }
             break;
 
         default:
-            $msg = Array("msg" => "funcao desconhecida");
-
-
+            $msg = "funcao desconhecida";
+            break;
     }
-
-
 }
-            
-
 ?>

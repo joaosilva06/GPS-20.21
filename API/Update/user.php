@@ -10,13 +10,11 @@ if(isset($partes[2])){
                 mysqli_stmt_execute($sql);
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
-                    $_SESSION["userName"] = $_POST["newName"];
-                    $_SESSION["id"] = $id;
-                    $msg = Array( "msg" => $name);
+                    $msg = $name;
                 }else
-                $msg = Array("msg" => "Login errado");
+                $msg = "Login errado";
             }else{
-                $msg = Array("msg" => "Falta de dados");
+                $msg = "Falta de dados";
             }
         break;
             
@@ -31,34 +29,11 @@ if(isset($partes[2])){
             mysqli_stmt_store_result($sql); 
             if(mysqli_stmt_num_rows($sql) > 0){
                 mysqli_stmt_fetch($sql);
-                $msg = Array("error" => "false", "msg" => $name);
+                $msg = $name;
             }else
-            $msg = Array("msg" => "Login errado");
+            $msg = "Login errado";
         }else{
-            $msg = Array("msg" => "Falta de dados");
-        }
-        break;
-        //not necessary
-    case "namePass":
-        if(isset($_SESSION["id"]) and isset($_POST["newName"]) and  isset($_POST["newPass"])){
-                
-            $query = "Update User Set userNamer= ?,password = ? Where idUser = ?";
-            $sql = mysqli_prepare($ligacao,$query);
-            $user = $_POST["newName"];
-            $pass = md5($salt . $_POST["newPass"] . $salt);
-            mysqli_stmt_bind_param($sql,'ssi', $user, $pass, $_SESSION["id"]); 
-            mysqli_stmt_execute($sql);
-            mysqli_stmt_bind_result($sql, $id, $name);
-            mysqli_stmt_store_result($sql); 
-            if(mysqli_stmt_num_rows($sql) > 0){
-                mysqli_stmt_fetch($sql);
-                $_SESSION["userName"] = $user;
-                $_SESSION["id"] = $id;
-                $msg = Array( "msg" => $name);
-            }else
-            $msg = Array("msg" => "Login errado");
-        }else{
-            $msg = Array("msg" => "Falta de dados");
+            $msg ="Falta de dados";
         }
         break;
         
@@ -88,19 +63,19 @@ if(isset($partes[2])){
                 $msg = $arr;
 
             }else{
-                $msg = Array("msg" => "already exist");
+                $msg = "already exist";
 
             }
 
         }else{
-                $msg = Array("msg" => "register incompleto");
+                $msg = "register incompleto";
 
         }
         break;
 
     
     default:
-        $msg = Array("msg" => "funcao desconhecida");
+        $msg = "funcao desconhecida";
 
 
 
