@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 public class BugRequests {
     public static Bug getBug(int proj, int bug) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/bug/request");
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/bug/request");
         String params = "projId=" + proj + "&bugId=" + bug;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -38,7 +38,7 @@ public class BugRequests {
     }
 
     public static boolean addBug(String desc, String title, int projId, Integer modId, int type, int prio) throws IOException {//ver
-        URL url = new URL("http://localhost/GPS_BT/get/bug/add");
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/bug/add");
         String params ="bugTitlte="+title+"&bugDescription="+desc+
                 "&bugModule="+modId +"&bugType="+type+"&bugPriority="+ prio +
                 "&bugProject=" + projId;
@@ -64,7 +64,7 @@ public class BugRequests {
     }
 
     public static boolean editBug(String desc, String title, int bugId) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/bug/edit");
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/bug/edit");
         String params = "newBugDescription="+desc+"&newTitle="+title+"&bugI="+bugId;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -89,7 +89,7 @@ public class BugRequests {
     }
 
     public static boolean solve(int bugId, int proj) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/bug/solve");
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/bug/solve");
         String params = "idBug="+bugId+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -114,7 +114,7 @@ public class BugRequests {
     }
 
     public static boolean unsolve(int bugId) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/get/bug/unsolve");
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/bug/unsolve");
         String params = "idBug="+bugId;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
