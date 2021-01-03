@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Bug` (
   `Status_idStatus` INT NOT NULL,
   `Priority_idPriority` INT NOT NULL,
   `Type_idType` INT NOT NULL,
-  `Module_idModule` INT NOT NULL,
+  `Module_idModule` INT NULL,
   `Project_idProject` INT NOT NULL,
   `User_idCreator` INT NOT NULL,
   PRIMARY KEY (`idBug`),
