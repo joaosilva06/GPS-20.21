@@ -5,8 +5,12 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema BugTrackerDataBase
 -- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema BugTrackerDataBase
+-- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `BugTrackerDataBase` DEFAULT CHARACTER SET utf8 ;
-USE `BugTrackerDataBase`;
+USE `BugTrackerDataBase` ;
 
 -- -----------------------------------------------------
 -- Table `BugTrackerDataBase`.`User`
@@ -120,33 +124,70 @@ ENGINE = InnoDB;
 -- Table `BugTrackerDataBase`.`Bug`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Bug` (
-    `idBug` INT NOT NULL AUTO_INCREMENT,
-    `title` VARCHAR(45) NOT NULL,
-    `description` VARCHAR(512) NOT NULL,
-    `dateCreation` DATE NOT NULL,
-    `dateSolved` DATE NULL,
-    `Status_idStatus` INT NOT NULL,
-    `Priority_idPriority` INT NOT NULL,
-    `Type_idType` INT NOT NULL,
-    `Module_idModule` INT,
-    `Project_idProject` INT NOT NULL,
-    PRIMARY KEY (`idBug`),
-    CONSTRAINT `fk_Bug_Status1` FOREIGN KEY (`Status_idStatus`)
-        REFERENCES `BugTrackerDataBase`.`Status` (`idStatus`)
-        ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT `fk_Bug_Priority1` FOREIGN KEY (`Priority_idPriority`)
-        REFERENCES `BugTrackerDataBase`.`Priority` (`idPriority`)
-        ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT `fk_Bug_Type1` FOREIGN KEY (`Type_idType`)
-        REFERENCES `BugTrackerDataBase`.`Type` (`idType`)
-        ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT `fk_Bug_Module1` FOREIGN KEY (`Module_idModule`)
-        REFERENCES `BugTrackerDataBase`.`Module` (`idModule`)
-        ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT `fk_Bug_Project1` FOREIGN KEY (`Project_idProject`)
-        REFERENCES `BugTrackerDataBase`.`Project` (`idProject`)
-        ON DELETE NO ACTION ON UPDATE NO ACTION
-)  ENGINE=INNODB;
+  `idBug` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(512) NOT NULL,
+  `dateCreation` DATE NOT NULL,
+  `dateSolved` DATE NULL,
+  `Status_idStatus` INT NOT NULL,
+  `Priority_idPriority` INT NOT NULL,
+  `Type_idType` INT NOT NULL,
+  `Module_idModule` INT NOT NULL,
+  `Project_idProject` INT NOT NULL,
+  `User_idCreator` INT NOT NULL,
+  PRIMARY KEY (`idBug`),
+  CONSTRAINT `fk_Bug_Status1`
+    FOREIGN KEY (`Status_idStatus`)
+    REFERENCES `BugTrackerDataBase`.`Status` (`idStatus`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Bug_Priority1`
+    FOREIGN KEY (`Priority_idPriority`)
+    REFERENCES `BugTrackerDataBase`.`Priority` (`idPriority`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Bug_Type1`
+    FOREIGN KEY (`Type_idType`)
+    REFERENCES `BugTrackerDataBase`.`Type` (`idType`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Bug_Module1`
+    FOREIGN KEY (`Module_idModule`)
+    REFERENCES `BugTrackerDataBase`.`Module` (`idModule`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Bug_Project1`
+    FOREIGN KEY (`Project_idProject`)
+    REFERENCES `BugTrackerDataBase`.`Project` (`idProject`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Bug_User1`
+    FOREIGN KEY (`User_idCreator`)
+    REFERENCES `BugTrackerDataBase`.`User` (`idUser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `BugTrackerDataBase`.`Solver`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Solver` (
+  `Solver_idSolver` INT NOT NULL AUTO_INCREMENT,
+  `Bug_idBug` INT NOT NULL,
+  `User_idUserSolving` INT NOT NULL,
+  PRIMARY KEY (`Solver_idSolver`),
+  CONSTRAINT `fk_Bug_has_User_Bug1`
+    FOREIGN KEY (`Bug_idBug`)
+    REFERENCES `BugTrackerDataBase`.`Bug` (`idBug`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Bug_has_User_User1`
+    FOREIGN KEY (`User_idUserSolving`)
+    REFERENCES `BugTrackerDataBase`.`User` (`idUser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
