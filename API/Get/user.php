@@ -15,12 +15,12 @@ if(isset($partes[2])){
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
-                    $_SESSION["uName"] = $user;
+                    //$_SESSION["uName"] = $user;
                     $_SESSION["id"] = $id;
                     $arr["id"] = $id;
                     $arr["name"] = $user;
                     $arr["pass"] = $pass;
-                    $msg = Array("msg" => $arr);
+                    $msg = $arr;
                 }else
                 $msg = Array("msg" => "Login errado");
             }else{
@@ -29,10 +29,9 @@ if(isset($partes[2])){
         break;
             
         case 'logoff':
-            if(isset($_SESSION["id"])){
-                $_SESSION["userName"] = "";  
+            if(isset($_SESSION["id"])){ 
                 session_destroy();
-                $msg = Array("msg" => "Success");
+                $msg = "Success";
             }else{
                 $msg = Array("msg" => "Failed to logoff");
             }
