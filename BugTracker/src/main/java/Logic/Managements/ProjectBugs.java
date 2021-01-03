@@ -1,12 +1,9 @@
 package Logic.Managements;
 
+import Logic.*;
 import Logic.API_Requests.BugRequests;
 import Logic.API_Requests.ProjectRequests;
-import Logic.Bug;
 import Logic.Exceptions.APIResponseException;
-import Logic.Priority;
-import Logic.Project;
-import Logic.Type;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,9 +21,16 @@ public class ProjectBugs {
     public List<Bug> getBugs(){return bugs;}
     public Project getProj(){return proj;}
 
-    public void editBug(Bug b){
+    public void editBug(int pos, String desc, String title){
         try{
-            BugRequests.editBug(b.getDesc(), b.getTitle(), b.getId());
+            Bug b = bugs.get(pos);
+            boolean suc = BugRequests.editBug(desc, title, b.getId());
+            if(suc){
+                b.setDesc(desc);
+                b.setTitle(title);
+            }else{
+                //callback
+            }
         } catch (IOException e) {
             //callback
         }
@@ -34,26 +38,44 @@ public class ProjectBugs {
 
     public void addBug(Bug b, Priority prio, Type t, Integer mod){
         try{
-            BugRequests.addBug(b.getDesc(), b.getTitle(), proj.getProjectId(), mod, t.ordinal(), prio.ordinal());
+            boolean suc = BugRequests.addBug(b.getDesc(), b.getTitle(), proj.getProjectId(), mod, t.ordinal(), prio.ordinal());
+            if(suc){
+                bugs.add(b);
+            }else{
+                //callback
+            }
         } catch (IOException e) {
             //callback
         }
     }
 
-    public void markAsSolved(int id){
+    public void markAsSolved(int pos){
         try{
-            BugRequests.solve(id, proj.getProjectId());
+            int id = bugs.get(pos).getId();
+            boolean suc = BugRequests.solve(id, proj.getProjectId());
+            if(suc){
+                bugs.get(pos).setStatus(Status.Solved.toString());
+            }else{
+                //callback
+            }
         } catch (IOException e) {
             //callback
         }
     }
 
-    public void unsolve(int id){
+    public void markAsUnsolved(int pos){
         try{
-            BugRequests.unsolve(id);
+            int id = bugs.get(pos).getId();
+            if(BugRequests.unsolve(id)){
+                bugs.get(pos).setStatus(Status.ToSolve.toString());
+            }
         } catch (IOException e) {
             //callback
         }
+    }
+
+    public void markAsSolving(int pos, int user){
+        //marcar o bug como a ser resolvido pelo currentUser
     }
 
 }
