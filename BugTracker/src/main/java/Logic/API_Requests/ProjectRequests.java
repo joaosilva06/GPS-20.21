@@ -14,10 +14,12 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class ProjectRequests {
+public class ProjectRequests{
 
     public static List<Bug> projectBugs(int project_id) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/get/project/bugs");
+
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/project/bugs");
+
         String params = "projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -43,7 +45,9 @@ public class ProjectRequests {
 
 
     public static List<User> projectMembers(int project_id) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/get/project/members");
+
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/project/members");
+
         String params = "projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -68,7 +72,9 @@ public class ProjectRequests {
     }
 
     public static List<Module> projectModules(int project_id) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/get/project/modules");
+
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/project/modules");
+
         String params = "projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -93,7 +99,9 @@ public class ProjectRequests {
     }
 
     public static boolean addProject(String project_name) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/Update/project/add");
+
+        URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/add");
+
         String params = "projName="+project_name;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -118,7 +126,9 @@ public class ProjectRequests {
     }
 
     public static boolean removeProject(int project_id) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/get/project/remove");//nao existe, mas devia
+
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/project/remove");//nao existe, mas devia
+
         String params = "projID="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -143,7 +153,9 @@ public class ProjectRequests {
     }
 
     public static boolean newModule(int project_id, String moduleName) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/update/module/new");
+
+        URL url = new URL("http://localhost/GPS_BT/index.php/update/module/new");
+
         String params = "projID="+project_id+"&moduleName="+moduleName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -168,7 +180,7 @@ public class ProjectRequests {
     }
 
     public static boolean addMember(int role, int user, int proj) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/update/project/addMember");
+        URL url = new URL("http://localhost/GPS_BT/index.php/update/project/addMember");
         String params = "role="+role+"&user="+user+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -193,7 +205,7 @@ public class ProjectRequests {
     }
 
     public static boolean changeRole(int role, int user, int proj) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/update/project/role");
+        URL url = new URL("http://localhost/GPS_BT/index.php/update/project/role");
         String params = "role="+role+"&user="+user+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -218,7 +230,7 @@ public class ProjectRequests {
     }
 
     public static boolean removeMember(int user, int proj) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/update/project/role");
+        URL url = new URL("http://localhost/GPS_BT/index.php/update/project/role");
         String params = "user="+user+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
