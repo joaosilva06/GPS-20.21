@@ -6,13 +6,12 @@ if(isset($partes[2])){
             if(isset($_SESSION["id"]) and isset($_POST["newName"])){
                 $query = "Update User Set userName = ? Where idUser = ?";
                 $sql = mysqli_prepare($ligacao,$query);
-                mysqli_stmt_bind_param($sql,'si', $_POST["newName"], $_SESSION["id"]); 
-                mysqli_stmt_execute($sql);
-                if(mysqli_stmt_num_rows($sql) > 0){
-                    mysqli_stmt_fetch($sql);
+                $name = strtolower($_POST["newName"]);
+                mysqli_stmt_bind_param($sql,'si', $name, $_SESSION["id"]); 
+                if(mysqli_stmt_execute($sql)){
                     $msg = $name;
                 }else
-                $msg = "Login errado";
+                    $msg = "Login errado";
             }else{
                 $msg = "Falta de dados";
             }
@@ -27,11 +26,10 @@ if(isset($partes[2])){
             mysqli_stmt_execute($sql);
             mysqli_stmt_bind_result($sql, $id , $name);
             mysqli_stmt_store_result($sql); 
-            if(mysqli_stmt_num_rows($sql) > 0){
-                mysqli_stmt_fetch($sql);
+            if(mysqli_affected_rows($sql) > 0){
                 $msg = $name;
             }else
-            $msg = "Login errado";
+                $msg = "Login errado";
         }else{
             $msg ="Falta de dados";
         }
@@ -41,7 +39,7 @@ if(isset($partes[2])){
         if(isset($_POST["uName"]) and isset($_POST["email"]) and  isset($_POST["pass"])){
             $query2 ="INSERT INTO User(userName, email, password, dateCreateAccount) VALUES (?,?,?, STR_TO_DATE(?, '%Y %m %d'))";
             $sql = mysqli_prepare($ligacao,$query2);
-            $username = $_POST["uName"];
+            $username = strtolower($_POST["uName"]);
             $mail = $_POST["email"];
             $pass = md5($salt . $_POST["pass"] . $salt);
             $today = date("Y m d");

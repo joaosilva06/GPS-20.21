@@ -89,9 +89,9 @@ public class UserRequests {
         }
     }
 
-    public static List<Project> projects(String username, String password) throws IOException {
+    public static List<Project> projects() throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/get/user/projects");
-        String params = "uName="+username+"&pass="+password;
+        String params = "";
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);

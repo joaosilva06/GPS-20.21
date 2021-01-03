@@ -48,6 +48,9 @@ class BugRequestsTest {
 
     @Test
     void editBug() {
+        Bug b = new Bug(6,"", Type.CompilationError.toString(), Status.ToSolve.toString(), Priority.Medium.toString(),
+                "olaola", null ,"ola", "test");
+
 
 
     }
