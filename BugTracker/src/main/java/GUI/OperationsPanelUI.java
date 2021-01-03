@@ -46,6 +46,8 @@ public class OperationsPanelUI extends BorderPane {
             @Override
             public void onChange(PropertyChangeEvent evt) {
                 setVisible(observable.getActualScreen() == Screens.OPERATIONS);
+                observable.setProjects(observable.getProjectsFromApi());
+                System.out.println(observable.getProjectList());
             }
         });
     }
