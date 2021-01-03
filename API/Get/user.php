@@ -5,7 +5,7 @@ if(isset($partes[2])){
             if(isset($_POST["uName"]) and isset($_POST["pass"])){
                 $query = "SELECT idUser FROM User WHERE userName = ? and password = ?;";
                 $sql = mysqli_prepare($ligacao,$query);
-                $user = $_POST["uName"];
+                $user = strtolower($_POST["uName"]);
                 $pass = md5($salt . $_POST["pass"] . $salt);
                 mysqli_stmt_bind_param($sql,'ss', $user, $pass); 
                 mysqli_stmt_execute($sql);
@@ -36,27 +36,28 @@ if(isset($partes[2])){
 
         case 'projects':
             if(isset($_SESSION["id"])){ 
-                $sql ="Select * From Project inner Join Member On Member.User_idUser = ? and Member.Project_idProject = Project.idProject ";
-                $id = $_POST["id"];
+                $query ="Select * From Project inner Join Member On Member.Project_idProject = Project.idProject WHERE Member.User_idUser = ?";
+                $id = $_SESSION["id"];
+                $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bind_param($sql,'i', $id); 
                 mysqli_stmt_execute($sql);
                 mysqli_stmt_bind_result($sql, $id, $name,$date, $trash, $roleId, $trash, $trash);
                 mysqli_stmt_store_result($sql); 
                 $result = Array();
                 if(mysqli_stmt_execute($sql)){
-                    $rows =mysqli_stmt_num_rows($sql) ;
-                    if($rows > 0)
-                        while($row = mysqli_stmt_fetch($sql)){
+                    while(mysqli_stmt_fetch($sql)){
                         $arr["projectId"] = $id;
                         $arr["name"] = $name;
                         $arr["dateCreate"] = $date;
                         array_push($result, $arr);
-                        }
+                    }
                     $msg = $result;
                 }else{
-                    $msg = "projects";
+                    $msg = "Error fetching projects";
 
                 }
+            }else{
+                $msg = "No login";
             }
             break;
 
@@ -82,7 +83,7 @@ if(isset($partes[2])){
             if(isset($_SESSION["id"])){
                 if(isset($_POST["search"])){
                     $query ="Select * From User Where email = ? or userName = ?;";
-                    $look = $_POST["search"];
+                    $look = strtolower($_POST["search"]);
                     $sql = mysqli_prepare($ligacao,$query);
                     mysqli_stmt_bind_param($sql,'ss', $look, $look); 
                     mysqli_stmt_execute($sql);

@@ -26,23 +26,23 @@ if(isset($partes[2])){
                         $arr["project"] = $project;
                         array_push($result, $arr);
                     }
-                    $msg = Array( "msg" => $result[0]);
+                    $msg = $result;
                 }else{
-                    $msg = Array("msg" => "no rows selected");
+                    $msg = "no rows selected";
                 }
                
             }else{
-                $msg = Array("msg" => "Incomplete data");
+                $msg = "Incomplete data";
             }
         break;
 
         case 'members':
             if(isset($_SESSION["id"]) and isset($_POST["projId"])){
                 $query = "SELECT userName, Role.description,  FROM User
-                                INNER JOIN Member ON idUser = User_idUser
-                                INNER JOIN Role ON Role_idRole = idRole
-                                INNER JOIN Project ON Project_idProject = idProject
-                                WHERE Member.Project_idProject = ?";
+                        INNER JOIN Member ON idUser = User_idUser
+                        INNER JOIN Role ON Role_idRole = idRole
+                        INNER JOIN Project ON Project_idProject = idProject
+                        WHERE Member.Project_idProject = ?";
 
                 $sql = mysqli_prepare($ligacao, $query);
                 mysqli_stmt_bind_param($sql, 'i', $_POST["projId"]);
@@ -56,13 +56,13 @@ if(isset($partes[2])){
                         $arr["role"] = $role;
                         array_push($result, $arr);
                     }
-                    $msg = Array( "msg" => $result);
+                    $msg =  $result;
                 }else{
-                    $msg = Array("msg" => "no rows selected");
+                    $msg = "no rows selected";
                 }
 
             }else{
-                $msg = Array("msg" => "Incomplete data");
+                $msg = "Incomplete data";
             }
         break;
 
@@ -85,19 +85,19 @@ if(isset($partes[2])){
                         $arr["idProject"] = $idProject;
                         array_push($result, $arr);
                     }
-                    $msg = Array( "msg" => $result);
+                    $msg =  $result;
                 }else{
-                    $msg = Array("msg" => "no rows selected");
+                    $msg = "no rows selected";
                 }
 
             }else{
-                $msg = Array("msg" => "Incomplete data");
+                $msg = "Incomplete data");
             }
         break;
             
         
         default:
-            $msg = Array("msg" => "Unkown function");
+            $msg = "Unkown function";
     }
 }
 

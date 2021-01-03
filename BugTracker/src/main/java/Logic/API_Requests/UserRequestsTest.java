@@ -1,14 +1,18 @@
 package Logic.API_Requests;
 
 import Logic.Exceptions.APIResponseException;
+import Logic.Project;
 import Logic.User;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserRequestsTest {
 
     @Test
@@ -37,12 +41,12 @@ public class UserRequestsTest {
     @Order(2)
     void login() {
         User user = new User();
-        user.setUsername("Fabio");
+        user.setUsername("Hugo");
         user.setPassword("olaola");
 
         User test = null;
         try {
-            test = UserRequests.login(user.getUsername(), user.getPassword());
+            test = UserRequests.login("Hugo", "olaola");
 
         } catch (IOException e) {
             fail(e.getMessage());
@@ -52,28 +56,20 @@ public class UserRequestsTest {
         //assertEquals(true, test);
     }
 
-    @Test
-    @Order(7)
-    void logoff() {
-        User user = new User();
-        user.setUsername("Fabio");
-        user.setPassword("olaola");
-
-        boolean test = false;
-        try {
-            test = UserRequests.logoff(user.getUsername(), user.getPassword());
-
-        } catch (IOException e) {
-            fail(e.getMessage());
-        }
-
-        assertTrue(test);
-        //assertEquals(true, test);
-    }
 
     @Test
     @Order(6)
     void projects() {
+        List<Project> listP = null;
+        try {
+            listP = UserRequests.projects();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assertNotNull(listP);
+
+
     }
 
     @Test
@@ -108,8 +104,9 @@ public class UserRequestsTest {
         } catch (APIResponseException e) {
             e.printStackTrace();
         }
+        String nome = "Fabiois";
 
-        assertNotNull(test);
+        assertEquals(nome, test);
         //assertEquals(name, test);
     }
 
@@ -137,7 +134,7 @@ public class UserRequestsTest {
     @Test
     @Order(3)
     void search() {
-        String name = "Hugo";
+        String name = "Neves";
         User test = null;
         try {
 
@@ -153,4 +150,24 @@ public class UserRequestsTest {
         //assertEquals(hugo, test);
 
     }
+
+    @Test
+    @Order(7)
+    void logoff() {
+        User user = new User();
+        user.setUsername("Fabio");
+        user.setPassword("olaola");
+
+        boolean test = false;
+        try {
+            test = UserRequests.logoff(user.getUsername(), user.getPassword());
+
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+        assertTrue(test);
+        //assertEquals(true, test);
+    }
+
 }
