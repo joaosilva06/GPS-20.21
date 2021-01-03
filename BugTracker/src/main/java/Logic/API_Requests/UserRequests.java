@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserRequests {
+
     public static User registar(String username, String password, String email) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/update/user/register");
         String params = "uName="+username+"&email="+email+"&pass="+password;
@@ -42,7 +43,8 @@ public class UserRequests {
         }
     }
 
-    public static boolean login(String username, String password) throws IOException {
+
+    public static User login(String username, String password) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/get/user/login");
         String params = "uName="+username+"&pass="+password;
 
@@ -58,10 +60,10 @@ public class UserRequests {
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
         try {
-            String resp = mapper.readValue(in, String.class);
-            return true;
-        }catch (Exception e){
-            return false;
+            User rUser = mapper.readValue(in, User.class);
+            return rUser;
+        } catch (Exception e){
+            throw new IOException(e.getMessage());
         }finally{
             in.close();
         }
@@ -189,10 +191,10 @@ public class UserRequests {
     }
 
     public static User search(String search) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/get/user/search");
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/user/search");
         String params = "search="+search;
 
-        HttpURLConnection   con = (HttpURLConnection) url.openConnection();
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
         con.setRequestMethod("POST");
         con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
@@ -204,10 +206,10 @@ public class UserRequests {
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
         try {
-            User resp = mapper.readValue(in, User.class);
-            return resp;
-        }catch (Exception e){
-            return null;
+            User rUser = mapper.readValue(in, User.class);
+            return rUser;
+        } catch (Exception e){
+            throw new IOException(e.getMessage());
         }finally{
             in.close();
         }

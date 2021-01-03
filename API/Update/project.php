@@ -15,12 +15,12 @@ if(isset($partes[2])){
                 if(mysqli_stmt_num_rows($sql) > 0){
                     while($row = mysqli_fetch_assoc($sql))
                         array_push($result, $row);
-                    $msg = Array( "msg" => $result);
+                    $msg = $result;
                 }
-                $msg = Array( "msg" => "no rows selected");
+                $msg = "no rows selected";
                
             }else{
-                $msg = Array("msg" => "Incomplete data");
+                $msg = "Incomplete data";
             }
         break;
 
