@@ -8,8 +8,7 @@ if(isset($partes[2])){
             if(isset($_POST["bugTitle"]) and isset( $_POST["bugDescription"]) and isset($_POST["bugModule"]) and isset($_POST["bugType"]) and isset($_POST["bugPriority"]) and isset($_POST["bugProject"])){
                 $query3 = "INSERT INTO bug(title, description, dateCreation, Priority_idPriority, Type_idType, Module_idModule, Project_idProject) VALUES (?,?,STR_TO_DATE(?, '%Y %m %d'),?,?,?,?,?)";
                 $sql = mysqli_prepare($ligacao, $query3);
-                $today = date("Y m d");                
-                
+                $today = date("Y m d");
                 mysqli_stmt_bind_param($sql ,"sssiiii",$_POST["bugTitle"], $_POST["bugDescription"],$today, $_POST["bugPriority"],$_POST["bugType"],$_POST["bugModule"],$_POST["bugProject"]);
                 if(mysqli_stmt_execute($sql)){
                     $msg = Array("msg" => "Success");

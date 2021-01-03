@@ -85,7 +85,7 @@ if(isset($partes[2])){
                 $arr["email"] = strval($mail);
                 $arr["password"] = strval($pass);
                 
-                $msg = Array("msg" => $arr);
+                $msg = $arr;
 
             }else{
                 $msg = Array("msg" => "already exist");
