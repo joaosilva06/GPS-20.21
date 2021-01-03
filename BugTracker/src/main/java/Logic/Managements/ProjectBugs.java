@@ -48,4 +48,12 @@ public class ProjectBugs {
         }
     }
 
+    public void unsolve(int id){
+        try{
+            BugRequests.unsolve(id);
+        } catch (IOException e) {
+            //callback
+        }
+    }
+
 }
