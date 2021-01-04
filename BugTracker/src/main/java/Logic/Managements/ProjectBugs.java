@@ -75,7 +75,33 @@ public class ProjectBugs {
     }
 
     public void markAsSolving(int pos, int user){
-        //marcar o bug como a ser resolvido pelo currentUser
+        try{
+            int id = bugs.get(pos).getId();
+            if(BugRequests.markSolving(id,user)){
+                bugs.get(pos).setStatus(Status.InProgress.toString());
+            }
+        } catch (IOException e) {
+            //callback
+        }
+    }
+
+    public Bug request(int pos){
+        try{
+            int id = bugs.get(pos).getId();
+            Bug b = BugRequests.getBug(id);
+
+            if (!bugs.contains(b)) {
+                bugs.add(b);
+            }
+            return b;
+        } catch (IOException e) {
+            //callback
+        }
+        return null;
+    }
+
+    public void check(int pos){
+        //check é util?
     }
 
 }
