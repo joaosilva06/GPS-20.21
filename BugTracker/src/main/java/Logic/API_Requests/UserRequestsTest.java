@@ -19,9 +19,9 @@ public class UserRequestsTest {
     @Order(1)
     void registar() throws IOException {
         User user = new User();
-        user.setUsername("Fabio");
-        user.setEmail("fabio@ola");
-        user.setPassword("olaola");
+        user.setUsername("TesTer");
+        user.setEmail("test@gmail.com");
+        user.setPassword("testerpass");
 
         User test = null;
         try {
@@ -30,7 +30,7 @@ public class UserRequestsTest {
             fail(e.getMessage());
         }
 
-        User user_result = new User(18, "Fabio", "fabio@ola", "071eee15edbb1d4493177690b3734054");
+        User user_result = new User(1, "tester", "test@gmail.com", "ba0826751cd40a5b19189a17571fd619");
 
         assertNotNull(test);
         //assertEquals(user_result, test); este pode induzir em erro uma vez que o id vai alterando
@@ -39,14 +39,50 @@ public class UserRequestsTest {
 
     @Test
     @Order(2)
-    void login() {
+    void login_Upper() {
         User user = new User();
-        user.setUsername("Hugo");
-        user.setPassword("olaola");
+        user.setUsername("TESTER");
+        user.setPassword("testerpass");
 
         User test = null;
         try {
-            test = UserRequests.login("Hugo", "olaola");
+            test = UserRequests.login(user.getUsername(),user.getPassword());
+
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+        assertNotNull(test);
+        //assertEquals(true, test);
+    }
+    @Test
+    @Order(2)
+    void login_Lower() {
+        User user = new User();
+        user.setUsername("tester");
+        user.setPassword("testerpass");
+
+        User test = null;
+        try {
+            test = UserRequests.login(user.getUsername(),user.getPassword());
+
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+        assertNotNull(test);
+        //assertEquals(true, test);
+    }
+    @Test
+    @Order(2)
+    void login_Mix() {
+        User user = new User();
+        user.setUsername("TesteR");
+        user.setPassword("testerpass");
+
+        User test = null;
+        try {
+            test = UserRequests.login(user.getUsername(),user.getPassword());
 
         } catch (IOException e) {
             fail(e.getMessage());
@@ -56,6 +92,43 @@ public class UserRequestsTest {
         //assertEquals(true, test);
     }
 
+    @Test
+    @Order(2)
+    void login_failName() {
+        User user = new User();
+        user.setUsername("Tedter");
+        user.setPassword("testerpass");
+
+        User test = null;
+        try {
+            test = UserRequests.login(user.getUsername(),user.getPassword());
+
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+        assertNotNull(test);
+        //assertEquals(true, test);
+    }
+
+    @Test
+    @Order(2)
+    void login_failPass() {
+        User user = new User();
+        user.setUsername("Tedter");
+        user.setPassword("tester123");
+
+        User test = null;
+        try {
+            test = UserRequests.login(user.getUsername(),user.getPassword());
+
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+        assertNotNull(test);
+        //assertEquals(true, test);
+    }
 
     @Test
     @Order(6)
@@ -75,7 +148,23 @@ public class UserRequestsTest {
     @Test
     @Order(8)
     void resetMail() {
-        String mail = "hugo@123";
+        String mail = "test@gmail.com";
+        boolean test = false;
+        try {
+            test = UserRequests.resetMail(mail);
+
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+        assertTrue(test);
+        //assertEquals(true, test);
+    }
+
+    @Test
+    @Order(8)
+    void resetMail_wrong() {
+        String mail = "tet@gmail.com";
         boolean test = false;
         try {
             test = UserRequests.resetMail(mail);
