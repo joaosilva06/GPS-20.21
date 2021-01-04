@@ -1,218 +1,156 @@
 package Logic.API_Requests;
 
-import Logic.*;
 import Logic.Exceptions.APIResponseException;
-import Logic.Module;
+import Logic.User;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import javax.lang.model.element.ModuleElement;
 import java.io.IOException;
-import java.lang.reflect.Member;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProjectRequestsTest{
+public class UserRequestsTest {
 
     @Test
-    void projectBugs() {
-        List<Bug> lista = new ArrayList<Bug>();
-        lista.add(new Bug());
-
-        Project projeto = new Project();
-        projeto.setBugs(lista);
-
-        List<Bug> teste = null;
-
-        try{
-            teste = ProjectRequests.projectBugs(projeto.getProjectId());
-        }catch(IOException | APIResponseException e){
-            fail(e.getMessage());
-        }
-
-        //assertNull(teste);
-        assertEquals(projeto.getBugs().size(), teste.size());
-    }
-
-    @Test
-    void projectMembers() {
-        //Criar Users
-        User user1 = new User();
-        user1.setUsername("Fabio");
-        User user2 = new User();
-        user2.setUsername("Hugo");
-
-        //Criar lista de Users
-        List<User> membros = new ArrayList<User>();
-        membros.add(user1);
-        membros.add(user2);
-
-        //Criar Projeto para testar e colocar a Lista neste projeto
-        Project projeto = new Project();
-        projeto.setMembers(membros);
-
-        List<User> teste = null;
-
-        try{
-            teste = ProjectRequests.projectMembers(projeto.getProjectId());
-        }catch(IOException | APIResponseException e){
-            fail(e.getMessage());
-        }
-
-        assertEquals(teste.size(),projeto.getMembers().size());
-    }
-
-    @Test
-    void projectModules() {
-        //Criar Modules
-        Module module1 = new Module("modelo1",1);
-        Module module2 = new Module("modelo2",2);
-
-        //Criar lista e adicionar Modules
-        List<Module> lista = new ArrayList<Module>();
-        lista.add(module1);
-        lista.add(module2);
-
-        //Criar Projeto e adicionar lista de Modules
-        Project project = new Project();
-        project.setModules(lista);
-
-        List<Module> teste = null;
-
-        try{
-            teste = ProjectRequests.projectModules(project.getProjectId());
-        }catch(IOException | APIResponseException e){
-            fail(e.getMessage());
-        }
-
-        assertEquals(teste.size(),project.getModules().size());
-    }
-
-    @Test
-    void addProject() {
-        Project projeto = new Project();
-        projeto.setName("ProjetoTeste");
-
-        boolean teste = false;
-
-        try{
-            teste = ProjectRequests.addProject(projeto.getName());
-        }catch(IOException | APIResponseException e){
-            fail(e.getMessage());
-        }
-
-        assertNotNull(teste);
-        assertTrue(teste);
-    }
-
-    @Test
-    void removeProject() {
-        Project projeto = new Project();
-        projeto.setName("ProjetoTeste");
-
-        boolean teste = false;
-
-        try{
-            teste = ProjectRequests.removeProject(projeto.getProjectId());
-        }catch(IOException | APIResponseException e){
-            fail(e.getMessage());
-        }
-
-        assertNotNull(teste);
-        assertTrue(teste);
-    }
-
-    @Test
-    void newModule() {
-        String module = "ModuleTeste";
-        Project projeto = new Project();
-        projeto.addModule(module);
-
-        boolean teste = false;
-
-        try{
-            teste = ProjectRequests.newModule(projeto.getProjectId(), module);
-        }catch(IOException | APIResponseException e){
-            fail(e.getMessage());
-        }
-
-        assertNotNull(teste);
-        assertTrue(teste);
-    }
-
-    @Test
-    void addMember() {
+    @Order(1)
+    void registar() throws IOException {
         User user = new User();
         user.setUsername("Fabio");
-        user.setPassword("teste123");
+        user.setEmail("fabio@ola");
+        user.setPassword("olaola");
 
-        Project project = new Project();
-
-        boolean teste = false;
-
-        try{
-            teste = ProjectRequests.addMember(4, user.getId(), project.getProjectId());
-        }catch(IOException | APIResponseException e){
+        User test = null;
+        try {
+            test = UserRequests.registar(user.getUsername(), user.getPassword(), user.getEmail());
+        } catch (IOException e) {
             fail(e.getMessage());
         }
 
-        assertNotNull(teste);
-        assertTrue(teste);
+        User user_result = new User(18, "Fabio", "fabio@ola", "071eee15edbb1d4493177690b3734054");
+
+        assertNotNull(test);
+        //assertEquals(user_result, test); este pode induzir em erro uma vez que o id vai alterando
+
     }
 
     @Test
-    void changeRole() {
-        //Criacao do User
-        User membro = new User();
-        membro.setUsername("Fabio");
-        membro.setPassword("teste123");
+    @Order(2)
+    void login() {
+        User user = new User();
+        user.setUsername("Fabio");
+        user.setPassword("olaola");
 
-        //Criacao da lista e adicao de um novo membro
-        List<User> lista = new ArrayList<User>();
-        lista.add(membro);
+        User test = null;
+        try {
+            test = UserRequests.login(user.getUsername(), user.getPassword());
 
-        //Criacao do projeto
-        Project project = new Project();
-        project.setMembers(lista);
-
-        Boolean teste = false;
-
-        try{
-            teste = ProjectRequests.addMember(4, membro.getId(), project.getProjectId());
-            teste = ProjectRequests.changeRole(3, membro.getId(), project.getProjectId());
-        }catch(IOException | APIResponseException e){
+        } catch (IOException e) {
             fail(e.getMessage());
         }
 
-        assertNotNull(teste);
-        assertTrue(teste);
+        assertNotNull(test);
+        //assertEquals(true, test);
     }
 
     @Test
-    void removeMember() {
-        //Criacao de um User
-        User membro = new User();
-        membro.setUsername("Fabio");
-        membro.setPassword("teste123");
+    @Order(7)
+    void logoff() {
+        User user = new User();
+        user.setUsername("Fabio");
+        user.setPassword("olaola");
 
-        //Criacao de um lista e adicao de um novo Membro
-        List<User> lista = new ArrayList<User>();
-        lista.add(membro);
+        boolean test = false;
+        try {
+            test = UserRequests.logoff();
 
-        //Criacao do Projeto e adicao da lista de membros
-        Project project = new Project();
-        project.setMembers(lista);
-
-        boolean teste = false;
-
-        try{
-            teste = ProjectRequests.removeMember(membro.getId(), project.getProjectId());
-        }catch(IOException | APIResponseException e){
+        } catch (IOException e) {
             fail(e.getMessage());
         }
 
-        assertNotNull(teste);
-        assertTrue(teste);
+        assertTrue(test);
+        //assertEquals(true, test);
+    }
+
+    @Test
+    @Order(6)
+    void projects() {
+    }
+
+    @Test
+    @Order(8)
+    void resetMail() {
+        String mail = "hugo@123";
+        boolean test = false;
+        try {
+            test = UserRequests.resetMail(mail);
+
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+        assertTrue(test);
+        //assertEquals(true, test);
+    }
+
+    @Test
+    @Order(5)
+    void rename() {
+        User user = new User();
+        user.setUsername("Fabio");
+        user.setPassword("olaola");
+        String name = "Fabois";
+        String test = null;
+        try {
+            test = UserRequests.rename(name);
+
+        } catch (IOException e) {
+            fail(e.getMessage());
+        } catch (APIResponseException e) {
+            e.printStackTrace();
+        }
+
+        assertNotNull(test);
+        //assertEquals(name, test);
+    }
+
+    @Test
+    @Order(4)
+    void repass() {
+        User user = new User();
+        user.setUsername("Fabio");
+        user.setPassword("olaola");
+        String pass = "adeus";
+        boolean test = false;
+        try {
+            test = UserRequests.repass(pass);
+
+        } catch (IOException e) {
+            fail(e.getMessage());
+        } catch (APIResponseException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue(test);
+        //assertEquals(true, test);
+    }
+
+    @Test
+    @Order(3)
+    void search() {
+        String name = "Hugo";
+        User test = null;
+        try {
+
+            test = UserRequests.search(name);
+
+        } catch (IOException | APIResponseException e) {
+            fail(e.getMessage());
+
+        }
+
+        User hugo = new User(2,"Hugo", "hugo@123", "071eee15edbb1d4493177690b3734054");
+        assertNotNull(test);
+        //assertEquals(hugo, test);
+
     }
 }
