@@ -47,6 +47,26 @@ class BugRequestsTest {
     }
 
     @Test
+    void addBug_NoDescription() {
+        Bug b = new Bug();
+        b.setCreator("TesTer");
+        b.setTitle("Teste");
+        b.setType(Type.CompilationError.toString());
+        b.setPriority(Priority.Medium.toString());
+        b.setProject("test");
+
+        boolean test = false;
+        try {
+            test = BugRequests.addBug(b.getTitle(),b.getDesc(),1, null, 1, 2);
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+        assertNotNull(test);
+        //assertEquals(true, test);
+    }
+
+    @Test
     void editBug() {
 
 
