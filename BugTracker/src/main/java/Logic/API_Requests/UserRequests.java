@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class UserRequests {
 
     public static User registar(String username, String password, String email) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/update/user/register");
+        URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/register");
         String params = "uName="+username+"&email="+email+"&pass="+password;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -69,7 +69,7 @@ public class UserRequests {
         }
     }
 
-    public static boolean logoff(String username, String password) throws IOException {
+    public static boolean logoff() throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/get/user/logoff");
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -81,7 +81,10 @@ public class UserRequests {
         ObjectMapper mapper = new ObjectMapper();
         try {
             String resp = mapper.readValue(in, String.class);
-            return true;
+            if(resp.equals("Success")){
+                return true;
+            }
+            return false;
         }catch (Exception e){
             return false;
         }finally{
@@ -91,20 +94,14 @@ public class UserRequests {
 
     public static List<Project> projects() throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/get/user/projects");
-        String params = "";
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
         con.setRequestMethod("POST");
         con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
         con.setRequestProperty( "charset", "utf-8");
-        con.setRequestProperty( "Content-Length", Integer.toString( params.getBytes(StandardCharsets.UTF_8).length));
-        try( DataOutputStream wr = new DataOutputStream( con.getOutputStream())) {
-            wr.write( params.getBytes(StandardCharsets.UTF_8) );
-        }
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        APIResponse resp = mapper.readValue(in, APIResponse.class);
         try {
             List<Project> rProjs = mapper.readValue(in,  mapper.getTypeFactory().constructCollectionType(List.class, Project.class));
             return rProjs;
@@ -132,6 +129,9 @@ public class UserRequests {
         ObjectMapper mapper = new ObjectMapper();
         try {
             String resp = mapper.readValue(in, String.class);
+            if(resp.equals("exist")){
+                return false;
+            }
             return true;
         }catch (Exception e){
             return false;
@@ -141,7 +141,7 @@ public class UserRequests {
     }
 
     public static String rename(String newName) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/update/user/rename");
+        URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/rename");
         String params = "newName="+newName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -166,7 +166,7 @@ public class UserRequests {
     }
 
     public static boolean repass(String newPass) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/update/user/pass");
+        URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/pass");
         String params = "newPass="+newPass;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -182,6 +182,9 @@ public class UserRequests {
         ObjectMapper mapper = new ObjectMapper();
         try {
             String resp = mapper.readValue(in, String.class);
+            if(resp.equals("Login errado") || resp.equals("Falta de dados")){
+                return false;
+            }
             return true;
         }catch (Exception e){
             return false;
@@ -209,7 +212,7 @@ public class UserRequests {
             User rUser = mapper.readValue(in, User.class);
             return rUser;
         } catch (Exception e){
-            throw new IOException(e.getMessage());
+            return null;
         }finally{
             in.close();
         }
