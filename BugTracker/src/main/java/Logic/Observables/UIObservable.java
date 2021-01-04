@@ -35,6 +35,7 @@ public class UIObservable {
     
     public UIObservable(){
         propertyChangeSupport = new PropertyChangeSupport(this);
+        loggedUser = new UserManagement(null);
         startAppication();
     }
 
@@ -82,16 +83,36 @@ public class UIObservable {
         return userProjects.getProjs();
     }
 
-    public void addProject(String project_name){
+    public Project addProject(String project_name){
+        Project project = null;
         try {
-            if(ProjectRequests.addProject(project_name)) {
+            project = userProjects.addProject(project_name);
+            if(project != null) {
                 disparaEventos(defineEventos(PropsID.PROJECT_ADDED));
             }
-        }catch (IOException | APIResponseException ex){
+        } catch (Exception e) {
             disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
-            setMessage("Fail to add project: "+ex);
+            setMessage("Fail to add project: "+e);
         }
+        return project;
+    }
 
+    public void newModule(int pos, String moduleName){
+        try{
+            userProjects.newModule(pos,moduleName);
+        }catch (Exception e){
+            disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
+            setMessage("Error adding module: "+e);
+        }
+    }
+
+    public void removeModule(int posModule, int posProject){
+        try{
+            userProjects.removeModule(posModule,posProject);
+        }catch (Exception e){
+            disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
+            setMessage("Error removing module: "+e);
+        }
     }
     
     //funcoes estados
@@ -101,34 +122,102 @@ public class UIObservable {
     }
     
     public void signIn(String username, String password){
-        loggedUser.login(username, password);
-        if(loggedUser != null){
-            actualScreen = Screens.OPERATIONS;
-            actualSubScreen = Screens.DASHBOARD;
-            disparaEventos(defineEventos(PropsID.CHANGE_SCREEN));
-        }
-        else{
+        try {
+            loggedUser.login(username, password);
+            if(loggedUser.getUsr() != null){
+                actualScreen = Screens.OPERATIONS;
+                actualSubScreen = Screens.DASHBOARD;
+                disparaEventos(defineEventos(PropsID.CHANGE_SCREEN,PropsID.GET_PROJECTS));
+            }
+            else{
+                disparaEventos(defineEventos(PropsID.LOGIN_FAIL));
+                setMessage("Invalid login");
+            }
+        } catch (IOException e) {
             disparaEventos(defineEventos(PropsID.LOGIN_FAIL));
-            setMessage("Invalid login");
+            setMessage("Something went wrong: "+e);
         }
+
     }
 
     public void signUp(String username, String password, String email){
-        loggedUser.registar(username, password, email);
-        if(loggedUser.getUsr() != null){
-            disparaEventos(defineEventos(PropsID.USER_REG_SUCCESS));
-            setMessage("Successfully registered!");
-        }
-        else{
+
+        try {
+            loggedUser.registar(username, password, email);
+            if(loggedUser.getUsr() != null){
+                disparaEventos(defineEventos(PropsID.USER_REG_SUCCESS));
+                setMessage("Successfully registered!");
+            }
+            else{
+                disparaEventos(defineEventos(PropsID.USER_REG_FAIL));
+                setMessage("Something went wrong!");
+            }
+        } catch (IOException e) {
             disparaEventos(defineEventos(PropsID.USER_REG_FAIL));
-            setMessage("Something went wrong!");
+            setMessage("Something went wrong: "+e);
         }
+
     }
 
     public void signOut(){
-        actualScreen = Screens.LOGIN;
-        actualSubScreen = null;
-        disparaEventos(defineEventos(PropsID.CHANGE_SCREEN));
+        try {
+            if(loggedUser.logoff()){
+                actualScreen = Screens.LOGIN;
+                actualSubScreen = null;
+                disparaEventos(defineEventos(PropsID.CHANGE_SCREEN));
+            }else{
+                disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
+                setMessage("Error logging out");
+            }
+
+        } catch (IOException e) {
+            disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
+            setMessage("Error logging out: "+e);
+        }
+    }
+
+    public void rename(String username){
+        try{
+            if(loggedUser.rename(username)){
+                setMessage("Username updated");
+            }
+            else{
+                disparaEventos(defineEventos(PropsID.ERROR_EDIT_USER));
+                setMessage("Error updating username");
+            }
+        }catch (Exception e){
+            disparaEventos(defineEventos(PropsID.ERROR_EDIT_USER));
+            setMessage("Error updating username: "+e);
+        }
+    }
+
+    public void resetMail(String email){
+        try{
+            if(loggedUser.resetMail(email)){
+                setMessage("Email updated");
+            }
+            else{
+                disparaEventos(defineEventos(PropsID.ERROR_EDIT_USER));
+                setMessage("Error updating email");
+            }
+        }catch (Exception e){
+            disparaEventos(defineEventos(PropsID.ERROR_EDIT_USER));
+            setMessage("Error updating email: "+e);
+        }
+    }
+
+    public void repass(String newPassword){
+        try {
+            if(loggedUser.repass(newPassword)){
+                setMessage("Password updated");
+            }else{
+                disparaEventos(defineEventos(PropsID.ERROR_EDIT_USER));
+                setMessage("Error updating password");
+            }
+        } catch (Exception e) {
+            disparaEventos(defineEventos(PropsID.ERROR_EDIT_USER));
+            setMessage("Error updating username: "+e);
+        }
     }
     
     public void dashboard(){
