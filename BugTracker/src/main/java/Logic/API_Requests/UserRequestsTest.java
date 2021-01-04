@@ -1,22 +1,17 @@
 package Logic.API_Requests;
 
 import Logic.Exceptions.APIResponseException;
-import Logic.Project;
 import Logic.User;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
 public class UserRequestsTest {
 
     @Test
-    @Order(1)
     void registar() throws IOException {
         User user = new User();
         user.setUsername("TesTer");
@@ -38,9 +33,9 @@ public class UserRequestsTest {
     }
 
     @Test
-    @Order(2)
     void login_Upper() {
         User user = new User();
+
         user.setUsername("TESTER");
         user.setPassword("testerpass");
 
@@ -56,7 +51,6 @@ public class UserRequestsTest {
         //assertEquals(true, test);
     }
     @Test
-    @Order(2)
     void login_Lower() {
         User user = new User();
         user.setUsername("tester");
@@ -74,7 +68,6 @@ public class UserRequestsTest {
         //assertEquals(true, test);
     }
     @Test
-    @Order(2)
     void login_Mix() {
         User user = new User();
         user.setUsername("TesteR");
@@ -93,7 +86,6 @@ public class UserRequestsTest {
     }
 
     @Test
-    @Order(2)
     void login_failName() {
         User user = new User();
         user.setUsername("Tedter");
@@ -112,7 +104,6 @@ public class UserRequestsTest {
     }
 
     @Test
-    @Order(2)
     void login_failPass() {
         User user = new User();
         user.setUsername("Tedter");
@@ -131,9 +122,26 @@ public class UserRequestsTest {
     }
 
     @Test
-    @Order(6)
+    void logoff() {
+        User user = new User();
+        user.setUsername("Fabio");
+        user.setPassword("olaola");
+
+        boolean test = false;
+        try {
+            test = UserRequests.logoff();
+
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+        assertTrue(test);
+        //assertEquals(true, test);
+    }
+
+    @Test
     void projects() {
-        List<Project> listP = null;
+      List<Project> listP = null;
         try {
             listP = UserRequests.projects();
         } catch (IOException e) {
@@ -141,12 +149,9 @@ public class UserRequestsTest {
         }
 
         assertNotNull(listP);
-
-
     }
 
     @Test
-    @Order(8)
     void resetMail() {
         String mail = "test@gmail.com";
         boolean test = false;
@@ -162,7 +167,6 @@ public class UserRequestsTest {
     }
 
     @Test
-    @Order(8)
     void resetMail_wrong() {
         String mail = "tet@gmail.com";
         boolean test = false;
@@ -178,7 +182,6 @@ public class UserRequestsTest {
     }
 
     @Test
-    @Order(5)
     void rename() {
         User user = new User();
         user.setUsername("Fabio");
@@ -193,14 +196,12 @@ public class UserRequestsTest {
         } catch (APIResponseException e) {
             e.printStackTrace();
         }
-        String nome = "Fabiois";
 
-        assertEquals(nome, test);
+        assertNotNull(test);
         //assertEquals(name, test);
     }
 
     @Test
-    @Order(4)
     void repass() {
         User user = new User();
         user.setUsername("Fabio");
@@ -221,9 +222,8 @@ public class UserRequestsTest {
     }
 
     @Test
-    @Order(3)
     void search() {
-        String name = "Neves";
+        String name = "Tester";
         User test = null;
         try {
 
@@ -234,29 +234,9 @@ public class UserRequestsTest {
 
         }
 
-        User hugo = new User(2,"Hugo", "hugo@123", "071eee15edbb1d4493177690b3734054");
+        User hugo = new User(1,"tester", "test@gmail.com", "ba0826751cd40a5b19189a17571fd619");
         assertNotNull(test);
         //assertEquals(hugo, test);
 
     }
-
-    @Test
-    @Order(7)
-    void logoff() {
-        User user = new User();
-        user.setUsername("Fabio");
-        user.setPassword("olaola");
-
-        boolean test = false;
-        try {
-            test = UserRequests.logoff(user.getUsername(), user.getPassword());
-
-        } catch (IOException e) {
-            fail(e.getMessage());
-        }
-
-        assertTrue(test);
-        //assertEquals(true, test);
-    }
-
 }

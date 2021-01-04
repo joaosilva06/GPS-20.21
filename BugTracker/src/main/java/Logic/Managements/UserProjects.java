@@ -1,17 +1,20 @@
 package Logic.Managements;
 
 import Logic.API_Requests.ProjectRequests;
+import Logic.API_Requests.UserRequests;
 import Logic.Exceptions.APIResponseException;
+import Logic.Module;
 import Logic.Project;
 import Logic.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class UserProjects {
 
-    private final List<Project> projs;
+    private List<Project> projs;
     private User usr;
     private int projectsId = 0;
 
@@ -21,7 +24,18 @@ public class UserProjects {
     }
 
     public List<Project> getProjs() {
-        return projs;
+        try {
+            projs = UserRequests.projects();
+            return projs;
+        }catch (IOException e){
+            //uma callback para a interface
+        }
+        return null;
+
+    }
+
+    public void setProjs(List<Project> proj){
+        this.projs = proj;
     }
 
     public void projectBugs(int pos){
@@ -41,6 +55,17 @@ public class UserProjects {
         int id_proj = projs.get(pos).getProjectId();
         try {
             projs.get(pos).setModules(ProjectRequests.projectModules(id_proj));
+        }catch (IOException e){
+            //uma callback para a interface
+        }catch (APIResponseException e){
+            //callback
+        }
+    }
+
+    public void projectMembers(int pos){
+        int id_proj = projs.get(pos).getProjectId();
+        try {
+            projs.get(pos).setMembers(ProjectRequests.projectMembers(id_proj));
         }catch (IOException e){
             //uma callback para a interface
         }catch (APIResponseException e){
@@ -92,6 +117,20 @@ public class UserProjects {
         }
     }
 
+    //remove module
+    public void removeModule(int posModule, int posProject){
+        List<Module> modules = projs.get(posProject).getModules();
+        int id_mod = modules.get(posModule).getId();
+        try {
+            if(ProjectRequests.removeModule(id_mod)){
+                projs.get(posProject).getModules().remove(posModule);
+            }
+        }catch (IOException e){
+            //uma callback para a interface
+        }catch (APIResponseException e){
+            //callback
+        }
+    }
 
 
 }
