@@ -13,7 +13,7 @@ class BugRequestsTest {
     void getBug() {
         Bug test = null;
         try {
-            test = BugRequests.getBug(1, 1);
+            test = BugRequests.getBug(1);
         } catch (IOException e) {
             fail(e.getMessage());
         }
@@ -48,9 +48,6 @@ class BugRequestsTest {
 
     @Test
     void editBug() {
-        Bug b = new Bug(6,"", Type.CompilationError.toString(), Status.ToSolve.toString(), Priority.Medium.toString(),
-                "olaola", null ,"ola", "test");
-
 
 
     }
