@@ -8,6 +8,8 @@ package Logic.Observables;
 import Logic.API_Requests.ProjectRequests;
 import Logic.API_Requests.UserRequests;
 import Logic.Exceptions.APIResponseException;
+import Logic.Managements.UserManagement;
+import Logic.Managements.UserProjects;
 import Logic.Project;
 import Logic.User;
 
@@ -28,8 +30,8 @@ public class UIObservable {
     Screens actualScreen;
     Screens actualSubScreen;
     String message;
-    User loggedUser;
-    List<Project> projectList;
+    UserManagement loggedUser;
+    UserProjects userProjects;
     
     public UIObservable(){
         propertyChangeSupport = new PropertyChangeSupport(this);
@@ -45,11 +47,11 @@ public class UIObservable {
     }
 
     public void setProjects(List<Project> list){
-        this.projectList = list;
+        this.userProjects.setProjs(list);
     }
 
     public List<Project> getProjectList() {
-        return projectList;
+        return userProjects.getProjs();
     }
 
     public Screens getActualScreen(){
@@ -77,14 +79,7 @@ public class UIObservable {
 
     //dados
     public List<Project> getProjectsFromApi(){
-        List<Project> projects = new ArrayList<>();
-        try{
-            projects = UserRequests.projects("p","p");
-        }catch (IOException ex){
-            disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
-            setMessage("Fail to get projects list: "+ex);
-        }
-        return projects;
+        return userProjects.getProjs();
     }
 
     public void addProject(String project_name){
@@ -106,39 +101,28 @@ public class UIObservable {
     }
     
     public void signIn(String username, String password){
-        try{
-            loggedUser = UserRequests.login(username, password);
-            if(loggedUser != null){
-                actualScreen = Screens.OPERATIONS;
-                actualSubScreen = Screens.DASHBOARD;
-                disparaEventos(defineEventos(PropsID.CHANGE_SCREEN));
-            }
-            else{
-                disparaEventos(defineEventos(PropsID.LOGIN_FAIL));
-                setMessage("Invalid login");
-            }
-        }catch (IOException ex){
+        loggedUser.login(username, password);
+        if(loggedUser != null){
+            actualScreen = Screens.OPERATIONS;
+            actualSubScreen = Screens.DASHBOARD;
+            disparaEventos(defineEventos(PropsID.CHANGE_SCREEN));
+        }
+        else{
             disparaEventos(defineEventos(PropsID.LOGIN_FAIL));
             setMessage("Invalid login");
         }
     }
 
     public void signUp(String username, String password, String email){
-        try{
-            User u = UserRequests.registar(username, password, email);
-            if(u != null){
-                disparaEventos(defineEventos(PropsID.USER_REG_SUCCESS));
-                setMessage("Successfully registered!");
-            }
-            else{
-                disparaEventos(defineEventos(PropsID.USER_REG_FAIL));
-                setMessage("Something went wrong!");
-            }
-        }catch (IOException ex){
-            disparaEventos(defineEventos(PropsID.USER_REG_FAIL));
-            setMessage("Something went wrong: "+ex);
+        loggedUser.registar(username, password, email);
+        if(loggedUser.getUsr() != null){
+            disparaEventos(defineEventos(PropsID.USER_REG_SUCCESS));
+            setMessage("Successfully registered!");
         }
-
+        else{
+            disparaEventos(defineEventos(PropsID.USER_REG_FAIL));
+            setMessage("Something went wrong!");
+        }
     }
 
     public void signOut(){

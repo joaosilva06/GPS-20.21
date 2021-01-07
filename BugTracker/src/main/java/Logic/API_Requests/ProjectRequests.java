@@ -117,6 +117,9 @@ public class ProjectRequests{
         ObjectMapper mapper = new ObjectMapper();
         try {
             String resp = mapper.readValue(in, String.class);
+            if(resp.equals("no rows selected") || resp.equals("Incomplete data")){
+                return false;
+            }
             return true;
         }catch (Exception e){
             return false;
@@ -127,7 +130,7 @@ public class ProjectRequests{
 
     public static boolean removeProject(int project_id) throws IOException, APIResponseException {
 
-        URL url = new URL("http://localhost/GPS_BT/index.php/get/project/remove");//nao existe, mas devia
+        URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/remove");//nao existe, mas devia
 
         String params = "projID="+project_id;
 
@@ -144,6 +147,9 @@ public class ProjectRequests{
         ObjectMapper mapper = new ObjectMapper();
         try {
             String resp = mapper.readValue(in, String.class);
+            if(resp.equals("Erro ao remover o projeto")){
+                return false;
+            }
             return true;
         }catch (Exception e){
             return false;
@@ -154,7 +160,7 @@ public class ProjectRequests{
 
     public static boolean newModule(int project_id, String moduleName) throws IOException, APIResponseException {
 
-        URL url = new URL("http://localhost/GPS_BT/index.php/update/module/new");
+        URL url = new URL("http://localhost/GPS_BT/index.php/Update/module/new");
 
         String params = "projID="+project_id+"&moduleName="+moduleName;
 
@@ -171,6 +177,9 @@ public class ProjectRequests{
         ObjectMapper mapper = new ObjectMapper();
         try {
             String resp = mapper.readValue(in, String.class);
+            if(resp.equals("Error adding new module") || resp.equals("register incompleto")){
+                return false;
+            }
             return true;
         }catch (Exception e){
             return false;
@@ -180,7 +189,7 @@ public class ProjectRequests{
     }
 
     public static boolean addMember(int role, int user, int proj) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/update/project/addMember");
+        URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/addMember");
         String params = "role="+role+"&user="+user+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -196,6 +205,9 @@ public class ProjectRequests{
         ObjectMapper mapper = new ObjectMapper();
         try {
             String resp = mapper.readValue(in, String.class);
+            if(resp.equals("no rows selected") || resp.equals("access denied") || resp.equals("Incomplete data")){
+                return false;
+            }
             return true;
         }catch (Exception e){
             return false;
@@ -205,7 +217,7 @@ public class ProjectRequests{
     }
 
     public static boolean changeRole(int role, int user, int proj) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/update/project/role");
+        URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/role");
         String params = "role="+role+"&user="+user+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -221,6 +233,9 @@ public class ProjectRequests{
         ObjectMapper mapper = new ObjectMapper();
         try {
             String resp = mapper.readValue(in, String.class);
+            if(resp.equals("no rows selected") || resp.equals("access denied") || resp.equals("Incomplete data")){
+                return false;
+            }
             return true;
         }catch (Exception e){
             return false;
@@ -230,7 +245,7 @@ public class ProjectRequests{
     }
 
     public static boolean removeMember(int user, int proj) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/update/project/role");
+        URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/removeMember");
         String params = "user="+user+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -246,7 +261,39 @@ public class ProjectRequests{
         ObjectMapper mapper = new ObjectMapper();
         try {
             String resp = mapper.readValue(in, String.class);
+            if(resp.equals("no rows selected") || resp.equals("access denied") || resp.equals("Incomplete data")){
+                return false;
+            }
             return true;
+        }catch (Exception e){
+            return false;
+        }finally{
+            in.close();
+        }
+    }
+
+    //remove module
+    public static boolean removeModule(int modId) throws IOException, APIResponseException {
+        URL url = new URL("http://localhost/GPS_BT/index.php/Update/module/remove");
+        String params = "idModule="+modId;
+
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setDoOutput(true);
+        con.setRequestMethod("POST");
+        con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+        con.setRequestProperty( "charset", "utf-8");
+        con.setRequestProperty( "Content-Length", Integer.toString( params.getBytes(StandardCharsets.UTF_8).length));
+        try( DataOutputStream wr = new DataOutputStream( con.getOutputStream())) {
+            wr.write( params.getBytes(StandardCharsets.UTF_8) );
+        }
+        InputStream in = con.getInputStream();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String resp = mapper.readValue(in, String.class);
+            if(resp.equals("Deleted")){
+                return true;
+            }
+            return false;
         }catch (Exception e){
             return false;
         }finally{
