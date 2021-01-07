@@ -47,6 +47,14 @@ public class LateralMenu extends BorderPane {
         logout.setAlignment(Pos.BOTTOM_CENTER);
         setBottom(logout);
 
+        observable.registaPropertyChangeListener(PropsID.GET_PROJECTS, new PropertyChangeListenerJFXAdapter() {
+            @Override
+            public void onChange(PropertyChangeEvent evt) {
+                observable.setProjects(observable.getProjectsFromApi());
+                System.out.println(observable.getProjectList());
+            }
+        });
+
         observable.registaPropertyChangeListener(PropsID.PROJECT_ADDED, new PropertyChangeListenerJFXAdapter() {
             @Override
             public void onChange(PropertyChangeEvent evt) {

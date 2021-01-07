@@ -77,7 +77,7 @@ public class UserProjects {
         }
     }
 
-    public void addProject(String project_name){
+    public Project addProject(String project_name) throws Exception {
         int usr_id = usr.getId();
         Date date=java.util.Calendar.getInstance().getTime();
         Project p = new Project(projectsId++,project_name,date);
@@ -89,11 +89,11 @@ public class UserProjects {
                 projectsId--;
             }
 
-        }catch (IOException e){
-            //uma callback para a interface
-        }catch (APIResponseException e){
-            //callback
+        }catch (IOException | APIResponseException e) {
+            throw new Exception(e.getMessage());
         }
+
+        return p;
     }
 
     public void removeProject(int pos){
@@ -109,7 +109,7 @@ public class UserProjects {
         }
     }
 
-    public void newModule(int pos, String moduleName){
+    public void newModule(int pos, String moduleName) throws Exception {
         int usr_id = usr.getId();
         int id_proj = projs.get(pos).getProjectId();
         try {
@@ -117,15 +117,13 @@ public class UserProjects {
             if(ProjectRequests.newModule(id_proj, moduleName,1)){
                 projs.get(pos).addModule(moduleName);
             }
-        }catch (IOException e){
-            //uma callback para a interface
-        }catch (APIResponseException e){
-            //callback
+        }catch (IOException | APIResponseException e){
+            throw new Exception(e.getMessage());
         }
     }
 
     //remove module
-    public void removeModule(int posModule, int posProject){
+    public void removeModule(int posModule, int posProject) throws Exception {
         List<Module> modules = projs.get(posProject).getModules();
         int id_mod = modules.get(posModule).getId();
         try {
@@ -133,10 +131,8 @@ public class UserProjects {
             if(ProjectRequests.removeModule(id_mod,1)){
                 projs.get(posProject).getModules().remove(posModule);
             }
-        }catch (IOException e){
-            //uma callback para a interface
-        }catch (APIResponseException e){
-            //callback
+        }catch (IOException | APIResponseException e){
+            throw new Exception(e.getMessage());
         }
     }
 
