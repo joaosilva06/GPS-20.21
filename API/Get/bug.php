@@ -4,7 +4,7 @@ if(isset($partes[2])){
     switch($partes[2]){
 
         case "request":
-            if(isset($_SESSION["id"]) and isset($_POST["bugId"])){
+            if(isset($_POST["id"]) and isset($_POST["bugId"])){
                 $query = "SELECT * FROM Bug 
                 Inner join Project On Project.idProject = Bug.Project_idProject 
                 Inner Join Type On Type.idType = Bug.Type_idType 
@@ -43,7 +43,7 @@ if(isset($partes[2])){
             break;
             
         case "check":
-            if(isset($_POST["idBug"]) and isset($_SESSION["id"])){
+            if(isset($_POST["idBug"]) and isset($_POST["id"])){
                 $query = "SELECT descripcion FROM bug WHERE idBug = ?";
                 $sql = mysqli_prepare($ligacao, $query);
                 mysqli_stmt_bind_param($sql,'i',$_POST["bugId"]);
