@@ -6,6 +6,7 @@ import Logic.API_Requests.ProjectRequests;
 import Logic.Exceptions.APIResponseException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectBugs {
@@ -16,6 +17,9 @@ public class ProjectBugs {
     public ProjectBugs(Project proj) throws IOException, APIResponseException {
         this.proj = proj;
         bugs = ProjectRequests.projectBugs(this.proj.getProjectId());
+        if(bugs == null){
+            bugs = new ArrayList<>();
+        }
     }
 
     public List<Bug> getBugs(){return bugs;}
