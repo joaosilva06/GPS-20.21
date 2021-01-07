@@ -32,6 +32,7 @@ public class UIObservable {
     String message;
     UserManagement loggedUser;
     UserProjects userProjects;
+    String username;
     
     public UIObservable(){
         propertyChangeSupport = new PropertyChangeSupport(this);
@@ -60,6 +61,14 @@ public class UIObservable {
             setMessage("Erro ao obter projetos: "+e);
         }
         return null;
+    }
+
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    public String getUsername(){
+        return this.username;
     }
 
     public Screens getActualScreen(){
@@ -96,18 +105,17 @@ public class UIObservable {
         return null;
     }
 
-    public Project addProject(String project_name){
-        Project project = null;
+    public void addProject(String project_name){
+        Boolean project = false;
         try {
             project = userProjects.addProject(project_name);
-            if(project != null) {
+            if(project) {
                 disparaEventos(defineEventos(PropsID.PROJECT_ADDED));
             }
         } catch (Exception e) {
             disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
             setMessage("Fail to add project: "+e);
         }
-        return project;
     }
 
     public void newModule(int pos, String moduleName){
@@ -138,9 +146,11 @@ public class UIObservable {
         try {
             loggedUser.login(username, password);
             if(loggedUser.getUsr() != null){
+                userProjects.setUsr(loggedUser.getUsr());
+                setUsername(loggedUser.getUsr().getUsername());
                 actualScreen = Screens.OPERATIONS;
                 actualSubScreen = Screens.DASHBOARD;
-                disparaEventos(defineEventos(PropsID.CHANGE_SCREEN,PropsID.GET_PROJECTS));
+                disparaEventos(defineEventos(PropsID.CHANGE_SCREEN,PropsID.GET_USER_DATA));
             }
             else{
                 disparaEventos(defineEventos(PropsID.LOGIN_FAIL));

@@ -6,17 +6,21 @@ import Logic.Observables.Screens;
 import Logic.Observables.UIObservable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
+import java.util.Optional;
 
 
 public class ProfileUI extends BorderPane {
@@ -72,6 +76,7 @@ public class ProfileUI extends BorderPane {
 
     class Form extends VBox{
         UIObservable observable;
+        String passwordText = "";
         public Form(UIObservable obs){
             this.observable = obs;
             TextField username = new TextField ();
@@ -101,7 +106,61 @@ public class ProfileUI extends BorderPane {
             saveBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    observable.rename(username.getText());
+                    if(!username.getText().trim().isEmpty()){
+                        observable.rename(username.getText());
+                    }
+
+                    if(!mail.getText().trim().isEmpty()){
+                        observable.resetMail(mail.getText());
+                    }
+
+                    if(!passwordText.trim().isEmpty()){
+                        observable.repass(passwordText);
+                    }
+
+                }
+            });
+
+            lbNewPass.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Dialog dialog = new Dialog();
+                    dialog.getDialogPane().setStyle("-fx-pref-height:200px");
+                    dialog.setTitle("Change Password");
+                    dialog.setHeaderText("Enter new passowrd");
+
+                    // Set the button types.
+                    ButtonType confirmBtn = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+                    dialog.getDialogPane().getButtonTypes().addAll(confirmBtn, ButtonType.CANCEL);
+
+                    // Create the username and password labels and fields.
+                    BorderPane pane = new BorderPane();
+                    pane.setPadding(new Insets(20, 20, 20, 20));
+
+                    TextField password = new TextField();
+                    password.setPromptText("New Password");
+                    password.setPrefSize(300, 40);
+                    password.getStyleClass().add("inputsDialogs");
+                    pane.setCenter(password);
+
+                    // Enable/Disable login button depending on whether a username was entered.
+                    Node confirm = dialog.getDialogPane().lookupButton(confirmBtn);
+                    confirm.setDisable(true);
+
+                    // Do some validation (using the Java 8 lambda syntax).
+                    password.textProperty().addListener((observable, oldValue, newValue) -> {
+                        confirm.setDisable(newValue.trim().isEmpty());
+                    });
+
+                    dialog.getDialogPane().setContent(pane);
+
+                    Optional result = dialog.showAndWait();
+
+                    result.ifPresent(module -> {
+                        if(result.get() == confirmBtn){
+                            passwordText = password.getText();
+                        }
+                    });
                 }
             });
         }

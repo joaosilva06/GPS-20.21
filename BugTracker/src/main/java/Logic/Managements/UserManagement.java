@@ -43,17 +43,8 @@ public class UserManagement {
     }
 
     public boolean logoff() throws IOException {
-        try {
-            boolean suc = UserRequests.logoff();
-            if(suc){
-                this.usr = null;
-                return true;
-            }
-
-        }catch (IOException e){
-            throw new IOException(e.getMessage());
-        }
-        return false;
+        this.usr = null;
+        return true;
     }
 
     public boolean resetMail(String email) throws IOException {
