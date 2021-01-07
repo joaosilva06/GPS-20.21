@@ -12,9 +12,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class BugRequests {
-    public static Bug getBug(int bug) throws IOException {
+    public static Bug getBug(int bug, int userId) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/get/bug/request");
-        String params = "bugId=" + bug;
+        String params = "id="+userId+"&bugId=" + bug;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
