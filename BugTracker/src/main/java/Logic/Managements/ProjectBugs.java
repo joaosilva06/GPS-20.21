@@ -28,7 +28,7 @@ public class ProjectBugs {
     public void editBug(int pos, String desc, String title){
         try{
             Bug b = bugs.get(pos);
-            boolean suc = BugRequests.editBug(desc, title, b.getId());
+            boolean suc = BugRequests.editBug(desc, title, b.getId(),1);
             if(suc){
                 b.setDesc(desc);
                 b.setTitle(title);
@@ -42,7 +42,7 @@ public class ProjectBugs {
 
     public void addBug(Bug b, Priority prio, Type t, Integer mod){
         try{
-            boolean suc = BugRequests.addBug(b.getDesc(), b.getTitle(), proj.getProjectId(), mod, t.ordinal(), prio.ordinal());
+            boolean suc = BugRequests.addBug(b.getDesc(), b.getTitle(), proj.getProjectId(), mod, t.ordinal(), prio.ordinal(),1);
             if(suc){
                 bugs.add(b);
             }else{
@@ -56,7 +56,7 @@ public class ProjectBugs {
     public void markAsSolved(int pos){
         try{
             int id = bugs.get(pos).getId();
-            boolean suc = BugRequests.solve(id, proj.getProjectId());
+            boolean suc = BugRequests.solve(id, proj.getProjectId(),1);
             if(suc){
                 bugs.get(pos).setStatus(Status.Solved.toString());
             }else{

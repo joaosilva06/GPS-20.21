@@ -112,7 +112,7 @@ public class UIObservable {
 
     public void newModule(int pos, String moduleName){
         try{
-            userProjects.newModule(pos,moduleName);
+            userProjects.newModule(pos,moduleName,loggedUser.getUsr().getId());
         }catch (Exception e){
             disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
             setMessage("Error adding module: "+e);
@@ -121,7 +121,7 @@ public class UIObservable {
 
     public void removeModule(int posModule, int posProject){
         try{
-            userProjects.removeModule(posModule,posProject);
+            userProjects.removeModule(posModule,posProject,loggedUser.getUsr().getId());
         }catch (Exception e){
             disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
             setMessage("Error removing module: "+e);
