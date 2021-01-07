@@ -39,7 +39,7 @@ class ProjectRequestsTest{
     void projectMembers() {
         //Criar Users
         User user1 = new User();
-        user1.setUsername("Fabio");
+        user1.setUsername("TesTer");
         User user2 = new User();
         user2.setUsername("Hugo");
 
@@ -144,8 +144,8 @@ class ProjectRequestsTest{
     @Test
     void addMember() {
         User user = new User();
-        user.setUsername("Fabio");
-        user.setPassword("teste123");
+        user.setUsername("TesTer");
+        user.setPassword("testerpass");
 
         Project project = new Project();
 
@@ -165,8 +165,8 @@ class ProjectRequestsTest{
     void changeRole() {
         //Criacao do User
         User membro = new User();
-        membro.setUsername("Fabio");
-        membro.setPassword("teste123");
+        membro.setUsername("TesTer");
+        membro.setPassword("testerpass");
 
         //Criacao da lista e adicao de um novo membro
         List<User> lista = new ArrayList<User>();
@@ -193,8 +193,8 @@ class ProjectRequestsTest{
     void removeMember() {
         //Criacao de um User
         User membro = new User();
-        membro.setUsername("Fabio");
-        membro.setPassword("teste123");
+        membro.setUsername("TesTer");
+        membro.setPassword("testerpass");
 
         //Criacao de um lista e adicao de um novo Membro
         List<User> lista = new ArrayList<User>();
