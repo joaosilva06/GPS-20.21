@@ -92,14 +92,16 @@ public class UserRequests {
         }
     }
 
-    public static List<Project> projects() throws IOException {
+    public static List<Project> projects(int id) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/get/user/projects");
+        String params = "id="+id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
         con.setRequestMethod("POST");
         con.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
         con.setRequestProperty( "charset", "utf-8");
+        con.setRequestProperty( "Content-Length", Integer.toString( params.getBytes(StandardCharsets.UTF_8).length));
         InputStream in = con.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -140,9 +142,9 @@ public class UserRequests {
         }
     }
 
-    public static String rename(String newName) throws IOException, APIResponseException {
+    public static String rename(String newName, int id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/rename");
-        String params = "newName="+newName;
+        String params = "id="+id+"newName="+newName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -165,9 +167,9 @@ public class UserRequests {
         }
     }
 
-    public static boolean repass(String newPass) throws IOException, APIResponseException {
+    public static boolean repass(String newPass, int id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/pass");
-        String params = "newPass="+newPass;
+        String params = "id="+id+"newPass="+newPass;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -193,9 +195,9 @@ public class UserRequests {
         }
     }
 
-    public static User search(String search) throws IOException, APIResponseException {
+    public static User search(String search, int id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/index.php/get/user/search");
-        String params = "search="+search;
+        String params = "id="+id+"search="+search;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
