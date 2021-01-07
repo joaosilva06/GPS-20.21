@@ -13,7 +13,7 @@ if(isset($partes[2])){
                 mysqli_stmt_store_result($sql); 
                 if(mysqli_stmt_num_rows($sql) > 0){
                     mysqli_stmt_fetch($sql);
-                    $_SESSION["id"] = $id;
+                    $_POST["id"] = $id;
                     $arr["id"] = $id;
                     $arr["username"] = $user;
                     $arr["password"] = $pass;
@@ -25,7 +25,7 @@ if(isset($partes[2])){
             }
             break;     
         case 'logoff':
-            if(isset($_SESSION["id"])){ 
+            if(isset($_POST["id"])){ 
                 session_destroy();
                 $msg = "Success";
             }else{
@@ -35,9 +35,9 @@ if(isset($partes[2])){
 
 
         case 'projects':
-            if(isset($_SESSION["id"])){ 
+            if(isset($_POST["id"])){ 
                 $query ="Select * From Project inner Join Member On Member.Project_idProject = Project.idProject WHERE Member.User_idUser = ?";
-                $id = $_SESSION["id"];
+                $id = $_POST["id"];
                 $sql = mysqli_prepare($ligacao,$query);
                 mysqli_stmt_bind_param($sql,'i', $id); 
                 mysqli_stmt_execute($sql);
@@ -80,7 +80,7 @@ if(isset($partes[2])){
             }
             break;
         case 'search':
-            if(isset($_SESSION["id"])){
+            if(isset($_POST["id"])){
                 if(isset($_POST["search"])){
                     $query ="Select * From User Where email = ? or userName = ?;";
                     $look = strtolower($_POST["search"]);
