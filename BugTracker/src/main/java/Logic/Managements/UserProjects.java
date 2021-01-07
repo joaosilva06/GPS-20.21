@@ -23,6 +23,14 @@ public class UserProjects {
         this.projs = null;
     }
 
+    public void setUsr(User usr) {
+        this.usr = usr;
+    }
+
+    public User getUsr() {
+        return usr;
+    }
+
     public List<Project> getProjs(int userId) throws IOException {
         try {
             //ver user id
@@ -75,23 +83,20 @@ public class UserProjects {
         }
     }
 
-    public Project addProject(String project_name) throws Exception {
+    public boolean addProject(String project_name) throws Exception {
         int usr_id = usr.getId();
-        Date date=java.util.Calendar.getInstance().getTime();
-        Project p = new Project(projectsId++,project_name,date);
+        System.out.println(usr_id);
         try {
             //ver user id
             if(ProjectRequests.addProject(project_name,this.usr.getId())) {
-                projs.add(p);
-            }else{
-                projectsId--;
+                //projs.add(p);
             }
 
         }catch (IOException | APIResponseException e) {
             throw new Exception(e.getMessage());
         }
 
-        return p;
+        return true;
     }
 
     public void removeProject(int pos){

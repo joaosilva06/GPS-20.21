@@ -17,7 +17,7 @@ public enum PropsID {
     REQUEST_FAIL("request_fail"),
     PROJECT_ADDED("project_added"),
     ERROR_EDIT_USER("error_edit_user"),
-    GET_PROJECTS("get_projects");
+    GET_USER_DATA("get_user_data");
     
     String valor;
 
