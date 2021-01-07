@@ -21,7 +21,10 @@ CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`User` (
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(256) NOT NULL,
   `dateCreateAccount` DATE NOT NULL,
-  PRIMARY KEY (`idUser`))
+  PRIMARY KEY (`idUser`),
+  UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC),
+  UNIQUE INDEX `userName_UNIQUE` (`userName` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 
 
@@ -32,7 +35,8 @@ CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Project` (
   `idProject` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `dateCreation` DATE NOT NULL,
-  PRIMARY KEY (`idProject`))
+  PRIMARY KEY (`idProject`),
+  UNIQUE INDEX `idProject_UNIQUE` (`idProject` ASC))
 ENGINE = InnoDB;
 
 
@@ -42,7 +46,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Role` (
   `idRole` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idRole`))
+  PRIMARY KEY (`idRole`),
+  UNIQUE INDEX `idRole_UNIQUE` (`idRole` ASC))
 ENGINE = InnoDB;
 
 
@@ -55,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Member` (
   `User_idUser` INT NOT NULL,
   `Project_idProject` INT NOT NULL,
   PRIMARY KEY (`idMember`),
+  UNIQUE INDEX `idMember_UNIQUE` (`idMember` ASC),
   CONSTRAINT `fk_Member_Role1`
     FOREIGN KEY (`Role_idRole`)
     REFERENCES `BugTrackerDataBase`.`Role` (`idRole`)
@@ -79,7 +85,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Status` (
   `idStatus` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idStatus`))
+  PRIMARY KEY (`idStatus`),
+  UNIQUE INDEX `idRole_UNIQUE` (`idStatus` ASC))
 ENGINE = InnoDB;
 
 
@@ -89,7 +96,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Priority` (
   `idPriority` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idPriority`))
+  PRIMARY KEY (`idPriority`),
+  UNIQUE INDEX `idRole_UNIQUE` (`idPriority` ASC))
 ENGINE = InnoDB;
 
 
@@ -99,7 +107,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Type` (
   `idType` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idType`))
+  PRIMARY KEY (`idType`),
+  UNIQUE INDEX `idRole_UNIQUE` (`idType` ASC))
 ENGINE = InnoDB;
 
 
@@ -112,6 +121,7 @@ CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Module` (
   `dateCreation` DATE NOT NULL,
   `Project_idProject` INT NOT NULL,
   PRIMARY KEY (`idModule`),
+  UNIQUE INDEX `idModule_UNIQUE` (`idModule` ASC),
   CONSTRAINT `fk_Module_Project1`
     FOREIGN KEY (`Project_idProject`)
     REFERENCES `BugTrackerDataBase`.`Project` (`idProject`)
@@ -136,6 +146,7 @@ CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Bug` (
   `Project_idProject` INT NOT NULL,
   `User_idCreator` INT NOT NULL,
   PRIMARY KEY (`idBug`),
+  UNIQUE INDEX `idBug_UNIQUE` (`idBug` ASC),
   CONSTRAINT `fk_Bug_Status1`
     FOREIGN KEY (`Status_idStatus`)
     REFERENCES `BugTrackerDataBase`.`Status` (`idStatus`)
@@ -163,27 +174,6 @@ CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Bug` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Bug_User1`
     FOREIGN KEY (`User_idCreator`)
-    REFERENCES `BugTrackerDataBase`.`User` (`idUser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `BugTrackerDataBase`.`Solver`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Solver` (
-  `Solver_idSolver` INT NOT NULL AUTO_INCREMENT,
-  `Bug_idBug` INT NOT NULL,
-  `User_idUserSolving` INT NOT NULL,
-  PRIMARY KEY (`Solver_idSolver`),
-  CONSTRAINT `fk_Bug_has_User_Bug1`
-    FOREIGN KEY (`Bug_idBug`)
-    REFERENCES `BugTrackerDataBase`.`Bug` (`idBug`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Bug_has_User_User1`
-    FOREIGN KEY (`User_idUserSolving`)
     REFERENCES `BugTrackerDataBase`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

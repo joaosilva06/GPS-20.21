@@ -3,11 +3,11 @@
 if(isset($partes[2])){
     switch($partes[2]) {
         case "rename":
-            if(isset($_SESSION["id"]) and isset($_POST["newName"])){
+            if(isset($_POST["id"]) and isset($_POST["newName"])){
                 $query = "Update User Set userName = ? Where idUser = ?";
                 $sql = mysqli_prepare($ligacao,$query);
                 $name = strtolower($_POST["newName"]);
-                mysqli_stmt_bind_param($sql,'si', $name, $_SESSION["id"]); 
+                mysqli_stmt_bind_param($sql,'si', $name, $_POST["id"]); 
                 if(mysqli_stmt_execute($sql)){
                     $msg = $name;
                 }else
@@ -18,11 +18,11 @@ if(isset($partes[2])){
         break;
             
     case "pass":
-        if(isset($_SESSION["id"]) and isset($_POST["newPass"])){ 
+        if(isset($_POST["id"]) and isset($_POST["newPass"])){ 
             $query = "Update User Set password = ? Where idUser = ?";
             $sql = mysqli_prepare($ligacao,$query);
             $pass = md5($salt . $_POST["newPass"] . $salt);
-            mysqli_stmt_bind_param($sql,'si', $pass, $_SESSION["id"]); 
+            mysqli_stmt_bind_param($sql,'si', $pass, $_POST["id"]); 
             mysqli_stmt_execute($sql);
             mysqli_stmt_bind_result($sql, $id , $name);
             mysqli_stmt_store_result($sql); 

@@ -4,7 +4,7 @@ include ("../getRole.php");
 if(isset($partes[2])){
     switch($partes[2]) {
         case 'new':
-            if(isset($_SESSION["id"]) and isset($_POST["projId"]) and isset($_POST["moduleName"])){
+            if(isset($_POST["id"]) and isset($_POST["projId"]) and isset($_POST["moduleName"])){
                 $insertQuery = "INSERT INTO Module( name, dateCreation, Project_idProject)  
                                 VALUES(?, STR_TO_DATE(?, '%Y %m %d'),?)";
                 $insertSQL = mysqli_prepare($ligacao, $insertQuery);
@@ -22,9 +22,9 @@ if(isset($partes[2])){
             break;
 
         case 'remove':
-            if(isset($_SESSION["id"]) and isset($_POST["idModule"]) and isset($_POST["project"])){
+            if(isset($_POST["id"]) and isset($_POST["idModule"]) and isset($_POST["project"])){
                 $query = "Delete From Module where Project_idProject = ? and idModule =  ?;";
-                $idRole = getRole($_SESSION["id"] , $_POST["project"]);
+                $idRole = getRole($_POST["id"] , $_POST["project"]);
 
                 if($idRole == 1 or $idRole == 2){
                     $sql = mysqli_prepare($ligacao, $query);

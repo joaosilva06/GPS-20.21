@@ -18,29 +18,29 @@ public class UserManagement {
         return this.usr;
     }
 
-    public void registar(String username, String password, String email){
+    public void registar(String username, String password, String email) throws IOException {
         try {
         User u = UserRequests.registar(username, password, email);
         if(u != null){
             this.usr = u;
         }
         }catch (IOException e){
-            //uma callback para a interface
+            throw new IOException(e.getMessage());
         }
     }
 
-    public void login(String username, String password){
+    public void login(String username, String password) throws IOException {
         try {
             User u = UserRequests.login(username, password);
             if(u != null){
                 this.usr = u;
             }
         }catch (IOException e){
-            //uma callback para a interface
+           throw new IOException(e.getMessage());
         }
     }
 
-    public boolean logoff(){
+    public boolean logoff() throws IOException {
         try {
             boolean suc = UserRequests.logoff();
             if(suc){
@@ -49,12 +49,12 @@ public class UserManagement {
             }
 
         }catch (IOException e){
-            //uma callback para a interface
+            throw new IOException(e.getMessage());
         }
         return false;
     }
 
-    public boolean resetMail(String email){
+    public boolean resetMail(String email) throws IOException {
         try {
             boolean suc = UserRequests.resetMail(email);
             if(suc){
@@ -62,12 +62,12 @@ public class UserManagement {
                 return true;
             }
         }catch (IOException e){
-            //uma callback para a interface
+            throw new IOException(e.getMessage());
         }
         return false;
     }
 
-    public boolean rename(String newName){
+    public boolean rename(String newName) throws Exception {
         try {
             String res = UserRequests.rename(newName);
             if(res.equals(newName)){
@@ -75,12 +75,12 @@ public class UserManagement {
                 return true;
             }
         }catch (IOException | APIResponseException e){
-            //uma callback para a interface
+            throw new Exception(e.getMessage());
         }
         return false;
     }
 
-    public boolean repass(String newPass){
+    public boolean repass(String newPass) throws Exception {
         try {
             boolean res = UserRequests.repass(newPass);
             if(res){
@@ -88,7 +88,7 @@ public class UserManagement {
                 return true;
             }
         }catch (IOException | APIResponseException e){
-            //uma callback para a interface
+            throw new Exception(e.getMessage());
         }
         return false;
     }
