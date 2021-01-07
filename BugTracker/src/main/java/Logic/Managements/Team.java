@@ -12,9 +12,18 @@ import java.io.IOException;
 public class Team {
 
     private Project proj;
+    private User usr;
 
     public Team(Project proj){
         this.proj = proj;
+    }
+
+    public User getUsr() {
+        return usr;
+    }
+
+    public void setUsr(User usr) {
+        this.usr = usr;
     }
 
     public void addMember(String search, Role role){
@@ -22,9 +31,10 @@ public class Team {
         //pedido para adicionar
         //se ocorreu sem erro adicionar ao array do proj
         try {
-            User u = UserRequests.search(search);
+            User u = UserRequests.search(search,1);
             if (u != null) {
-              if(ProjectRequests.addMember(role.ordinal(), u.getId(), proj.getProjectId())){
+                //ver user id
+              if(ProjectRequests.addMember(role.ordinal(), u.getId(), proj.getProjectId(), usr.getId())){
                 proj.getMembers().add(u);
               }
             }
@@ -38,7 +48,8 @@ public class Team {
         //pedido para remover o user com o id selecionado deste projeto
         int id = proj.getMembers().get(pos).getId();
         try {
-            if(ProjectRequests.removeMember(id, proj.getProjectId()))
+            //ver user id
+            if(ProjectRequests.removeMember(id, proj.getProjectId(), usr.getId()))
                 proj.getMembers().remove(pos);
         } catch (IOException e) {
             //uma callback para a interface
@@ -50,7 +61,8 @@ public class Team {
     public void changeRole(int pos, Role role){
         int id = proj.getMembers().get(pos).getId();
         try {
-            if(ProjectRequests.changeRole(role.ordinal(), id, proj.getProjectId()))
+            //ver user id
+            if(ProjectRequests.changeRole(role.ordinal(), id, proj.getProjectId(), usr.getId()))
                 proj.getMembers().remove(pos);
         } catch (IOException e) {
             //uma callback para a interface

@@ -13,13 +13,23 @@ public class ProjectBugs {
 
     private List<Bug> bugs;
     private Project proj;
+    private User usr = null;
+
+    public User getUsr() {
+        return usr;
+    }
+
+    public void setUsr(User usr) {
+        this.usr = usr;
+    }
 
     public ProjectBugs(Project proj) throws IOException, APIResponseException {
         this.proj = proj;
-        bugs = ProjectRequests.projectBugs(this.proj.getProjectId());
+        bugs = ProjectRequests.projectBugs(this.proj.getProjectId(), usr.getId());
         if(bugs == null){
             bugs = new ArrayList<>();
         }
+
     }
 
     public List<Bug> getBugs(){return bugs;}
@@ -28,7 +38,7 @@ public class ProjectBugs {
     public void editBug(int pos, String desc, String title){
         try{
             Bug b = bugs.get(pos);
-            boolean suc = BugRequests.editBug(desc, title, b.getId(),1);
+            boolean suc = BugRequests.editBug(desc, title, b.getId(), usr.getId());
             if(suc){
                 b.setDesc(desc);
                 b.setTitle(title);
@@ -42,7 +52,7 @@ public class ProjectBugs {
 
     public void addBug(Bug b, Priority prio, Type t, Integer mod){
         try{
-            boolean suc = BugRequests.addBug(b.getDesc(), b.getTitle(), proj.getProjectId(), mod, t.ordinal(), prio.ordinal(),1);
+            boolean suc = BugRequests.addBug(b.getDesc(), b.getTitle(), proj.getProjectId(), mod, t.ordinal(), prio.ordinal(), usr.getId());
             if(suc){
                 bugs.add(b);
             }else{
@@ -56,7 +66,7 @@ public class ProjectBugs {
     public void markAsSolved(int pos){
         try{
             int id = bugs.get(pos).getId();
-            boolean suc = BugRequests.solve(id, proj.getProjectId(),1);
+            boolean suc = BugRequests.solve(id, proj.getProjectId(), usr.getId());
             if(suc){
                 bugs.get(pos).setStatus(Status.Solved.toString());
             }else{
@@ -70,7 +80,7 @@ public class ProjectBugs {
     public void markAsUnsolved(int pos){
         try{
             int id = bugs.get(pos).getId();
-            if(BugRequests.unsolve(id)){
+            if(BugRequests.unsolve(id, usr.getId())){
                 bugs.get(pos).setStatus(Status.ToSolve.toString());
             }
         } catch (IOException e) {
@@ -81,7 +91,7 @@ public class ProjectBugs {
     public void markAsSolving(int pos, int user){
         try{
             int id = bugs.get(pos).getId();
-            if(BugRequests.markSolving(id,user)){
+            if(BugRequests.markSolving(id,usr.getId(),proj.getProjectId())){
                 bugs.get(pos).setStatus(Status.InProgress.toString());
             }
         } catch (IOException e) {
@@ -92,7 +102,7 @@ public class ProjectBugs {
     public Bug request(int pos){
         try{
             int id = bugs.get(pos).getId();
-            Bug b = BugRequests.getBug(id);
+            Bug b = BugRequests.getBug(id, usr.getId());
 
             if (!bugs.contains(b)) {
                 bugs.add(b);

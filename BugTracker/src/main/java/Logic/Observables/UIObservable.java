@@ -112,7 +112,7 @@ public class UIObservable {
 
     public void newModule(int pos, String moduleName){
         try{
-            userProjects.newModule(pos,moduleName,loggedUser.getUsr().getId());
+            userProjects.newModule(pos,moduleName);
         }catch (Exception e){
             disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
             setMessage("Error adding module: "+e);
@@ -121,7 +121,7 @@ public class UIObservable {
 
     public void removeModule(int posModule, int posProject){
         try{
-            userProjects.removeModule(posModule,posProject,loggedUser.getUsr().getId());
+            userProjects.removeModule(posModule,posProject);
         }catch (Exception e){
             disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
             setMessage("Error removing module: "+e);
@@ -191,7 +191,7 @@ public class UIObservable {
 
     public void rename(String username){
         try{
-            if(loggedUser.rename(username,loggedUser.getUsr().getId())){
+            if(loggedUser.rename(username)){
                 setMessage("Username updated");
             }
             else{
@@ -206,7 +206,7 @@ public class UIObservable {
 
     public void resetMail(String email){
         try{
-            if(loggedUser.resetMail(email,loggedUser.getUsr().getId())){
+            if(loggedUser.resetMail(email)){
                 setMessage("Email updated");
             }
             else{
@@ -221,7 +221,7 @@ public class UIObservable {
 
     public void repass(String newPassword){
         try {
-            if(loggedUser.repass(newPassword,loggedUser.getUsr().getId())){
+            if(loggedUser.repass(newPassword)){
                 setMessage("Password updated");
             }else{
                 disparaEventos(defineEventos(PropsID.ERROR_EDIT_USER));
