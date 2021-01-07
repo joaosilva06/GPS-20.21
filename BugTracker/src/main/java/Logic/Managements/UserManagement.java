@@ -71,7 +71,7 @@ public class UserManagement {
 
     public boolean rename(String newName) throws Exception {
         try {
-            String res = UserRequests.rename(newName);
+            String res = UserRequests.rename(newName,this.usr.getId());
             if(res.equals(newName)){
                 this.usr.setUsername(newName);
                 return true;
@@ -84,7 +84,7 @@ public class UserManagement {
 
     public boolean repass(String newPass) throws Exception {
         try {
-            boolean res = UserRequests.repass(newPass);
+            boolean res = UserRequests.repass(newPass,this.usr.getId());
             if(res){
                 this.usr.setPassword(newPass);
                 return true;

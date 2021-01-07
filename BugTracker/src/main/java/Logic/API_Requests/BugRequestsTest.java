@@ -13,7 +13,7 @@ class BugRequestsTest {
     void getBug() {
         Bug test = null;
         try {
-            test = BugRequests.getBug(1);
+            test = BugRequests.getBug(1,1);
         } catch (IOException e) {
             fail(e.getMessage());
         }
@@ -37,7 +37,7 @@ class BugRequestsTest {
 
         boolean test = false;
         try {
-            test = BugRequests.addBug(b.getTitle(),b.getDesc(),1, null, 1, 2);
+            test = BugRequests.addBug(b.getTitle(),b.getDesc(),1, null, 1, 2,1);
         } catch (IOException e) {
             fail(e.getMessage());
         }
@@ -57,7 +57,7 @@ class BugRequestsTest {
 
         boolean test = false;
         try {
-            test = BugRequests.addBug(b.getTitle(),b.getDesc(),1, null, 1, 2);
+            test = BugRequests.addBug(b.getTitle(),b.getDesc(),1, null, 1, 2,1);
         } catch (IOException e) {
             fail(e.getMessage());
         }

@@ -36,6 +36,7 @@ public class UIObservable {
     public UIObservable(){
         propertyChangeSupport = new PropertyChangeSupport(this);
         loggedUser = new UserManagement(null);
+        userProjects = new UserProjects(null);
         startAppication();
     }
 
@@ -52,7 +53,13 @@ public class UIObservable {
     }
 
     public List<Project> getProjectList() {
-        return userProjects.getProjs();
+        try{
+            return userProjects.getProjs(loggedUser.getUsr().getId());
+        }catch (IOException e){
+            disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
+            setMessage("Erro ao obter projetos: "+e);
+        }
+        return null;
     }
 
     public Screens getActualScreen(){
@@ -80,7 +87,13 @@ public class UIObservable {
 
     //dados
     public List<Project> getProjectsFromApi(){
-        return userProjects.getProjs();
+        try{
+            return userProjects.getProjs(loggedUser.getUsr().getId());
+        }catch (IOException e){
+            disparaEventos(defineEventos(PropsID.REQUEST_FAIL));
+            setMessage("Erro ao obter projetos: "+e);
+        }
+        return null;
     }
 
     public Project addProject(String project_name){

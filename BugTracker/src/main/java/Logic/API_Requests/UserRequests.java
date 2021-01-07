@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class UserRequests {
 
     public static User registar(String username, String password, String email) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/register");
+        URL url = new URL("http://localhost/GPS-20.21/API/index.php/Update/user/register");
         String params = "uName="+username+"&email="+email+"&pass="+password;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -45,7 +45,7 @@ public class UserRequests {
 
 
     public static User login(String username, String password) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/get/user/login");
+        URL url = new URL("http://localhost/GPS-20.21/API/index.php/get/user/login");
         String params = "uName="+username+"&pass="+password;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -115,7 +115,7 @@ public class UserRequests {
     }
 
     public static boolean resetMail(String email) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/get/user/reset");
+        URL url = new URL("http://localhost/GPS-20.21/API/index.php/get/user/reset");
         String params = "mail="+email;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();

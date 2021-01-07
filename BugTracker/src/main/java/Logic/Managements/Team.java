@@ -12,9 +12,18 @@ import java.io.IOException;
 public class Team {
 
     private Project proj;
+    private User usr;
 
     public Team(Project proj){
         this.proj = proj;
+    }
+
+    public User getUsr() {
+        return usr;
+    }
+
+    public void setUsr(User usr) {
+        this.usr = usr;
     }
 
     public void addMember(String search, Role role){
@@ -25,7 +34,7 @@ public class Team {
             User u = UserRequests.search(search,1);
             if (u != null) {
                 //ver user id
-              if(ProjectRequests.addMember(role.ordinal(), u.getId(), proj.getProjectId(), 1)){
+              if(ProjectRequests.addMember(role.ordinal(), u.getId(), proj.getProjectId(), usr.getId())){
                 proj.getMembers().add(u);
               }
             }
@@ -40,7 +49,7 @@ public class Team {
         int id = proj.getMembers().get(pos).getId();
         try {
             //ver user id
-            if(ProjectRequests.removeMember(id, proj.getProjectId(),1))
+            if(ProjectRequests.removeMember(id, proj.getProjectId(), usr.getId()))
                 proj.getMembers().remove(pos);
         } catch (IOException e) {
             //uma callback para a interface
@@ -53,7 +62,7 @@ public class Team {
         int id = proj.getMembers().get(pos).getId();
         try {
             //ver user id
-            if(ProjectRequests.changeRole(role.ordinal(), id, proj.getProjectId(),1))
+            if(ProjectRequests.changeRole(role.ordinal(), id, proj.getProjectId(), usr.getId()))
                 proj.getMembers().remove(pos);
         } catch (IOException e) {
             //uma callback para a interface
