@@ -12,9 +12,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class BugRequests {
-    public static Bug getBug(int bug) throws IOException {
+    public static Bug getBug(int bug, int userId) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/get/bug/request");
-        String params = "bugId=" + bug;
+        String params = "id="+userId+"&bugId=" + bug;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -38,9 +38,9 @@ public class BugRequests {
 
     }
 
-    public static boolean addBug(String desc, String title, int projId, Integer modId, int type, int prio) throws IOException {//ver
+    public static boolean addBug(String desc, String title, int projId, Integer modId, int type, int prio, int userId) throws IOException {//ver
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/bug/addBugProject");
-        String params ="bugTitlte="+title+"&bugDescription="+desc+
+        String params = "id="+userId+"&bugTitlte="+title+"&bugDescription="+desc+
                 "&bugModule="+modId +"&bugType="+type+"&bugPriority="+ prio +
                 "&bugProject=" + projId;
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -67,9 +67,9 @@ public class BugRequests {
         }
     }
 
-    public static boolean editBug(String desc, String title, int bugId) throws IOException {
+    public static boolean editBug(String desc, String title, int bugId, int userId) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/bug/edit");
-        String params = "newBugDescription="+desc+"&newTitle="+title+"&bugI="+bugId; //não da match com os isset do php
+        String params = "id="+userId+"&newBugDescription="+desc+"&newTitle="+title+"&bugI="+bugId; //não da match com os isset do php
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -95,9 +95,9 @@ public class BugRequests {
         }
     }
 
-    public static boolean solve(int bugId, int proj) throws IOException {
+    public static boolean solve(int bugId, int proj, int userId) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/bug/solve");
-        String params = "idBug="+bugId+"&project="+proj;
+        String params = "id0"+userId+"&idBug="+bugId+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -123,9 +123,9 @@ public class BugRequests {
         }
     }
 
-    public static boolean unsolve(int bugId) throws IOException {
+    public static boolean unsolve(int bugId, int userId) throws IOException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/bug/unsolve");
-        String params = "idBug="+bugId; //no php pede tambem "projeto"
+        String params = "id="+userId+"&idBug="+bugId; //no php pede tambem "projeto"
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -151,9 +151,9 @@ public class BugRequests {
         }
     }
 
-    public static boolean markSolving(int bugId, int userId) throws IOException { //precisa projectId
+    public static boolean markSolving(int bugId, int userId, int proj) throws IOException { //precisa projectId
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/bug/progress");
-        String params = "idBug="+bugId+"&userId="+userId;
+        String params = "idBug="+bugId+"&id="+userId+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -181,7 +181,7 @@ public class BugRequests {
 
     //check
     public static String bugCheck(int bugId) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/get/bug/check"); //é util?
+        URL url = new URL("http://localhost/GPS_BT/index.php/get/bug/check"); //é util? não
         String params = "idBug="+bugId;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
