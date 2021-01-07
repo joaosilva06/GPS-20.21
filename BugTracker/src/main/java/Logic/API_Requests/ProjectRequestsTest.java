@@ -26,7 +26,7 @@ class ProjectRequestsTest{
         List<Bug> teste = null;
 
         try{
-            teste = ProjectRequests.projectBugs(projeto.getProjectId());
+            teste = ProjectRequests.projectBugs(projeto.getProjectId(), 1);
         }catch(IOException | APIResponseException e){
             fail(e.getMessage());
         }
@@ -55,7 +55,8 @@ class ProjectRequestsTest{
         List<User> teste = null;
 
         try{
-            teste = ProjectRequests.projectMembers(projeto.getProjectId());
+            //ver user id
+            teste = ProjectRequests.projectMembers(projeto.getProjectId(),1);
         }catch(IOException | APIResponseException e){
             fail(e.getMessage());
         }
@@ -81,7 +82,8 @@ class ProjectRequestsTest{
         List<Module> teste = null;
 
         try{
-            teste = ProjectRequests.projectModules(project.getProjectId());
+            //ver user id
+            teste = ProjectRequests.projectModules(project.getProjectId(),1);
         }catch(IOException | APIResponseException e){
             fail(e.getMessage());
         }
@@ -97,7 +99,8 @@ class ProjectRequestsTest{
         boolean teste = false;
 
         try{
-            teste = ProjectRequests.addProject(projeto.getName());
+            //ver user id
+            teste = ProjectRequests.addProject(projeto.getName(),1);
         }catch(IOException | APIResponseException e){
             fail(e.getMessage());
         }
@@ -114,7 +117,8 @@ class ProjectRequestsTest{
         boolean teste = false;
 
         try{
-            teste = ProjectRequests.removeProject(projeto.getProjectId());
+            //ver user id
+            teste = ProjectRequests.removeProject(projeto.getProjectId(),1);
         }catch(IOException | APIResponseException e){
             fail(e.getMessage());
         }
@@ -132,7 +136,8 @@ class ProjectRequestsTest{
         boolean teste = false;
 
         try{
-            teste = ProjectRequests.newModule(projeto.getProjectId(), module);
+            //ver user id
+            teste = ProjectRequests.newModule(projeto.getProjectId(), module,1);
         }catch(IOException | APIResponseException e){
             fail(e.getMessage());
         }
@@ -152,7 +157,8 @@ class ProjectRequestsTest{
         boolean teste = false;
 
         try{
-            teste = ProjectRequests.addMember(4, user.getId(), project.getProjectId());
+            //ver user id
+            teste = ProjectRequests.addMember(4, user.getId(), project.getProjectId(),1);
         }catch(IOException | APIResponseException e){
             fail(e.getMessage());
         }
@@ -179,8 +185,9 @@ class ProjectRequestsTest{
         Boolean teste = false;
 
         try{
-            teste = ProjectRequests.addMember(4, membro.getId(), project.getProjectId());
-            teste = ProjectRequests.changeRole(3, membro.getId(), project.getProjectId());
+            //ver user id
+            teste = ProjectRequests.addMember(4, membro.getId(), project.getProjectId(),1);
+            teste = ProjectRequests.changeRole(3, membro.getId(), project.getProjectId(),1);
         }catch(IOException | APIResponseException e){
             fail(e.getMessage());
         }
@@ -207,7 +214,8 @@ class ProjectRequestsTest{
         boolean teste = false;
 
         try{
-            teste = ProjectRequests.removeMember(membro.getId(), project.getProjectId());
+            //ver user id
+            teste = ProjectRequests.removeMember(membro.getId(), project.getProjectId(),1);
         }catch(IOException | APIResponseException e){
             fail(e.getMessage());
         }

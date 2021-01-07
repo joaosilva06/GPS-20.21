@@ -15,7 +15,7 @@ public class ProjectBugs {
 
     public ProjectBugs(Project proj) throws IOException, APIResponseException {
         this.proj = proj;
-        bugs = ProjectRequests.projectBugs(this.proj.getProjectId());
+        bugs = ProjectRequests.projectBugs(this.proj.getProjectId(), 1);
     }
 
     public List<Bug> getBugs(){return bugs;}
