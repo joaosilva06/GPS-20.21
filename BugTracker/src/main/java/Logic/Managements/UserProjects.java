@@ -23,15 +23,13 @@ public class UserProjects {
         this.projs = null;
     }
 
-    public List<Project> getProjs() {
+    public List<Project> getProjs(int userId) throws IOException {
         try {
             projs = UserRequests.projects();
             return projs;
         }catch (IOException e){
-            //uma callback para a interface
+            throw new IOException(e.getMessage());
         }
-        return null;
-
     }
 
     public void setProjs(List<Project> proj){

@@ -1,11 +1,13 @@
 package Logic.API_Requests;
 
 import Logic.Exceptions.APIResponseException;
+import Logic.Project;
 import Logic.User;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -54,7 +54,7 @@ public class UserManagement {
         return false;
     }
 
-    public boolean resetMail(String email) throws IOException {
+    public boolean resetMail(String email, int userId) throws IOException {
         try {
             boolean suc = UserRequests.resetMail(email);
             if(suc){
@@ -67,7 +67,7 @@ public class UserManagement {
         return false;
     }
 
-    public boolean rename(String newName) throws Exception {
+    public boolean rename(String newName, int userId) throws Exception {
         try {
             String res = UserRequests.rename(newName);
             if(res.equals(newName)){
@@ -80,7 +80,7 @@ public class UserManagement {
         return false;
     }
 
-    public boolean repass(String newPass) throws Exception {
+    public boolean repass(String newPass, int userId) throws Exception {
         try {
             boolean res = UserRequests.repass(newPass);
             if(res){

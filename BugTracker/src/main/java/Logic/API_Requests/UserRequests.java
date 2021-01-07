@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class UserRequests {
 
     public static User registar(String username, String password, String email) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/register");
+        URL url = new URL("http://localhost/GPS-20.21/API/index.php/Update/user/register");
         String params = "uName="+username+"&email="+email+"&pass="+password;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -45,7 +45,7 @@ public class UserRequests {
 
 
     public static User login(String username, String password) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/get/user/login");
+        URL url = new URL("http://localhost/GPS-20.21/API/index.php/get/user/login");
         String params = "uName="+username+"&pass="+password;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -93,7 +93,7 @@ public class UserRequests {
     }
 
     public static List<Project> projects() throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/get/user/projects");
+        URL url = new URL("http://localhost/GPS-20.21/API/index.php/get/user/projects");
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -113,7 +113,7 @@ public class UserRequests {
     }
 
     public static boolean resetMail(String email) throws IOException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/get/user/reset");
+        URL url = new URL("http://localhost/GPS-20.21/API/index.php/get/user/reset");
         String params = "mail="+email;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -141,7 +141,7 @@ public class UserRequests {
     }
 
     public static String rename(String newName) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/rename");
+        URL url = new URL("http://localhost/GPS-20.21/API/index.php/Update/user/rename");
         String params = "newName="+newName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -166,7 +166,7 @@ public class UserRequests {
     }
 
     public static boolean repass(String newPass) throws IOException, APIResponseException {
-        URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/pass");
+        URL url = new URL("http://localhost/GPS-20.21/API/index.php/Update/user/pass");
         String params = "newPass="+newPass;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
