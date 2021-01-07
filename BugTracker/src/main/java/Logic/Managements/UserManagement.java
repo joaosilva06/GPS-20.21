@@ -14,6 +14,8 @@ public class UserManagement {
         this.usr = usr;
     }
 
+    public UserManagement(){usr = null}
+
     public User getUsr(){
         return this.usr;
     }
@@ -22,7 +24,7 @@ public class UserManagement {
         try {
         User u = UserRequests.registar(username, password, email);
         if(u != null){
-            this.usr = u;
+            this.usr = u; //isto provavelmente deve ser alterado, o user nao fica loggado com o register
         }
         }catch (IOException e){
             throw new IOException(e.getMessage());
