@@ -25,7 +25,8 @@ public class UserProjects {
 
     public List<Project> getProjs() {
         try {
-            projs = UserRequests.projects();
+            //ver user id
+            projs = UserRequests.projects(1);
             return projs;
         }catch (IOException e){
             //uma callback para a interface
@@ -42,7 +43,8 @@ public class UserProjects {
         int usr_id = usr.getId();
         int id_proj = projs.get(pos).getProjectId();
         try {
-            projs.get(pos).setBugs(ProjectRequests.projectBugs(id_proj));
+            //ver user id
+            projs.get(pos).setBugs(ProjectRequests.projectBugs(id_proj,1));
         }catch (IOException e){
             //uma callback para a interface
         }catch (APIResponseException e){
@@ -54,7 +56,8 @@ public class UserProjects {
         int usr_id = usr.getId();
         int id_proj = projs.get(pos).getProjectId();
         try {
-            projs.get(pos).setModules(ProjectRequests.projectModules(id_proj));
+            //ver user id
+            projs.get(pos).setModules(ProjectRequests.projectModules(id_proj,1));
         }catch (IOException e){
             //uma callback para a interface
         }catch (APIResponseException e){
@@ -65,7 +68,8 @@ public class UserProjects {
     public void projectMembers(int pos){
         int id_proj = projs.get(pos).getProjectId();
         try {
-            projs.get(pos).setMembers(ProjectRequests.projectMembers(id_proj));
+            //ver user id
+            projs.get(pos).setMembers(ProjectRequests.projectMembers(id_proj,1));
         }catch (IOException e){
             //uma callback para a interface
         }catch (APIResponseException e){
@@ -78,7 +82,8 @@ public class UserProjects {
         Date date=java.util.Calendar.getInstance().getTime();
         Project p = new Project(projectsId++,project_name,date);
         try {
-            if(ProjectRequests.addProject(project_name)) {
+            //ver user id
+            if(ProjectRequests.addProject(project_name,1)) {
                 projs.add(p);
             }else{
                 projectsId--;
@@ -94,7 +99,8 @@ public class UserProjects {
     public void removeProject(int pos){
         int id_proj = projs.get(pos).getProjectId();
         try {
-            if(ProjectRequests.removeProject(id_proj))
+            //ver user id
+            if(ProjectRequests.removeProject(id_proj,1))
                 projs.remove(pos);
         } catch (IOException e) {
             //uma callback para a interface
@@ -107,7 +113,8 @@ public class UserProjects {
         int usr_id = usr.getId();
         int id_proj = projs.get(pos).getProjectId();
         try {
-            if(ProjectRequests.newModule(id_proj, moduleName)){
+            //ver user id
+            if(ProjectRequests.newModule(id_proj, moduleName,1)){
                 projs.get(pos).addModule(moduleName);
             }
         }catch (IOException | APIResponseException e){
@@ -120,7 +127,8 @@ public class UserProjects {
         List<Module> modules = projs.get(posProject).getModules();
         int id_mod = modules.get(posModule).getId();
         try {
-            if(ProjectRequests.removeModule(id_mod)){
+            //ver user id
+            if(ProjectRequests.removeModule(id_mod,1)){
                 projs.get(posProject).getModules().remove(posModule);
             }
         }catch (IOException | APIResponseException e){

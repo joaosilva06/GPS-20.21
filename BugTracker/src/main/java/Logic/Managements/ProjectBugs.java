@@ -16,10 +16,11 @@ public class ProjectBugs {
 
     public ProjectBugs(Project proj) throws IOException, APIResponseException {
         this.proj = proj;
-        bugs = ProjectRequests.projectBugs(this.proj.getProjectId());
+        bugs = ProjectRequests.projectBugs(this.proj.getProjectId(), 1);
         if(bugs == null){
             bugs = new ArrayList<>();
         }
+
     }
 
     public List<Bug> getBugs(){return bugs;}

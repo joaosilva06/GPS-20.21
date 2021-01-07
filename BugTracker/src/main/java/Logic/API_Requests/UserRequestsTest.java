@@ -1,11 +1,13 @@
 package Logic.API_Requests;
 
 import Logic.Exceptions.APIResponseException;
+import Logic.Project;
 import Logic.User;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -143,7 +145,8 @@ public class UserRequestsTest {
     void projects() {
       List<Project> listP = null;
         try {
-            listP = UserRequests.projects();
+            //ver user id
+            listP = UserRequests.projects(1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -189,7 +192,8 @@ public class UserRequestsTest {
         String name = "Fabois";
         String test = null;
         try {
-            test = UserRequests.rename(name);
+            //ver user id
+            test = UserRequests.rename(name,1);
 
         } catch (IOException e) {
             fail(e.getMessage());
@@ -209,7 +213,8 @@ public class UserRequestsTest {
         String pass = "adeus";
         boolean test = false;
         try {
-            test = UserRequests.repass(pass);
+            //ver user id
+            test = UserRequests.repass(pass,1);
 
         } catch (IOException e) {
             fail(e.getMessage());
@@ -226,8 +231,8 @@ public class UserRequestsTest {
         String name = "Tester";
         User test = null;
         try {
-
-            test = UserRequests.search(name);
+            //ver user id
+            test = UserRequests.search(name,1);
 
         } catch (IOException | APIResponseException e) {
             fail(e.getMessage());

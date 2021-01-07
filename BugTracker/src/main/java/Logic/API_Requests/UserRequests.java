@@ -144,7 +144,7 @@ public class UserRequests {
 
     public static String rename(String newName, int id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/rename");
-        String params = "id="+id+"newName="+newName;
+        String params = "id="+id+"&newName="+newName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -169,7 +169,7 @@ public class UserRequests {
 
     public static boolean repass(String newPass, int id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/user/pass");
-        String params = "id="+id+"newPass="+newPass;
+        String params = "id="+id+"&newPass="+newPass;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -197,7 +197,7 @@ public class UserRequests {
 
     public static User search(String search, int id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/index.php/get/user/search");
-        String params = "id="+id+"search="+search;
+        String params = "id="+id+"&search="+search;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);

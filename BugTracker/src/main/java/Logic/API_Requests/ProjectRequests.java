@@ -20,7 +20,7 @@ public class ProjectRequests{
 
         URL url = new URL("http://localhost/GPS_BT/index.php/get/project/bugs");
 
-        String params = "id="+id+"projId="+project_id;
+        String params = "id="+id+"&projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -48,7 +48,7 @@ public class ProjectRequests{
 
         URL url = new URL("http://localhost/GPS_BT/index.php/get/project/members");
 
-        String params = "id="+id+"projId="+project_id;
+        String params = "id="+id+"&projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -75,7 +75,7 @@ public class ProjectRequests{
 
         URL url = new URL("http://localhost/GPS_BT/index.php/get/project/modules");
 
-        String params = "id="+id+"projId="+project_id;
+        String params = "id="+id+"&projId="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -102,7 +102,7 @@ public class ProjectRequests{
 
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/add");
 
-        String params = "id="+id+"projName="+project_name;
+        String params = "id="+id+"&projName="+project_name;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -132,7 +132,7 @@ public class ProjectRequests{
 
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/remove");//nao existe, mas devia
 
-        String params = "id="+id+"projID="+project_id;
+        String params = "id="+id+"&projID="+project_id;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -162,7 +162,7 @@ public class ProjectRequests{
 
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/module/new");
 
-        String params = "id="+id+"projID="+project_id+"&moduleName="+moduleName;
+        String params = "id="+id+"&projID="+project_id+"&moduleName="+moduleName;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -190,7 +190,7 @@ public class ProjectRequests{
 
     public static boolean addMember(int role, int user, int proj, int id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/addMember");
-        String params = "id="+id+"role="+role+"&user="+user+"&project="+proj;
+        String params = "id="+id+"&role="+role+"&user="+user+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -218,7 +218,7 @@ public class ProjectRequests{
 
     public static boolean changeRole(int role, int user, int proj,int id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/role");
-        String params = "id="+id+"role="+role+"&user="+user+"&project="+proj;
+        String params = "id="+id+"&role="+role+"&user="+user+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -246,7 +246,7 @@ public class ProjectRequests{
 
     public static boolean removeMember(int user, int proj, int id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/project/removeMember");
-        String params = "id="+id+"user="+user+"&project="+proj;
+        String params = "id="+id+"&user="+user+"&project="+proj;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
@@ -275,7 +275,7 @@ public class ProjectRequests{
     //remove module
     public static boolean removeModule(int modId,int id) throws IOException, APIResponseException {
         URL url = new URL("http://localhost/GPS_BT/index.php/Update/module/remove");
-        String params = "id="+id+"idModule="+modId;
+        String params = "id="+id+"&idModule="+modId;
 
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setDoOutput(true);
