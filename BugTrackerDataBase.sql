@@ -179,7 +179,25 @@ CREATE TABLE IF NOT EXISTS `BugTrackerDataBase`.`Bug` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+Insert into Role(description) values("Owner");
+Insert into Role(description) values("Admin");
+Insert into Role(description) values("Developer");
+Insert into Role(description) values("Tester");
+                                
+Insert into Priority(description) values("High");
+Insert into Priority(description) values("Medium");
+Insert into Priority(description) values("Low");
+                                
+Insert into Status(description) values("Solved");
+Insert into Status(description) values("InProgress");
+Insert into Status(description) values("ToSolve");
 
+Insert into Type(description) values("CompilationError");
+Insert into Type(description) values("RuntimeError");
+Insert into Type(description) values("LogicMalfunction");
+                                
+                                
+                                
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
